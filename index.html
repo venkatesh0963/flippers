@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Free Online Coin Flipper - Heads or Tails</title>
+<meta name="description" content="FLIPPERS offers free online random decision-making tools including Coin Flip, Dice Roller, Wheel of Names, Number Generator, Card Shuffle, and more. Make fast and fun decisions instantly.">
+<meta name="keywords" content="random decision maker, coin flip online, dice roller, wheel of names, random picker, number generator, card shuffle, fantasy name generator, decision maker tools, flippers">
+<meta name="author" content="FLIPPERS">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="FLIPPERS - Free Random Decision Maker Tools">
+<meta property="og:description" content="Use FLIPPERS to flip coins, roll dice, spin wheels, shuffle cards, generate names, and make quick decisions online for free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourwebsite.com">
+<meta property="og:image" content="https://yourwebsite.com/preview-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FLIPPERS - Online Random Decision Tools">
+<meta name="twitter:description" content="Fun and free random decision-making tools including coin flips, dice rollers, random pickers, and more.">
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ 
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+
+    /* ================= HERO SECTION ================= */
+
+    .hero-section{
+      width:90%;
+      max-width:1400px;
+
+      margin:70px auto;
+
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      gap:60px;
+    }
+
+    /* LEFT */
+
+    .hero-left{
+      flex:1;
+    }
+
+    .hero-text h1{
+      font-size:75px;
+      line-height:1.1;
+      font-weight:800;
+      color:#0d0d26;
+    }
+
+    .blue{
+      color:#1a73e8;
+    }
+
+    /* .gradient{
+      background:linear-gradient(90deg,#1a73e8,#7f00ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    } */
+     .gradient{
+  background: linear-gradient(90deg, #1a73e8, #7f00ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  display: inline-block;
+}
+
+    .separator{
+      width:120px;
+      height:4px;
+      background:#ddd;
+      border-radius:10px;
+      margin:30px 0;
+    }
+
+    .hero-text p{
+      font-size:20px;
+      color:#5f6368;
+      line-height:1.8;
+      max-width:650px;
+    }
+
+    /* FEATURE GRID */
+
+    .feature-grid{
+      margin-top:50px;
+
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+
+      gap:20px;
+    }
+
+    .feature-card{
+      background:white;
+
+      border-radius:18px;
+
+      padding:25px 35px;
+
+      box-shadow:0 10px 25px rgba(0,0,0,0.07);
+
+      transition:0.3s;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-8px);
+    }
+
+    .feature-card i{
+      font-size:30px;
+      margin-bottom:15px;
+    }
+
+    .feature-card h3{
+      font-size:14px;
+      margin-bottom:10px;
+      color:#111827;
+    }
+
+    .feature-card span{
+      color:#666;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .purple{
+      color:#7f00ff;
+    }
+
+    .green{
+      color:#0abf53;
+    }
+
+    .yellow{
+      color:#ffb300;
+    }
+
+    .blue-icon{
+      color:#1a73e8;
+    }
+
+    /* ================= HERO RIGHT IMAGE ================= */
+
+    .hero-right{
+      flex:1;
+      position:relative;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    /* IMAGE */
+
+    .hero-image{
+      width:100%;
+      max-width:700px;
+
+      border-radius:30px;
+
+      object-fit:cover;
+
+      box-shadow:0 15px 40px rgba(0,0,0,0.15);
+
+      animation:floatImage 4s ease-in-out infinite;
+    }
+
+    @keyframes floatImage{
+
+      0%{
+        transform:translateY(0px);
+      }
+
+      50%{
+        transform:translateY(-15px);
+      }
+
+      100%{
+        transform:translateY(0px);
+      }
+
+    }
+
+    /* MINI BADGE */
+
+    .mini-badge{
+      position:absolute;
+
+      top:20px;
+      right:20px;
+
+      background:white;
+
+      border-radius:20px;
+
+      padding:15px 20px;
+
+      display:flex;
+      align-items:center;
+
+      gap:12px;
+
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
+      z-index:10;
+    }
+
+    .mini-badge i{
+      color:#7f00ff;
+      font-size:22px;
+    }
+
+    .mini-badge b{
+      color:#1a73e8;
+    }
+
+    /* ================= EXPLORE ================= */
+
+    .explore{
+      text-align:center;
+      margin:40px 0 80px;
+
+      font-weight:bold;
+
+      color:#1a237e;
+
+      letter-spacing:2px;
+    }
+
+    /* ================= CONTACT SECTION ================= */
+
+    .contact-section{
+      width:90%;
+      max-width:1200px;
+
+      margin:60px auto;
+
+      display:flex;
+      gap:30px;
+
+      flex-wrap:wrap;
+    }
+
+    /* LEFT */
+
+    .contact-left{
+      flex:1;
+      min-width:320px;
+
+      background:white;
+
+      padding:35px;
+
+      border-radius:18px;
+
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .contact-left h2{
+      margin-bottom:10px;
+      font-size:32px;
+    }
+
+    .contact-left p{
+      color:#666;
+      margin-bottom:25px;
+    }
+
+    .contact-form{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .contact-form input,
+    .contact-form textarea{
+      width:100%;
+
+      padding:14px;
+
+      border:1px solid #ccc;
+
+      border-radius:10px;
+
+      outline:none;
+    }
+
+    .contact-form button{
+      padding:14px;
+
+      border:none;
+
+      background:#1a73e8;
+
+      color:white;
+
+      border-radius:10px;
+
+      cursor:pointer;
+
+      transition:0.3s;
+    }
+
+    .contact-form button:hover{
+      background:#0d47a1;
+    }
+
+    /* RIGHT */
+
+    .contact-right{
+      flex:1;
+      min-width:320px;
+
+      background:#111827;
+
+      color:white;
+
+      padding:35px;
+
+      border-radius:18px;
+
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .contact-right h2{
+      text-align:center;
+      margin-bottom:30px;
+      font-size:30px;
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+
+    .info-box{
+      text-decoration:none;
+      color:white;
+
+      background:#1f2937;
+
+      padding:25px;
+
+      border-radius:16px;
+
+      text-align:center;
+
+      transition:0.3s;
+    }
+
+    .info-box:hover{
+      background:#1a73e8;
+      transform:translateY(-5px);
+    }
+
+    .info-box i{
+      font-size:30px;
+      margin-bottom:10px;
+      display:block;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer{
+      margin-top:70px;
+
+      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+      color:white;
+    }
+
+    .footer-container{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+
+      gap:30px;
+
+      padding:45px 40px;
+    }
+
+    .footer-box{
+      flex:1;
+      min-width:220px;
+    }
+
+    .footer-box h3{
+      margin-bottom:15px;
+      color:#00e5ff;
+      font-size:22px;
+    }
+
+    .footer-box p,
+    .footer-box a{
+      color:#d1d1d1;
+
+      text-decoration:none;
+
+      display:block;
+
+      margin:8px 0;
+
+      transition:0.3s;
+    }
+
+    .footer-box a:hover{
+      color:#00e5ff;
+      transform:translateX(5px);
+    }
+
+    /* SOCIAL */
+
+    .social-icons{
+      display:flex;
+      gap:15px;
+      margin-top:15px;
+    }
+
+    .social-icons a{
+      width:42px;
+      height:42px;
+
+      border-radius:50%;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      background:rgba(255,255,255,0.1);
+
+      color:white;
+
+      transition:0.3s;
+    }
+
+    .social-icons a:hover{
+      transform:scale(1.15);
+    }
+
+    .instagram:hover{
+      background:#e1306c;
+    }
+
+    .facebook:hover{
+      background:#1877f2;
+    }
+
+    .whatsapp:hover{
+      background:#25d366;
+    }
+
+    .footer-bottom{
+      text-align:center;
+
+      padding:15px;
+
+      border-top:1px solid rgba(255,255,255,0.1);
+
+      color:#aaa;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1100px){
+
+      .hero-section{
+        flex-direction:column;
+      }
+
+      .feature-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:768px){
+
+      header{
+        flex-direction:column;
+        gap:15px;
+      }
+
+      .hero-text h1{
+        font-size:48px;
+      }
+
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .footer-container{
+        flex-direction:column;
+      }
+
+    }
+/* ================= FEATURE + CTA SECTION ================= */
+
+.feature-cta-section{
+  width:90%;
+  max-width:1400px;
+  margin:80px auto;
+}
+
+/* ================= TOP FEATURES ================= */
+
+.top-features{
+  display:flex;
+  justify-content:space-between;
+
+  background:white;
+
+  border-radius:20px;
+
+  padding:30px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+
+  margin-bottom:35px;
+
+  flex-wrap:wrap;
+}
+
+.feature-item{
+  flex:1;
+  min-width:220px;
+
+  display:flex;
+  gap:18px;
+
+  padding:10px 20px;
+
+  border-right:1px solid #ececec;
+}
+
+.no-border{
+  border-right:none;
+}
+
+.feature-item i{
+  font-size:35px;
+  margin-top:5px;
+}
+
+.feature-item h3{
+  font-size:18px;
+  color:#111827;
+  margin-bottom:6px;
+}
+
+.feature-item p{
+  color:#666;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* ICON COLORS */
+
+.green-icon{
+  color:#0abf53;
+}
+
+.blue-icon{
+  color:#1a73e8;
+}
+
+.purple-icon{
+  color:#7f00ff;
+}
+
+.orange-icon{
+  color:#ff9800;
+}
+
+/* ================= BOTTOM GRID ================= */
+
+.bottom-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:25px;
+}
+
+/* CTA CARD */
+
+.cta-card{
+  background:linear-gradient(
+    135deg,
+    rgba(26,115,232,0.08),
+    rgba(127,0,255,0.08)
+  );
+
+  border-radius:24px;
+
+  padding:40px;
+
+  display:flex;
+  align-items:center;
+  gap:40px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* IMAGE */
+
+.cta-image img{
+  width:260px;
+  animation:floatCoder 4s ease-in-out infinite;
+}
+
+@keyframes floatCoder{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-12px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+
+/* CONTENT */
+
+.cta-content h2{
+  font-size:34px;
+  line-height:1.5;
+  color:#111827;
+  margin-bottom:25px;
+}
+
+.cta-content span{
+  color:#1a73e8;
+  font-weight:700;
+}
+
+/* BUTTON */
+
+.cta-content button{
+  padding:16px 28px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:linear-gradient(
+    135deg,
+    #1a73e8,
+    #7f00ff
+  );
+
+  color:white;
+
+  font-size:15px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.3s;
+}
+
+.cta-content button:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 25px rgba(26,115,232,0.3);
+}
+
+/* ================= QUOTE CARD ================= */
+
+.quote-card{
+  background:white;
+
+  border-radius:24px;
+
+  padding:40px 35px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+
+  position:relative;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.quote-mark{
+  font-size:90px;
+  color:#7f00ff;
+  line-height:1;
+  margin-bottom:10px;
+}
+
+.quote-card p{
+  font-size:24px;
+  line-height:1.7;
+  color:#1f2937;
+
+  margin-bottom:25px;
+}
+
+.quote-card span{
+  color:#666;
+  font-size:15px;
+  text-align:right;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+  .bottom-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cta-card{
+    flex-direction:column;
+    text-align:center;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .top-features{
+    flex-direction:column;
+  }
+
+  .feature-item{
+    border-right:none;
+    border-bottom:1px solid #ececec;
+    padding:20px 0;
+  }
+
+  .feature-item:last-child{
+    border-bottom:none;
+  }
+
+  .cta-content h2{
+    font-size:26px;
+  }
+
+  .quote-card p{
+    font-size:20px;
+  }
+
+}
+/* SECTION */
+
+.topics-section{
+  width:90%;
+  margin:70px auto;
+}
+
+/* GRID */
+
+.topics-grid{
+  display:grid;
+
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+  gap:20px;
+}
+
+/* CARD */
+
+.topic-card{
+  background:white;
+
+  border-radius:20px;
+
+  padding:25px;
+
+  display:flex;
+
+  gap:18px;
+
+  align-items:flex-start;
+
+  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+
+  transition:0.3s;
+}
+
+.topic-card:hover{
+  transform:translateY(-8px);
+}
+
+/* ICON */
+
+.icon-box{
+  width:60px;
+  height:60px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:white;
+
+  font-size:28px;
+
+  flex-shrink:0;
+}
+
+/* CONTENT */
+
+.topic-content h3{
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.topic-content p{
+  color:#666;
+  line-height:1.6;
+}
+
+/* COLORS */
+
+.html-bg{
+  background:#ff5722;
+}
+
+.css-bg{
+  background:#1a73e8;
+}
+
+.js-bg{
+  background:#ffd600;
+  color:black;
+}
+
+.python-bg{
+  background:#3776ab;
+}
+
+.java-bg{
+  background:#f44336;
+}
+
+.c-bg{
+  background:#3949ab;
+}
+
+.cpp-bg{
+  background:#673ab7;
+}
+
+.sql-bg{
+  background:#009688;
+}
+
+.mongo-bg{
+  background:#13aa52;
+}
+/* ================= MOBILE ================= */
+
+    @media(max-width:768px){
+
+      header{
+
+        flex-direction:column;
+
+        gap:20px;
+      }
+
+      nav{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+      }
+
+      .hero-left h1{
+
+        font-size:45px;
+      }
+
+      .contact-grid{
+
+        grid-template-columns:1fr;
+      }
+    }
+    /* BUTTON */
+
+.topic-btn{
+
+  display:inline-block;
+
+  margin-top:15px;
+
+  padding:10px 18px;
+
+  background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+  color:white;
+
+  text-decoration:none;
+
+  border-radius:10px;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  transition:0.3s;
+}
+
+.topic-btn:hover{
+
+  transform:translateY(-3px);
+
+  box-shadow:0 8px 20px rgba(26,115,232,0.25);
+}
+.left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-decoration:none;
+}
+.header-logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#7f00ff,#1a73e8);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(127,0,255,0.35);
+}
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header>
+
+    <a href="index.html" class="left">
+
+
+      <div class="header-logo">
+  <i class="fa-solid fa-coins"></i>
+</div>
+
+      <div class="brand-text">
+
+        <h2>FLIPPERS</h2>
+
+        <p>
+         SPIN.PICK.DECIDE
+        </p>
+
+      </div>
+
+    <div class="right">
+
+      <a href="#home">
+  <button>Home</button>
+</a>
+
+      <a href="#Flippers">
+  <button>FLIPPERS</button>
+</a>
+
+      <a href="#contact">
+  <button>Contact</button>
+</a>
+
+    </div>
+
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+
+  <section class="hero-section" id="home">
+
+    <!-- LEFT -->
+
+    <div class="hero-left">
+
+      <div class="hero-text">
+
+<h1>FREE ONLINE</h1>
+
+<h1>
+  <span class="blue">RANDOM DECISION </span>
+  <span class="gradient"> MAKER TOOLS</span>
+</h1>
+
+        <div class="separator"></div>
+
+<p>
+  Use powerful and fun online random tools to make quick decisions instantly.
+  <br>Flip coins, roll dice, spin wheels, shuffle cards,
+  <br>generate names, and much more — all completely free.
+</p>
+      </div>
+
+      <!-- FEATURES -->
+
+      <div class="feature-grid">
+
+        <div class="feature-card">
+  <i class="fa-solid fa-gamepad green"></i>
+  <h3>Made For Fun</h3>
+</div>
+
+<div class="feature-card">
+  <i class="fa-solid fa-shuffle purple"></i>
+  <h3>Random & Fair Results</h3>
+</div>
+
+<div class="feature-card">
+  <i class="fa-solid fa-bolt yellow"></i>
+  <h3>Instant Entertainment</h3>
+</div>
+
+<div class="feature-card">
+  <i class="fa-solid fa-circle-exclamation blue-icon"></i>
+  <h3>For Casual Use Only</h3>
+</div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT IMAGE -->
+
+    <div class="hero-right">
+
+      <!-- FLOATING BADGE 
+
+      <div class="mini-badge">
+
+        <i class="fa-solid fa-code"></i> 
+
+         <span>
+          Learn. Practice. Build.
+          <b>Become a Developer.</b>
+        </span>
+
+      </div> -->
+
+      <!-- HERO IMAGE -->
+
+      <img src="image1.jpeg" alt="Random Decision Tools" class="hero-image">
+
+    </div>
+
+  </section>
+
+  <!-- EXPLORE -->
+
+  <div class="explore">
+    • • EXPLORE FREE RANDOM TOOLS • •
+  </div>
+<section class="topics-section" id="Flippers">
+
+  <div class="topics-grid">
+
+    <!-- Coin Flip-->
+  <div class="topic-card">
+  <div class="icon-box html-bg">
+    <i class="fa-solid fa-coins coin-bg"></i>
+  </div>
+  <div class="topic-content">
+    <h3>Coin Flip</h3>
+    <p>Flip a virtual coin online and get instant Heads or Tails results.</p>
+    <!-- BUTTON -->
+    <a href="Coin Flip.html" class="topic-btn">
+      Open
+    </a>
+  </div>
+  </div>
+
+    <!-- Dice Roller -->
+    <div class="topic-card">
+      <div class="icon-box css-bg">
+        <i class="fa-solid fa-dice dice-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Dice Roller</h3>
+        <p>Roll virtual dice online for games, choices, and random outcomes.</p>
+        <a href="Dice Roller.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+    <!-- Wheel of Names -->
+    <div class="topic-card">
+      <div class="icon-box js-bg">
+        <i class="fa-solid fa-arrows-spin wheel-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Wheel of Names</h3>
+        <p>Spin a customizable random wheel picker to choose winners instantly.</p>
+        <a href="Wheel of Names.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+    <!-- Decision Shuffler -->
+    <div class="topic-card">
+      <div class="icon-box python-bg">
+        <i class="fa-solid fa-shuffle shuffle-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Decision Shuffler</h3>
+        <p>Shuffle options randomly to make fair and unbiased decisions.</p>
+        <a href="Decision Shuffler.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+    <!-- Comment Picker-->
+    <div class="topic-card">
+      <div class="icon-box c-bg">
+        <i class="fa-solid fa-comments comment-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Comment Picker</h3>
+        <p>Randomly select comments, names, or entries from any list.</p>
+        <a href="Comment Picker.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+    <!-- Card Shuffle -->
+    <div class="topic-card">
+      <div class="icon-box cpp-bg">
+        <i class="fa-solid fa-clover card-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Card Shuffle</h3>
+        <p>Shuffle virtual playing cards instantly for games and random selection.</p>
+        <a href="Card Shuffle.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+    <!-- Number Generator -->
+    <div class="topic-card">
+      <div class="icon-box sql-bg">
+        <i class="fa-solid fa-hashtag number-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Number Generator</h3>
+        <p>Generate random numbers online within any custom range instantly.</p>
+        <a href="Number Generator.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+    <!-- Fantasy Name Generator -->
+    <div class="topic-card">
+      <div class="icon-box mongo-bg">
+        <i class="fa-solid fa-wand-magic-sparkles fantasy-bg"></i>
+      </div>
+
+      <div class="topic-content">
+        <h3>Fantasy Name Generator</h3>
+        <p>Create random fantasy names for games, stories, characters, and worlds.</p>
+        <a href="Fantasy Name Generator.html" class="topic-btn">
+      Open
+    </a>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+  <!-- ================= FEATURES + CTA SECTION ================= -->
+
+<section class="feature-cta-section">
+
+  <!-- TOP FEATURES BAR -->
+
+  <div class="top-features">
+
+    <!-- ITEM 1 -->
+        
+<div class="feature-item">
+
+  <i class="fa-solid fa-gamepad purple-icon"></i>
+
+  <div>
+    <h3>Made for Fun</h3>
+    <p>Enjoy random tools for games, parties, giveaways, and everyday fun.</p>
+  </div>
+
+</div>
+    
+
+    <!-- ITEM 2 -->
+    <div class="feature-item">
+
+      <i class="fa-solid fa-dice blue-icon"></i>
+
+      <div>
+        <h3>Random Choice Generator</h3>
+        <p>Pick between options fairly and instantly.</p>
+      </div>
+
+    </div>
+
+    <!-- ITEM 3 -->
+<div class="feature-item">
+
+      <i class="fa-solid fa-wand-magic-sparkles green-icon"></i>
+
+      <div>
+        <h3>Fun & Interactive UI</h3>
+        <p>Simple, engaging experience for fast decisions.</p>
+      </div>
+
+    </div>
+
+    <!-- ITEM 4 -->
+    <div class="feature-item">
+
+      <i class="fa-solid fa-sliders orange-icon"></i>
+
+      <div>
+        <h3>Custom Inputs</h3>
+        <p>Add your own choices and get instant results.</p>
+      </div>
+
+    </div>
+
+    <!-- ITEM 5 -->
+<!-- ITEM -->
+<div class="feature-item">
+
+  <i class="fa-solid fa-circle-exclamation orange-icon"></i>
+
+  <div>
+    <h3>Random Results</h3>
+    <p>Results are generated randomly and should not be treated as advice.</p>
+  </div>
+
+</div>
+
+  </div>
+
+  <!-- BOTTOM GRID -->
+
+  <div class="bottom-grid">
+
+    <!-- LEFT CTA CARD -->
+
+    <div class="cta-card">
+
+      <!-- RIGHT CONTENT -->
+
+      <div class="cta-content">
+
+        <h2>
+  Have fun making choices with
+  <span>FLIPPERS</span> <br>free random tools for games and everyday entertainment.
+</h2>
+
+        <button>
+  TRY TOOLS →
+</button>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT QUOTE CARD -->
+
+    <div class="quote-card">
+
+      <div class="quote-mark">“</div>
+
+      <p>
+  Spin, flip, pick, and play with FLIPPERS — free random tools designed for fun and entertainment.
+</p>
+
+      <span>– Flippers Community</span>
+
+    </div>
+
+  </div>
+
+</section>
+ <!-- ================= SEO CONTENT ================= -->
+
+<section class="topics-section">
+
+  <div class="topic-card" style="display:block;padding:40px;">
+
+    <h2 style="font-size:38px;margin-bottom:20px;">
+      Free Online Random Tools for Fun & Entertainment
+    </h2>
+
+    <p style="line-height:2;color:#666;margin-bottom:20px;">
+      FLIPPERS is a free online platform offering fun and interactive random tools including Coin Flip, Dice Roller, Wheel of Names, Card Shuffle, Number Generator, Fantasy Name Generator, and more. Whether you're playing games, hosting giveaways, organizing activities, or simply looking for a quick random choice, FLIPPERS provides fast and easy-to-use tools directly in your browser.
+    </p>
+
+    <p style="line-height:2;color:#666;margin-bottom:20px;">
+      Our tools are designed to make random selection simple, entertaining, and accessible on any device. No downloads, registrations, or installations are required—just choose a tool and start having fun instantly.
+    </p>
+
+    <h3 style="font-size:28px;margin-bottom:15px;">
+      Why Use FLIPPERS?
+    </h3>
+
+    <ul style="line-height:2;color:#666;padding-left:20px;">
+
+      <li>Free online random generators and decision tools</li>
+
+      <li>Instant coin flips, dice rolls, and wheel spins</li>
+
+      <li>Simple, fast, and mobile-friendly experience</li>
+
+      <li>Perfect for games, giveaways, classrooms, and parties</li>
+
+      <li>No signup or installation required</li>
+
+      <li>Fun and interactive user experience</li>
+
+    </ul>
+
+    <h3 style="font-size:28px;margin-top:30px;margin-bottom:15px;">
+      Important Disclaimer
+    </h3>
+
+    <p style="line-height:2;color:#666;">
+      FLIPPERS is intended for entertainment and recreational purposes only. All results generated by our tools are random and should not be considered professional advice, recommendations, predictions, or guarantees of any kind.
+    </p>
+
+    <p style="line-height:2;color:#666;">
+      Users should not rely on FLIPPERS for financial, legal, medical, educational, employment, safety-related, or other important real-world decisions. Always use personal judgment and consult qualified professionals when making significant decisions.
+    </p>
+
+  </div>
+
+</section>
+  <!-- ================= CONTACT SECTION ================= -->
+
+  <section class="contact-section" id="contact">
+
+    <!-- LEFT -->
+
+    <div class="contact-left">
+
+      <h2>Contact Us</h2>
+
+      <p>
+        Feel free to send us your message anytime.
+      </p>
+
+      <form class="contact-form">
+
+        <input type="text" placeholder="Enter your name" required>
+
+        <input type="email" placeholder="Enter your email" required>
+
+        <textarea rows="6" placeholder="Enter your message" required></textarea>
+
+        <button type="submit">
+          Send Message
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="contact-right">
+
+      <h2>Get In Touch</h2>
+
+      <div class="contact-grid">
+
+
+        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" target="_blank" class="info-box">
+          <i class="fa-brands fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+
+        <!-- <a href="https://facebook.com" target="_blank" class="info-box">
+          <i class="fa-brands fa-facebook"></i>
+          <span>Facebook</span>
+        </a>
+
+        <a href="https://twitter.com" target="_blank" class="info-box">
+          <i class="fa-brands fa-twitter"></i>
+          <span>Twitter</span>
+        </a> -->
+
+        <a href="https://www.linkedin.com/in/venkatesh-b-172505353?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="info-box">
+          <i class="fa-brands fa-linkedin"></i>
+          <span>LinkedIn</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="footer-container">
+
+      <div class="footer-box">
+
+        <h3>Flippers</h3>
+
+        <p>
+  FLIPPERS provides free online random decision-making tools including coin tosses, dice rollers, wheel spinners, card shufflers, and random generators.
+</p>
+
+      </div>
+
+      <div class="footer-box">
+
+        <h3>Useful Links</h3>
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html">Flippers</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+      </div>
+
+      <div class="footer-box">
+
+        <h3>Follow Us</h3>
+
+        <div class="social-icons">
+
+          <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <!-- <a href="#" class="facebook">
+            <i class="fa-brands fa-facebook"></i>
+          </a> -->
+
+          <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 Flippers | All Rights Reserved
+    </div>
+
+  </footer>
+
+</body>
+</html>

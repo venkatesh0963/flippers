@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About FLIPPERS | Free Online Random Decision Maker Tools</title>
+
+<meta name="description" content="Learn about FLIPPERS, the free online platform for random decision maker tools including coin flips, dice rollers, wheel spinners, random pickers, and more.">
+
+<meta name="keywords" content="about flippers, random decision maker, coin flip tool, wheel spinner, dice roller, online random tools">
+
+<meta name="author" content="FLIPPERS">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="About FLIPPERS - Free Online Random Decision Tools">
+
+<meta property="og:description" content="Discover FLIPPERS and explore free online tools for quick random decisions and fun interactive generators.">
+
+<meta property="og:type" content="website">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+
+/* HERO */
+
+.about-hero{
+  width:90%;
+  max-width:1200px;
+
+  margin:80px auto;
+
+  text-align:center;
+}
+
+.about-hero h1{
+  font-size:70px;
+  font-weight:800;
+
+  margin-bottom:20px;
+}
+
+.gradient{
+  background: linear-gradient(90deg, #1a73e8, #7f00ff);
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  display: inline-block;
+}
+
+.about-hero p{
+  max-width:900px;
+
+  margin:auto;
+
+  font-size:20px;
+
+  line-height:1.9;
+
+  color:#5f6368;
+}
+
+/* CONTENT */
+
+.about-container{
+  width:90%;
+  max-width:1200px;
+  margin:50px auto;
+
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:30px;
+}
+
+.about-card{
+  background:white;
+
+  padding:35px;
+
+  border-radius:24px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.07);
+
+  transition:0.3s;
+}
+
+.about-card:hover{
+  transform:translateY(-8px);
+}
+
+.about-card i{
+  font-size:45px;
+
+  margin-bottom:20px;
+
+  color:#1a73e8;
+}
+
+.about-card h2{
+  margin-bottom:15px;
+
+  font-size:28px;
+}
+
+.about-card p{
+  color:#666;
+
+  line-height:1.9;
+}
+
+/* SEO SECTION */
+
+.seo-section{
+  width:90%;
+  max-width:1200px;
+
+  margin:70px auto;
+
+  background:white;
+
+  padding:50px;
+
+  border-radius:28px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.07);
+}
+
+.seo-section h2{
+  font-size:42px;
+
+  margin-bottom:20px;
+}
+
+.seo-section p{
+  color:#666;
+
+  line-height:2;
+
+  margin-bottom:20px;
+}
+
+.seo-section ul{
+  padding-left:25px;
+}
+
+.seo-section li{
+  color:#666;
+
+  line-height:2;
+}
+
+/* FOOTER */
+
+    footer{
+      margin-top:70px;
+
+      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+      color:white;
+    }
+
+    .footer-container{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+
+      gap:30px;
+
+      padding:45px 40px;
+    }
+
+    .footer-box{
+      flex:1;
+      min-width:220px;
+    }
+
+    .footer-box h3{
+      margin-bottom:15px;
+      color:#00e5ff;
+      font-size:22px;
+    }
+
+    .footer-box p,
+    .footer-box a{
+      color:#d1d1d1;
+
+      text-decoration:none;
+
+      display:block;
+
+      margin:8px 0;
+
+      transition:0.3s;
+    }
+
+    .footer-box a:hover{
+      color:#00e5ff;
+      transform:translateX(5px);
+    }
+
+    /* SOCIAL */
+
+    .social-icons{
+      display:flex;
+      gap:15px;
+      margin-top:15px;
+    }
+
+    .social-icons a{
+      width:42px;
+      height:42px;
+
+      border-radius:50%;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      background:rgba(255,255,255,0.1);
+
+      color:white;
+
+      transition:0.3s;
+    }
+
+    .social-icons a:hover{
+      transform:scale(1.15);
+    }
+
+    .instagram:hover{
+      background:#e1306c;
+    }
+
+    .facebook:hover{
+      background:#1877f2;
+    }
+
+    .whatsapp:hover{
+      background:#25d366;
+    }
+
+    .footer-bottom{
+      text-align:center;
+
+      padding:15px;
+
+      border-top:1px solid rgba(255,255,255,0.1);
+
+      color:#aaa;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1100px){
+
+      .hero-section{
+        flex-direction:column;
+      }
+
+      .feature-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:768px){
+
+      header{
+        flex-direction:column;
+        gap:15px;
+      }
+
+      .hero-text h1{
+        font-size:48px;
+      }
+
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .footer-container{
+        flex-direction:column;
+      }
+
+    }
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-decoration:none;
+}
+.header-logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#7f00ff,#1a73e8);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(127,0,255,0.35);
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<a href="index.html" class="left">
+
+<div class="header-logo">
+  <i class="fa-solid fa-coins"></i>
+</div>
+
+<div class="brand-text">
+<h2>FLIPPERS</h2>
+<p>SPIN.PICK.DECIDE</p>
+</div>
+
+</div>
+
+<div class="right">
+
+<a href="index.html">
+<button>Home</button>
+</a>
+
+<a href="about.html">
+<button>About</button>
+</a>
+
+<a href="contact.html">
+<button>Contact</button>
+</a>
+
+</div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="about-hero">
+
+<h1>
+About <span class="gradient">FLIPPERS</span>
+</h1>
+
+<p>
+FLIPPERS is a free online platform designed to make decision-making fun, fast, and effortless. From flipping coins and rolling dice to spinning wheels and generating random names, our tools help users make quick choices instantly with engaging interactive experiences.
+</p>
+
+</section>
+
+<!-- CARDS -->
+
+<section class="about-container">
+
+<div class="about-card">
+
+<i class="fa-solid fa-shuffle"></i>
+
+<h2>Who We Are</h2>
+
+<p>
+FLIPPERS was created for people who want easy-to-use random decision tools online. Whether you're choosing between options, playing games, running giveaways, or making group decisions, our tools are designed to simplify the process.
+</p>
+
+</div>
+
+<div class="about-card">
+
+<i class="fa-solid fa-bolt"></i>
+
+<h2>What We Offer</h2>
+
+<p>
+We provide free online random generators including Coin Flip, Dice Roller, Wheel of Names, Card Shuffle, Fantasy Name Generator, Number Generator, and more. Every tool works instantly without signup or downloads.
+</p>
+
+</div>
+
+<div class="about-card">
+
+<i class="fa-solid fa-globe"></i>
+
+<h2>Why Choose FLIPPERS</h2>
+
+<p>
+Our platform is fast, mobile-friendly, secure, and accessible on all devices. FLIPPERS combines modern design, smooth animations, and reliable randomization tools to create a fun and seamless user experience.
+</p>
+
+</div>
+<div class="about-card">
+
+  <i class="fa-solid fa-face-smile"></i>
+
+  <h2>For Fun & Entertainment</h2>
+
+  <p>
+    FLIPPERS is designed purely for entertainment, fun activities, games, and casual decision-making. Our tools provide random outcomes to make choices easier, but they should not be used for important, professional, financial, legal, medical, or life-changing decisions.
+  </p>
+
+</div>
+
+</section>
+
+<!-- SEO CONTENT -->
+
+<section class="seo-section">
+
+<h2>
+Free Online Random Decision Maker Platform
+</h2>
+
+<p>
+FLIPPERS is one of the best free online random decision-making platforms for users looking for quick and fair choices. Our tools are ideal for classrooms, games, giveaways, social media contests, team activities, and everyday decisions.
+</p>
+
+<p>
+Whether you need a virtual coin toss, random wheel spinner, dice roller, or random number generator, FLIPPERS offers simple and interactive tools that work directly in your browser.
+</p>
+
+<h3 style="margin-bottom:15px;font-size:28px;">
+Popular Features
+</h3>
+
+<ul>
+
+<li>Free online coin flip tool</li>
+
+<li>Interactive wheel of names spinner</li>
+
+<li>Fast and secure random generators</li>
+
+<li>Mobile-friendly responsive design</li>
+
+<li>No registration required</li>
+
+<li>Simple and fun user experience</li>
+
+<li>Perfect for games, giveaways, and quick decisions</li>
+
+</ul>
+<h3 style="margin-top:30px;margin-bottom:15px;font-size:28px;">
+Important Disclaimer
+</h3>
+
+<p>
+FLIPPERS is intended for entertainment and recreational purposes only. While our tools generate random results, they are not designed to provide professional advice or make serious decisions on behalf of users.
+</p>
+
+<p>
+Users should not rely on FLIPPERS for financial, legal, medical, educational, employment, safety-related, or other critical decisions. Always use your own judgment and consult qualified professionals when necessary.
+</p>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-box">
+
+<h3>FLIPPERS</h3>
+
+<p>
+Your trusted platform for fun and interactive random decision maker tools online.
+</p>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Quick Links</h3>
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html">Flippers</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Our Tools</h3>
+
+<p>Coin Flip</p>
+
+<p>Dice Roller</p>
+
+<p>Wheel of Names</p>
+
+<p>Number Generator</p>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 FLIPPERS | All Rights Reserved
+</div>
+
+</footer>
+
+</body>
+</html>

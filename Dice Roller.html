@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Dice Roller - Free Random Dice Generator | Flippers</title>
+<meta name="description" content="Use the free online Dice Roller by Flippers to roll 1 to 6 dice instantly. Perfect for board games, classrooms, decision-making, RPGs, probability games, and fun random number generation.">
+
+<meta name="keywords" content="dice roller, online dice roller, random dice generator, virtual dice, roll dice online, dice game tool, free dice roller, random number dice, RPG dice roller, flippers">
+
+<meta name="author" content="Flippers">
+
+<meta property="og:title" content="Online Dice Roller - Free Random Dice Generator | Flippers">
+
+<meta property="og:description" content="Roll virtual dice instantly with Flippers Dice Roller. Fast, fun, accurate, and perfect for games, random choices, and classroom activities.">
+
+<meta property="og:type" content="website">
+
+<meta name="robots" content="index, follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+/* GLASS CARD */
+
+.glass-card{
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.3);
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* DICE */
+
+.dice{
+  width:90px;
+  height:90px;
+  border-radius:20px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  font-weight:bold;
+  box-shadow:0 10px 20px rgba(0,0,0,0.15);
+  animation:none;
+}
+
+.rolling{
+  animation:shake 0.6s ease;
+}
+
+@keyframes shake{
+  0%{transform:rotate(0deg);}
+  25%{transform:rotate(10deg);}
+  50%{transform:rotate(-10deg);}
+  75%{transform:rotate(10deg);}
+  100%{transform:rotate(0deg);}
+}
+
+/* FOOTER */
+
+    footer{
+      margin-top:70px;
+
+      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+      color:white;
+    }
+
+    .footer-container{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+
+      gap:30px;
+
+      padding:45px 40px;
+    }
+
+    .footer-box{
+      flex:1;
+      min-width:220px;
+    }
+
+    .footer-box h3{
+      margin-bottom:15px;
+      color:#00e5ff;
+      font-size:22px;
+    }
+
+    .footer-box p,
+    .footer-box a{
+      color:#d1d1d1;
+
+      text-decoration:none;
+
+      display:block;
+
+      margin:8px 0;
+
+      transition:0.3s;
+    }
+
+    .footer-box a:hover{
+      color:#00e5ff;
+      transform:translateX(5px);
+    }
+
+    /* SOCIAL */
+
+    .social-icons{
+      display:flex;
+      gap:15px;
+      margin-top:15px;
+    }
+
+    .social-icons a{
+      width:42px;
+      height:42px;
+
+      border-radius:50%;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      background:rgba(255,255,255,0.1);
+
+      color:white;
+
+      transition:0.3s;
+    }
+
+    .social-icons a:hover{
+      transform:scale(1.15);
+    }
+
+    .instagram:hover{
+      background:#e1306c;
+    }
+
+    .facebook:hover{
+      background:#1877f2;
+    }
+
+    .whatsapp:hover{
+      background:#25d366;
+    }
+
+    .footer-bottom{
+      text-align:center;
+
+      padding:15px;
+
+      border-top:1px solid rgba(255,255,255,0.1);
+
+      color:#aaa;
+    }
+.header-logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#7f00ff,#1a73e8);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(127,0,255,0.35);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<a href="index.html" class="left">
+
+
+<div class="header-logo">
+  <i class="fa-solid fa-coins"></i>
+</div>
+
+<div class="brand-text">
+<h2>FLIPPERS</h2>
+<p>SPIN.PICK.DECIDE</p>
+</div>
+</a>
+<div class="right">
+
+<a href="index.html">
+  <button>Home</button>
+</a>
+
+<a href="index.html#Flippers">
+  <button>Flippers</button>
+</a>
+
+<a href="index.html#contact">
+  <button>Contact</button>
+</a>
+
+</div>
+
+</header>
+
+<!-- MAIN -->
+
+<main class="pt-24 pb-20 px-6 max-w-6xl mx-auto">
+
+<h1 class="text-5xl font-bold">
+Online Dice Roller
+</h1>
+
+<p class="text-gray-500 mt-2">
+Roll virtual dice instantly with our free online dice roller. Perfect for board games, classroom activities, RPG sessions, probability practice, random number generation, and fun decision-making.
+</p>
+
+<div class="grid md:grid-cols-2 gap-8 mt-10">
+
+<!-- LEFT BOX -->
+
+<div class="glass-card rounded-[32px] p-10">
+
+<h3 class="text-gray-400 uppercase text-xs">
+DICE ROLL RESULT
+</h3>
+
+<div id="total-result" class="text-6xl font-bold mt-4">
+0
+</div>
+
+<div class="mt-6">
+<p class="text-gray-500">
+Total Dice Rolled:
+<span id="dice-count">1</span>
+</p>
+</div>
+
+<button onclick="resetDice()"
+class="mt-6 text-sm text-red-500">
+Reset
+</button>
+
+</div>
+
+<!-- RIGHT BOX -->
+
+<div class="glass-card rounded-[32px] p-10 flex flex-col items-center">
+
+<select id="dice-select"
+class="border p-3 rounded-xl mb-6 w-full">
+
+<option value="1">1 Dice</option>
+<option value="2">2 Dice</option>
+<option value="3">3 Dice</option>
+<option value="4">4 Dice</option>
+<option value="5">5 Dice</option>
+<option value="6">6 Dice</option>
+
+</select>
+
+<div id="dice-container"
+class="flex flex-wrap gap-4 justify-center mb-10">
+
+<div class="dice">🎲</div>
+
+</div>
+
+<button onclick="rollDice()"
+class="bg-blue-600 px-10 py-4 rounded-xl font-bold text-white hover:bg-blue-500">
+
+ROLL DICE
+
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+<!-- SCRIPT -->
+
+<script>
+
+const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+
+function rollDice(){
+
+  const diceCount = parseInt(document.getElementById("dice-select").value);
+
+  const container = document.getElementById("dice-container");
+
+  const totalResult = document.getElementById("total-result");
+
+  document.getElementById("dice-count").innerText = diceCount;
+
+  container.innerHTML = "";
+
+  let total = 0;
+
+  for(let i=0;i<diceCount;i++){
+
+    const value = Math.floor(Math.random()*6)+1;
+
+    total += value;
+
+    const dice = document.createElement("div");
+
+    dice.classList.add("dice","rolling");
+
+    dice.innerText = diceFaces[value-1];
+
+    container.appendChild(dice);
+
+  }
+
+  setTimeout(()=>{
+    totalResult.innerText = total;
+  },500);
+
+}
+
+function resetDice(){
+
+  document.getElementById("total-result").innerText = "0";
+
+  document.getElementById("dice-count").innerText = "1";
+
+  document.getElementById("dice-select").value = "1";
+
+  document.getElementById("dice-container").innerHTML =
+  '<div class="dice">🎲</div>';
+}
+
+</script>
+<!-- SEO CONTENT SECTION -->
+
+<section class="max-w-6xl mx-auto px-6 py-10">
+
+<div class="glass-card rounded-[32px] p-10">
+
+<h2 class="text-3xl font-bold mb-6">
+Why Use Our Online Dice Roller?
+</h2>
+
+<p class="text-gray-600 leading-8 mb-6">
+The Flippers Dice Roller is a fast, free, and interactive virtual dice generator designed for players, students, teachers, and anyone who needs fair random results instantly. Whether you are playing board games, tabletop RPGs, classroom activities, or making quick random decisions, our dice roller provides accurate and fun dice rolling with smooth animations.
+</p>
+
+<p class="text-gray-600 leading-8 mb-6">
+You can roll multiple dice at once and instantly see the total score. The tool works perfectly on desktop and mobile devices without requiring downloads or registration.
+</p>
+
+<h3 class="text-2xl font-bold mb-4">
+Popular Uses of Dice Roller
+</h3>
+
+<ul class="text-gray-600 leading-8 list-disc pl-6">
+<li>Board games and tabletop games</li>
+<li>Dungeons & Dragons and RPG sessions</li>
+<li>Math and probability learning</li>
+<li>Random number generation</li>
+<li>Classroom activities</li>
+<li>Fun online decision-making</li>
+</ul>
+
+</div>
+
+</section>
+<!-- FOOTER -->
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="footer-container">
+
+    <div class="footer-box">
+
+      <h3>Flippers</h3>
+
+      <p>
+        FLIPPERS provides free online random decision-making tools including
+        coin tosses, dice rollers, wheel spinners, card shufflers, and random
+        generators.
+      </p>
+
+    </div>
+
+    <div class="footer-box">
+
+      <h3>Useful Links</h3>
+
+      <a href="index.html">Home</a>
+      <a href="index.html#Flippers">Flippers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+
+    </div>
+
+    <div class="footer-box">
+
+      <h3>Follow Us</h3>
+
+      <div class="social-icons">
+
+        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <!-- <a href="#" class="facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a> -->
+
+        <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Flippers | All Rights Reserved
+  </div>
+
+</footer>
+
+</body>
+</html>

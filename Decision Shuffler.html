@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Shuffler Online | Free Random Decision Maker - FLIPPERS</title>
+<meta name="description" content="Use the free online Decision Shuffler by FLIPPERS to randomly choose between options instantly. Perfect for daily decisions, games, food choices, and fun activities.">
+
+<meta name="keywords" content="decision shuffler, random decision maker, online decision picker, choice generator, random choice selector, decision maker tool, shuffle choices online">
+
+<meta name="author" content="FLIPPERS">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Decision Shuffler Online - FLIPPERS">
+
+<meta property="og:description" content="Randomly shuffle and pick decisions instantly with the FLIPPERS Decision Shuffler tool.">
+
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://yourwebsite.com/decision-shuffler-preview.jpg">
+
+<meta property="og:url" content="https://yourwebsite.com/decision-shuffler">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+/* CARD STYLE */
+.box{
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* SHUFFLE ANIMATION */
+.shuffling{
+  animation: shake 0.2s infinite;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+  100%{transform:translateX(0)}
+}
+
+/* BUTTON */
+.btn{
+  background:linear-gradient(135deg,#1a73e8,#7f00ff);
+  color:white;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  margin-top:70px;
+
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+  color:white;
+}
+
+/* CONTAINER */
+
+.footer-container{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+
+  gap:30px;
+
+  padding:45px 40px;
+}
+
+/* BOX */
+
+.footer-box{
+  flex:1;
+  min-width:220px;
+}
+
+/* TITLE */
+
+.footer-box h3{
+  margin-bottom:15px;
+
+  color:#00e5ff;
+
+  font-size:22px;
+
+  font-weight:700;
+}
+
+/* TEXT + LINKS */
+
+.footer-box p,
+.footer-box a{
+  color:#d1d1d1;
+
+  text-decoration:none;
+
+  display:block;
+
+  margin:8px 0;
+
+  line-height:1.8;
+
+  transition:0.3s;
+}
+
+/* LINK HOVER */
+
+.footer-box a:hover{
+  color:#00e5ff;
+
+  transform:translateX(5px);
+}
+
+/* SOCIAL ICONS */
+
+.social-icons{
+  display:flex;
+
+  gap:15px;
+
+  margin-top:15px;
+}
+
+/* ICON BUTTONS */
+
+.social-icons a{
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,0.1);
+
+  color:white;
+
+  transition:0.3s;
+}
+
+/* ICON HOVER */
+
+.social-icons a:hover{
+  transform:scale(1.15);
+}
+
+/* SOCIAL COLORS */
+
+.instagram:hover{
+  background:#e1306c;
+}
+
+.facebook:hover{
+  background:#1877f2;
+}
+
+.whatsapp:hover{
+  background:#25d366;
+}
+
+/* COPYRIGHT */
+
+.footer-bottom{
+  text-align:center;
+
+  padding:15px;
+
+  border-top:1px solid rgba(255,255,255,0.1);
+
+  color:#aaa;
+
+  font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+  .footer-container{
+    flex-direction:column;
+
+    gap:40px;
+
+    padding:40px 25px;
+  }
+
+  .footer-box{
+    min-width:100%;
+  }
+
+}
+.left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-decoration:none;
+}
+.header-logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#7f00ff,#1a73e8);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(127,0,255,0.35);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<!-- HEADER -->
+  <header>
+
+    <a href="index.html" class="left">
+
+
+     <div class="header-logo">
+  <i class="fa-solid fa-coins"></i>
+</div>
+
+      <div class="brand-text">
+
+        <h2>FLIPPERS</h2>
+
+        <p>
+         SPIN.PICK.DECIDE
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="right">
+
+      <a href="index.html">
+  <button>Home</button>
+</a>
+
+      <a href="index.html">
+  <button>Flippers</button>
+</a>
+
+      <a href="contact.html">
+  <button>Contact</button>
+</a>
+
+    </div>
+
+  </header>
+
+<!-- MAIN -->
+<main class="max-w-6xl mx-auto p-6 mt-10">
+
+<h1 class="text-4xl font-bold">
+  Online Decision Shuffler
+</h1>
+<p class="text-gray-500">
+  Instantly shuffle your choices and let the random decision maker pick for you 🎯
+</p>
+
+<div class="grid md:grid-cols-2 gap-8 mt-10">
+
+<!-- LEFT BOX -->
+<div class="box">
+ <h2 class="text-xl font-bold">
+  Random Decision Result
+</h2>
+
+<div id="result" class="text-3xl font-bold mt-4">
+  Enter choices to generate a random decision
+</div>
+
+<p class="mt-5 text-gray-500">
+  Recent Decision History
+</p>
+  <ul id="history" class="text-sm text-gray-600 mt-2"></ul>
+
+  <button onclick="resetAll()" class="mt-6 text-red-500 text-sm">
+    Reset All
+  </button>
+</div>
+
+<!-- RIGHT BOX -->
+<div class="box">
+ <h2 class="text-xl font-bold">
+  Add Your Options
+</h2>
+
+  <textarea id="input"
+    class="w-full border p-3 mt-3 rounded-lg"
+    rows="6"
+    placeholder="Enter choices separated by commas (Example: Pizza, Burger, Pasta)"></textarea>
+
+ <button onclick="shuffleDecision()" aria-label="Shuffle random decision choices" class="btn mt-4">
+    SHUFFLE RANDOM DECISION
+  </button>
+
+  <p class="mt-4 text-gray-500 text-sm">
+    Example: Watch movie, Order pizza, Go shopping
+  </p>
+</div>
+
+</div>
+</main>
+
+<script>
+let historyList = [];
+
+function shuffleDecision(){
+  let input = document.getElementById("input").value;
+  let choices = input.split(",").map(x => x.trim()).filter(x => x);
+
+  if(choices.length === 0){
+    alert("Please enter at least 2 choices");
+    return;
+  }
+
+  const result = document.getElementById("result");
+  result.classList.add("shuffling");
+
+  let i = 0;
+  let cycles = 0;
+
+  // 🔥 SHUFFLE ANIMATION
+  let interval = setInterval(() => {
+    result.innerText = choices[i];
+    i = (i + 1) % choices.length;
+    cycles++;
+
+    if(cycles > 25){
+      clearInterval(interval);
+
+      let finalChoice = choices[Math.floor(Math.random() * choices.length)];
+      result.innerText = "🎯 " + finalChoice;
+
+      historyList.push(finalChoice);
+      updateHistory();
+
+      result.classList.remove("shuffling");
+    }
+  }, 90);
+}
+
+function updateHistory(){
+  document.getElementById("history").innerHTML =
+    historyList.map(h => `<li>• ${h}</li>`).join("");
+}
+
+function resetAll(){
+  historyList = [];
+  document.getElementById("result").innerText = "Enter choices to generate a random decision";
+  document.getElementById("history").innerHTML = "";
+  document.getElementById("input").value = "";
+}
+</script>
+<!-- SEO CONTENT SECTION -->
+
+<section class="max-w-6xl mx-auto px-6 py-16">
+
+  <div class="box">
+
+    <h2 class="text-4xl font-bold mb-6">
+      Free Online Decision Shuffler Tool
+    </h2>
+
+    <p class="text-gray-600 leading-8 mb-6">
+      FLIPPERS Decision Shuffler is a free online random decision maker designed to help you choose between multiple options quickly and fairly. Whether you are deciding what to eat, where to go, what activity to do, or making fun group decisions, this tool instantly shuffles your choices and picks one randomly.
+    </p>
+
+    <p class="text-gray-600 leading-8 mb-6">
+      Simply enter your options separated by commas and let the random choice generator do the work. The Decision Shuffler includes smooth animations, instant results, and a clean interface that works perfectly on desktop and mobile devices.
+    </p>
+
+    <h3 class="text-2xl font-bold mb-4">
+      Features of the Decision Shuffler
+    </h3>
+
+    <ul class="list-disc pl-6 text-gray-600 leading-8">
+
+      <li>Instant random decision generation</li>
+
+      <li>Interactive shuffle animation</li>
+
+      <li>Fair and unbiased random selection</li>
+
+      <li>Simple and user-friendly interface</li>
+
+      <li>Works on mobile and desktop devices</li>
+
+      <li>Completely free online decision maker</li>
+
+      <li>Perfect for games, food choices, and daily decisions</li>
+
+    </ul>
+
+  </div>
+
+</section>
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+
+    <div class="footer-box">
+
+      <h3>Flippers</h3>
+
+      <p>
+        FLIPPERS provides free online decision-making tools
+        including random pickers, shufflers, generators,
+        spinning wheels, and fun utilities for quick choices.
+      </p>
+
+    </div>
+
+    <!-- LINKS -->
+
+    <div class="footer-box">
+
+        <h3>Useful Links</h3>
+
+         <a href="index.html">Home</a>
+
+        <a href="index.html">Flippers</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+    </div>
+
+    <!-- SOCIAL -->
+
+    <div class="footer-box">
+
+      <h3>Follow Us</h3>
+
+      <div class="social-icons">
+
+        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <!-- <a href="#" class="facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a> -->
+
+        <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- COPYRIGHT -->
+
+  <div class="footer-bottom">
+    © 2026 FLIPPERS | All Rights Reserved
+  </div>
+
+</footer>
+</body>
+</html>

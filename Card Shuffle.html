@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Shuffler Online | Free Random Card Picker - FLIPPERS</title>
+<meta name="description" content="Use the free online Card Shuffler tool to shuffle and pick random playing cards instantly. Perfect for games, fun activities, and random card selection.">
+
+<meta name="keywords" content="card shuffler, random card picker, online card shuffle, playing card generator, shuffle cards online, virtual card deck, random playing cards">
+
+<meta name="author" content="FLIPPERS">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Card Shuffler Online - Free Random Card Picker">
+
+<meta property="og:description" content="Shuffle and pick random playing cards instantly with FLIPPERS free online Card Shuffler tool.">
+
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://yourwebsite.com/card-shuffler-preview.jpg">
+
+<meta property="og:url" content="https://yourwebsite.com/card-shuffler">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+/* ================= CARD ANIMATION ================= */
+.card{
+  transition:0.6s;
+}
+
+.shuffle{
+  animation:shuffleAnim 0.8s ease-in-out;
+}
+
+@keyframes shuffleAnim{
+  0%{transform:translateY(0) rotate(0);}
+  50%{transform:translateY(-40px) rotate(15deg);}
+  100%{transform:translateY(0) rotate(0);}
+}
+
+/* ================= CARD DESIGN ================= */
+.playing-card{
+  width:160px;
+  height:220px;
+  background:white;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:10px;
+}
+
+.top,.bottom{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.center{
+  font-size:60px;
+  text-align:center;
+}
+
+/* ================= FOOTER ================= */
+/* ================= FOOTER ================= */
+
+footer{
+  margin-top:70px;
+
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+  color:white;
+}
+
+.footer-container{
+  display:flex;
+
+  justify-content:space-between;
+
+  flex-wrap:wrap;
+
+  gap:30px;
+
+  padding:45px 50px;
+}
+
+.footer-box{
+  flex:1;
+  min-width:220px;
+}
+
+.footer-box h3{
+  margin-bottom:20px;
+
+  color:#00e5ff;
+
+  font-size:22px;
+
+  font-weight:700;
+}
+
+.footer-box p,
+.footer-box a{
+  color:#d1d1d1;
+
+  text-decoration:none;
+
+  display:block;
+
+  margin:10px 0;
+
+  line-height:1.8;
+
+  transition:0.3s;
+}
+
+.footer-box a:hover{
+  color:#00e5ff;
+
+  transform:translateX(5px);
+}
+
+/* SOCIAL ICONS */
+
+.social-icons{
+  display:flex;
+
+  gap:15px;
+
+  margin-top:15px;
+}
+
+.social-icons a{
+  width:52px;
+
+  height:52px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:rgba(255,255,255,0.08);
+
+  color:white;
+
+  font-size:20px;
+
+  transition:0.3s;
+}
+
+.social-icons a:hover{
+  transform:scale(1.12);
+}
+
+.instagram:hover{
+  background:#e1306c;
+}
+
+.facebook:hover{
+  background:#1877f2;
+}
+
+.whatsapp:hover{
+  background:#25d366;
+}
+
+/* BOTTOM */
+
+.footer-bottom{
+  text-align:center;
+
+  padding:18px;
+
+  border-top:1px solid rgba(255,255,255,0.1);
+
+  color:#aaa;
+
+  font-size:15px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+  .footer-container{
+    flex-direction:column;
+  }
+
+}
+.left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-decoration:none;
+}
+
+.header-logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#7f00ff,#1a73e8);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(127,0,255,0.35);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+  <a href="index.html" class="left">
+    <div class="header-logo">
+  <i class="fa-solid fa-coins"></i>
+</div>
+    <div class="brand-text">
+      <h2>FLIPPERS</h2>
+      <p>SPIN.PICK.DECIDE</p>
+    </div>
+  </div>
+
+  <div class="right">
+    <a href="index.html">
+  <button>Home</button>
+</a>
+   <a href="index.html">
+  <button>FLIPPERS</button>
+</a>
+    <a href="contact.html">
+  <button>Contact</button>
+</a>
+  </div>
+
+</header>
+
+<!-- MAIN -->
+<main class="max-w-6xl mx-auto pt-32 px-6">
+
+<h1 class="text-5xl font-bold">
+  Online Card Shuffler
+</h1>
+<p class="text-gray-500 mt-2">
+  Shuffle virtual playing cards online and pick a random card instantly for games and fun decisions.
+</p>
+
+<!-- 2 BOX LAYOUT -->
+<div class="grid md:grid-cols-2 gap-10 mt-10">
+
+<!-- LEFT BOX -->
+<div class="bg-white/50 backdrop-blur p-8 rounded-3xl shadow">
+
+<h2 class="text-gray-500 text-sm">
+  RANDOM CARD RESULT
+</h2>
+
+ <div id="result" class="text-xl font-bold mt-4">
+  Shuffle the deck to reveal a random card
+</div>
+
+  <div class="mt-6">
+    SHUFFLE RANDOM CARD <span id="count">0</span>
+  </div>
+
+  <button onclick="resetGame()" class="mt-6 underline text-gray-600">
+    Reset
+  </button>
+
+</div>
+
+<!-- RIGHT BOX -->
+<div class="bg-white/50 backdrop-blur p-8 rounded-3xl shadow flex flex-col items-center">
+
+  <div id="card" class="playing-card card">
+    <div id="top" class="top"></div>
+    <div id="center" class="center">🂠</div>
+    <div id="bottom" class="bottom"></div>
+  </div>
+
+  <button onclick="shuffleCard()"
+    class="mt-8 bg-blue-600 text-white px-10 py-3 rounded-xl font-bold hover:bg-blue-500">
+    SHUFFLE CARD
+  </button>
+
+</div>
+
+</div>
+
+</main>
+
+<!-- SCRIPT -->
+<script>
+
+let count = 0;
+
+const cards = [
+  {v:"A", s:"♠", c:"black"},
+  {v:"K", s:"♥", c:"red"},
+  {v:"Q", s:"♦", c:"red"},
+  {v:"J", s:"♣", c:"black"},
+  {v:"10", s:"♠", c:"black"},
+  {v:"9", s:"♥", c:"red"},
+  {v:"8", s:"♦", c:"red"},
+  {v:"7", s:"♣", c:"black"}
+];
+
+function shuffleCard(){
+
+  const card = document.getElementById("card");
+
+  const top = document.getElementById("top");
+  const center = document.getElementById("center");
+  const bottom = document.getElementById("bottom");
+  const result = document.getElementById("result");
+
+  card.classList.add("shuffle");
+
+  const r = cards[Math.floor(Math.random()*cards.length)];
+
+  setTimeout(()=>{
+
+    let color = r.c === "red" ? "red" : "black";
+
+    top.innerHTML = `<span style="color:${color}">${r.v}</span>`;
+    center.innerHTML = `<span style="color:${color}">${r.s}</span>`;
+    bottom.innerHTML = `<span style="color:${color}">${r.v}</span>`;
+
+    result.innerText = `You got ${r.v} ${r.s}`;
+
+    count++;
+    document.getElementById("count").innerText = count;
+
+    card.classList.remove("shuffle");
+
+  },800);
+
+}
+
+function resetGame(){
+
+  count = 0;
+  document.getElementById("count").innerText = "0";
+  document.getElementById("result").innerText = "No Card Yet";
+
+  document.getElementById("top").innerHTML = "";
+  document.getElementById("center").innerHTML = "🂠";
+  document.getElementById("bottom").innerHTML = "";
+
+}
+
+</script>
+
+<!-- SEO CONTENT SECTION -->
+
+<section class="max-w-6xl mx-auto px-6 py-16">
+
+  <div class="bg-white rounded-3xl shadow p-10">
+
+    <h2 class="text-4xl font-bold mb-6">
+      Free Online Card Shuffler Tool
+    </h2>
+
+    <p class="text-gray-600 leading-8 mb-6">
+      The FLIPPERS Card Shuffler is a free online tool designed to instantly shuffle and generate random playing cards. Whether you're playing games, making random selections, practicing card tricks, or adding excitement to activities, this virtual card picker makes the process simple and fun.
+    </p>
+
+    <p class="text-gray-600 leading-8 mb-6">
+      Our random card generator works directly in your browser with smooth animations and instant results. No downloads or registration are required. Simply shuffle the deck and reveal a random playing card anytime on desktop or mobile devices.
+    </p>
+
+    <h3 class="text-2xl font-bold mb-4">
+      Features of the Card Shuffler
+    </h3>
+
+    <ul class="list-disc pl-6 text-gray-600 leading-8">
+
+      <li>Instant random card generation</li>
+
+      <li>Interactive card shuffle animation</li>
+
+      <li>Easy-to-use virtual card picker</li>
+
+      <li>Works on desktop and mobile devices</li>
+
+      <li>Free online card shuffling tool</li>
+
+      <li>Perfect for games and random decisions</li>
+
+    </ul>
+
+  </div>
+
+</section>
+```
+
+<!-- FOOTER -->
+  <footer>
+
+    <div class="footer-container">
+
+      <div class="footer-box">
+
+        <h3>Flippers</h3>
+
+        <p>
+  FLIPPERS provides free online random decision-making tools including coin tosses, dice rollers, wheel spinners, card shufflers, and random generators.
+</p>
+
+      </div>
+
+      <div class="footer-box">
+
+        <h3>Useful Links</h3>
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html">Flippers</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+      </div>
+
+      <div class="footer-box">
+
+        <h3>Follow Us</h3>
+
+        <div class="social-icons">
+
+          <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <!-- <a href="#" class="facebook">
+            <i class="fa-brands fa-facebook"></i>
+          </a> -->
+
+          <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 Flippers | All Rights Reserved
+    </div>
+
+  </footer>
+</body>
+</html>

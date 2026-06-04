@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fantasy Name Generator - Free Random Fantasy Names | Flippers</title>
+<meta name="description" content="Generate unique fantasy names instantly with the free Fantasy Name Generator by Flippers. Perfect for RPG games, D&D characters, novels, fantasy worlds, usernames, and storytelling.">
+
+<meta name="keywords" content="fantasy name generator, random fantasy names, RPG name generator, DnD names, fantasy character names, wizard name generator, medieval names, game character names, fantasy world names">
+
+<meta name="author" content="Flippers">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Fantasy Name Generator - Flippers">
+
+<meta property="og:description" content="Create magical fantasy names instantly for RPG characters, fantasy stories, games, and adventures.">
+
+<meta property="og:type" content="website">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+/* GLASS CARD */
+
+.glass-card{
+  background:rgba(255,255,255,0.55);
+
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,255,255,0.4);
+
+  box-shadow:0 8px 32px rgba(31,38,135,0.15);
+}
+
+/* NAME ANIMATION */
+
+.name-animation{
+  animation:pulseName 0.15s linear infinite;
+}
+
+@keyframes pulseName{
+  0%{
+    transform:scale(1);
+    opacity:0.6;
+  }
+
+  50%{
+    transform:scale(1.08);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:0.6;
+  }
+}
+
+/* BUTTON */
+
+.generate-btn{
+  background:linear-gradient(135deg,#1a73e8,#7f00ff);
+  transition:0.3s;
+}
+
+.generate-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(26,115,232,0.3);
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:70px;
+
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+  color:white;
+}
+
+.footer-container{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+
+  gap:30px;
+
+  padding:45px 40px;
+}
+
+.footer-box{
+  flex:1;
+  min-width:220px;
+}
+
+.footer-box h3{
+  margin-bottom:15px;
+  color:#00e5ff;
+  font-size:22px;
+}
+
+.footer-box p,
+.footer-box a{
+  color:#d1d1d1;
+
+  text-decoration:none;
+
+  display:block;
+
+  margin:8px 0;
+
+  transition:0.3s;
+}
+
+.footer-box a:hover{
+  color:#00e5ff;
+  transform:translateX(5px);
+}
+
+.social-icons{
+  display:flex;
+  gap:15px;
+  margin-top:15px;
+}
+
+.social-icons a{
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,0.1);
+
+  color:white;
+
+  transition:0.3s;
+}
+
+.social-icons a:hover{
+  transform:scale(1.15);
+}
+
+.instagram:hover{
+  background:#e1306c;
+}
+
+.facebook:hover{
+  background:#1877f2;
+}
+
+.whatsapp:hover{
+  background:#25d366;
+}
+
+.footer-bottom{
+  text-align:center;
+
+  padding:15px;
+
+  border-top:1px solid rgba(255,255,255,0.1);
+
+  color:#aaa;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+  <div class="left">
+
+    <div class="header-logo">
+      &lt;/&gt;
+    </div>
+
+    <div class="brand-text">
+
+      <h2>FLIPPERS</h2>
+
+      <p>SPIN.PICK.DECIDE</p>
+
+    </div>
+
+  </div>
+
+  <div class="right">
+
+    <button>Home</button>
+
+    <button>Generators</button>
+
+    <button>Contact</button>
+
+  </div>
+
+</header>
+
+<!-- MAIN -->
+
+<main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
+
+<h1 class="text-5xl font-bold">
+  Free Fantasy Name Generator
+</h1>
+
+<p class="text-gray-500 mt-3 text-lg">
+  Instantly generate magical fantasy names for RPG characters, fantasy stories, games, novels, kingdoms, wizards, and adventures.
+</p>
+
+  <div class="grid md:grid-cols-2 gap-8 mt-12">
+
+    <!-- LEFT BOX -->
+
+    <div class="glass-card rounded-[32px] p-10">
+
+      <h3 class="text-gray-500 uppercase text-sm tracking-wider">
+  Random Fantasy Name
+</h3>
+
+      <div id="name-result"
+           class="text-5xl font-bold mt-8 text-purple-700 break-words">
+        Generate Your Fantasy Name
+      </div>
+
+      <div class="mt-10">
+
+        <button onclick="generateFantasyName()"
+                id="generate-btn"
+                class="generate-btn text-white px-8 py-4 rounded-2xl font-bold text-lg">
+          GENERATE FANTASY NAME
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT BOX -->
+
+    <div class="glass-card rounded-[32px] p-10 flex flex-col items-center justify-center">
+
+      <div id="magic-circle"
+           class="w-64 h-64 rounded-full flex items-center justify-center text-6xl font-bold text-white shadow-2xl"
+           style="background:linear-gradient(135deg,#7f00ff,#1a73e8);">
+
+        ✨
+
+      </div>
+
+      <p class="mt-8 text-gray-500 text-center">
+  Click the button to instantly create unique fantasy names with magical animated effects.
+</p>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- SCRIPT -->
+
+<script>
+
+const fantasyNames = [
+
+"Drakthor",
+"Velmora",
+"Zypharion",
+"Elarith",
+"Kaelthorn",
+"Nyxoria",
+"Thalvorn",
+"Vaelric",
+"Zephyra",
+"Lunareth",
+"Morvayne",
+"Xandor",
+"Aeryndor",
+"Sylvaris",
+"Ravaryn",
+"Vexmira",
+"Orlathion",
+"Kyverra",
+"Draemor",
+"Faeloria"
+
+];
+
+function generateFantasyName(){
+
+  const result = document.getElementById("name-result");
+  const circle = document.getElementById("magic-circle");
+  const btn = document.getElementById("generate-btn");
+
+  btn.disabled = true;
+
+  result.classList.add("name-animation");
+
+  let counter = 0;
+
+  const animation = setInterval(() => {
+
+    const randomName =
+      fantasyNames[Math.floor(Math.random() * fantasyNames.length)];
+
+    result.innerText = randomName;
+
+    counter++;
+
+    if(counter > 15){
+
+      clearInterval(animation);
+
+      const finalName =
+        fantasyNames[Math.floor(Math.random() * fantasyNames.length)];
+
+      result.innerText = finalName;
+
+      result.classList.remove("name-animation");
+
+      circle.innerHTML = "🧙";
+
+      btn.disabled = false;
+    }
+
+  },120);
+
+}
+
+</script>
+<!-- SEO CONTENT SECTION -->
+
+<section class="max-w-6xl mx-auto px-6 py-10">
+
+  <div class="glass-card rounded-[32px] p-10">
+
+    <h2 class="text-4xl font-bold mb-6">
+      Online Fantasy Name Generator
+    </h2>
+
+    <p class="text-gray-600 leading-8 mb-6">
+      The Flippers Fantasy Name Generator helps you create unique and creative fantasy names instantly. Whether you are building a fantasy world, creating RPG characters, writing novels, playing Dungeons & Dragons, or searching for cool usernames, this free online tool generates magical fantasy-style names with a single click.
+    </p>
+
+    <p class="text-gray-600 leading-8 mb-6">
+      Our fantasy randomizer is designed for gamers, writers, storytellers, roleplayers, and creative creators who want memorable fantasy names quickly and easily.
+    </p>
+
+    <h3 class="text-2xl font-bold mb-4">
+      Popular Uses of Fantasy Name Generator
+    </h3>
+
+    <ul class="list-disc pl-6 text-gray-600 leading-8">
+
+      <li>Fantasy RPG character names</li>
+
+      <li>Dungeons & Dragons names</li>
+
+      <li>Wizard and warrior names</li>
+
+      <li>Fantasy kingdom and world names</li>
+
+      <li>Novel and story characters</li>
+
+      <li>Gaming usernames and nicknames</li>
+
+      <li>Creative writing inspiration</li>
+
+    </ul>
+
+  </div>
+
+</section>
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="footer-container">
+
+    <div class="footer-box">
+
+      <h3>Flippers</h3>
+
+      <p>
+  FLIPPERS creates free online random generators and decision-making tools including fantasy name generators, dice rollers, wheel spinners, card shufflers, and random pickers.
+</p>
+
+    </div>
+
+    <div class="footer-box">
+
+      <h3>Useful Links</h3>
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html">Flippers</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+    </div>
+
+    <div class="footer-box">
+
+      <h3>Follow Us</h3>
+
+      <div class="social-icons">
+
+        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <!-- <a href="#" class="facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a> -->
+
+        <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Flippers | All Rights Reserved
+  </div>
+
+</footer>
+
+</body>
+</html>

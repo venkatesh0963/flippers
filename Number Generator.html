@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Random Number Generator Online Free | Instant RNG Tool - Flippers</title>
+<meta name="description"
+content="Use Flippers Random Number Generator to instantly generate random numbers within any range. Fast, free, secure, and perfect for games, giveaways, lucky draws, math practice, and random selection.">
+
+<meta name="keywords"
+content="random number generator, RNG tool, online random number picker, generate random numbers, lucky draw generator, randomizer tool, random number app, Flippers">
+
+<meta name="robots" content="index, follow">
+
+<meta name="author" content="Flippers">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    html,body{
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+/* ================= LIGHT TECH BACKGROUND ================= */
+
+body{
+  background-color:#f7f9fc;
+
+  /* Purple + Blue Grid */
+  background-image:
+    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+
+  background-size:50px 50px;
+
+  position:relative;
+
+  overflow-x:hidden;
+}
+
+/* TOP GLOW */
+body::before{
+  content:"";
+
+  position:fixed;
+
+  top:-120px;
+  left:-120px;
+
+  width:450px;
+  height:450px;
+
+  background:
+  radial-gradient(circle,
+  rgba(127,0,255,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow1 8s ease-in-out infinite alternate;
+}
+
+/* BOTTOM GLOW */
+body::after{
+  content:"";
+
+  position:fixed;
+
+  bottom:-150px;
+  right:-150px;
+
+  width:500px;
+  height:500px;
+
+  background:
+  radial-gradient(circle,
+  rgba(26,115,232,0.18),
+  transparent 70%);
+
+  z-index:-1;
+
+  animation:moveGlow2 10s ease-in-out infinite alternate;
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes moveGlow1{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(80px,40px);
+  }
+
+}
+
+@keyframes moveGlow2{
+
+  0%{
+    transform:translate(0,0);
+  }
+
+  100%{
+    transform:translate(-60px,-50px);
+  }
+
+}
+
+    /* ================= HEADER ================= */
+
+    header{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      padding:18px 50px;
+
+      background:linear-gradient(135deg,#141e30,#243b55);
+
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* LEFT */
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .header-logo{
+      width:60px;
+      height:60px;
+
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#7f00ff,#1a73e8);
+
+      color:white;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:26px;
+      font-weight:bold;
+
+      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    }
+
+    .brand-text h2{
+      color:white;
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .brand-text p{
+      color:#d1d5db;
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.5;
+    }
+
+    /* RIGHT */
+
+    .right{
+      display:flex;
+      gap:15px;
+    }
+
+    .right button{
+      padding:10px 18px;
+
+      border:none;
+      border-radius:8px;
+
+      background:linear-gradient(135deg,#1a73e8,#7f00ff);
+
+      color:white;
+
+      cursor:pointer;
+
+      transition:0.3s;
+
+      font-size:14px;
+    }
+
+    .right button:hover{
+      background:#00e5ff;
+      color:#111;
+      transform:translateY(-2px);
+    }
+/* GLASS CARD */
+
+.glass-card{
+  background:rgba(255,255,255,0.55);
+
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,255,255,0.4);
+
+  box-shadow:0 8px 32px rgba(31,38,135,0.15);
+}
+
+/* NUMBER ANIMATION */
+
+.number-animation{
+  animation:pulseNumber 0.12s linear infinite;
+}
+
+@keyframes pulseNumber{
+  0%{
+    transform:scale(1);
+    opacity:0.6;
+  }
+
+  50%{
+    transform:scale(1.08);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:0.6;
+  }
+}
+
+/* BUTTON */
+
+.generate-btn{
+  background:linear-gradient(135deg,#1a73e8,#7f00ff);
+  transition:0.3s;
+}
+
+.generate-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(26,115,232,0.3);
+}
+
+/* INPUT */
+
+.range-input{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  border:2px solid #dbeafe;
+  outline:none;
+  font-size:18px;
+  margin-top:10px;
+}
+
+.range-input:focus{
+  border-color:#7f00ff;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:70px;
+
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+  color:white;
+}
+
+.footer-container{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+
+  gap:30px;
+
+  padding:45px 40px;
+}
+
+.footer-box{
+  flex:1;
+  min-width:220px;
+}
+
+.footer-box h3{
+  margin-bottom:15px;
+  color:#00e5ff;
+  font-size:22px;
+}
+
+.footer-box p,
+.footer-box a{
+  color:#d1d1d1;
+
+  text-decoration:none;
+
+  display:block;
+
+  margin:8px 0;
+
+  transition:0.3s;
+}
+
+.footer-box a:hover{
+  color:#00e5ff;
+  transform:translateX(5px);
+}
+
+.social-icons{
+  display:flex;
+  gap:15px;
+  margin-top:15px;
+}
+
+.social-icons a{
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,0.1);
+
+  color:white;
+
+  transition:0.3s;
+}
+
+.social-icons a:hover{
+  transform:scale(1.15);
+}
+
+.instagram:hover{
+  background:#e1306c;
+}
+
+.facebook:hover{
+  background:#1877f2;
+}
+
+.whatsapp:hover{
+  background:#25d366;
+}
+
+.footer-bottom{
+  text-align:center;
+
+  padding:15px;
+
+  border-top:1px solid rgba(255,255,255,0.1);
+
+  color:#aaa;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+  <div class="left">
+
+    <div class="header-logo">
+      &lt;/&gt;
+    </div>
+
+    <div class="brand-text">
+
+      <h2>FLIPPERS</h2>
+
+      <p>SPIN.PICK.DECIDE</p>
+
+    </div>
+
+  </div>
+
+  <div class="right">
+
+    <button>Home</button>
+
+    <button>Generators</button>
+
+    <button>Contact</button>
+
+  </div>
+
+</header>
+
+<!-- MAIN -->
+
+<main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
+
+<h1 class="text-5xl font-bold">
+  Free Random Number Generator
+</h1>
+
+<p class="text-gray-500 mt-3 text-lg leading-relaxed">
+  Generate truly random numbers instantly with Flippers Random Number Generator.
+  Choose your minimum and maximum range for games, lucky draws, contests,
+  classroom activities, giveaways, statistics, and fair random selection.
+</p>
+
+  <div class="grid md:grid-cols-2 gap-8 mt-12">
+
+    <!-- LEFT BOX -->
+
+    <div class="glass-card rounded-[32px] p-10">
+
+      <h3 class="text-gray-500 uppercase text-sm tracking-wider">
+  Choose Your Random Number Range
+</h3>
+
+      <div class="mt-8">
+
+        <label class="font-semibold text-gray-700">
+          Minimum Random Value
+        </label>
+
+        <input type="number"
+               id="min-number"
+               value="1"
+               class="range-input">
+
+      </div>
+
+      <div class="mt-6">
+
+        <label class="font-semibold text-gray-700">
+          Maximum Random Value
+        </label>
+
+        <input type="number"
+               id="max-number"
+               value="100"
+               class="range-input">
+
+      </div>
+
+      <button onclick="generateNumber()"
+              id="generate-btn"
+              class="generate-btn text-white px-8 py-4 rounded-2xl font-bold text-lg mt-8 w-full">
+        GENERATE RANDOM NUMBER
+      </button>
+
+    </div>
+
+    <!-- RIGHT BOX -->
+
+    <div class="glass-card rounded-[32px] p-10 flex flex-col items-center justify-center">
+
+      <div id="number-result"
+           class="text-8xl font-bold text-purple-700">
+        ?
+      </div>
+
+      <p class="mt-8 text-gray-500 text-center text-lg">
+        Your randomly generated number will appear instantly here after the animation completes.
+Perfect for games, raffles, contests, classroom activities, and fair random selection.
+      </p>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- SCRIPT -->
+
+<script>
+
+function generateNumber(){
+
+  const min =
+    parseInt(document.getElementById("min-number").value);
+
+  const max =
+    parseInt(document.getElementById("max-number").value);
+
+  const result =
+    document.getElementById("number-result");
+
+  const btn =
+    document.getElementById("generate-btn");
+
+  if(min >= max){
+
+    alert("Maximum number must be greater than minimum number.");
+
+    return;
+  }
+
+  btn.disabled = true;
+
+  result.classList.add("number-animation");
+
+  let counter = 0;
+
+  const animation = setInterval(() => {
+
+    const random =
+      Math.floor(Math.random() * (max - min + 1)) + min;
+
+    result.innerText = random;
+
+    counter++;
+
+    if(counter > 20){
+
+      clearInterval(animation);
+
+      const finalNumber =
+        Math.floor(Math.random() * (max - min + 1)) + min;
+
+      result.innerText = finalNumber;
+
+      result.classList.remove("number-animation");
+
+      btn.disabled = false;
+    }
+
+  },100);
+
+}
+
+</script>
+<!-- SEO CONTENT SECTION -->
+
+<section class="max-w-6xl mx-auto px-6 py-20">
+
+  <div class="glass-card rounded-[32px] p-10">
+
+    <h2 class="text-4xl font-bold">
+      Why Use Our Random Number Generator?
+    </h2>
+
+    <p class="text-gray-600 mt-6 leading-8 text-lg">
+      Flippers Random Number Generator helps users generate fast, fair,
+      and completely random numbers online. Whether you need a number
+      for lucky draws, classroom games, team selection, contests,
+      raffles, statistics, or decision-making, our free RNG tool delivers
+      instant results with a modern interactive experience.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8 mt-12">
+
+      <div>
+        <h3 class="text-2xl font-bold">
+          Instant Results
+        </h3>
+
+        <p class="text-gray-600 mt-3 leading-7">
+          Generate random numbers instantly with smooth animation
+          and lightning-fast performance.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-bold">
+          Fully Custom Range
+        </h3>
+
+        <p class="text-gray-600 mt-3 leading-7">
+          Set your own minimum and maximum values
+          for unlimited random number generation.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-bold">
+          Free & Secure
+        </h3>
+
+        <p class="text-gray-600 mt-3 leading-7">
+          Use the generator anytime for free with
+          a secure and responsive experience across all devices.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="footer-container">
+
+    <div class="footer-box">
+
+      <h3>Flippers</h3>
+
+      <p>
+        Flippers provides modern random decision-making tools including
+random number generators, wheel spinners, fantasy name generators,
+coin flips, dice rollers, and more for fun, games, and productivity.
+
+    </div>
+
+    <div class="footer-box">
+
+<h3>Quick Links</h3>
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html">Flippers</a>
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+    </div>
+
+    <div class="footer-box">
+
+      <h3>Follow Us</h3>
+
+      <div class="social-icons">
+
+        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <!-- <a href="#" class="facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a> -->
+
+        <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Flippers | All Rights Reserved
+  </div>
+
+</footer>
+
+</body>
+</html>
