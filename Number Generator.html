@@ -1,669 +1,556 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Random Number Generator Online Free | Instant RNG Tool - Flippers</title>
+  <meta name="description" content="Use Flippers Random Number Generator to instantly generate random numbers within any range. Fast, free, secure, and perfect for games, giveaways, lucky draws, math practice, and random selection.">
+  <meta name="keywords" content="random number generator, RNG tool, online random number picker, generate random numbers, lucky draw generator, randomizer tool, random number app, Flippers">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Flippers">
 
-<title>Random Number Generator Online Free | Instant RNG Tool - Flippers</title>
-<meta name="description"
-content="Use Flippers Random Number Generator to instantly generate random numbers within any range. Fast, free, secure, and perfect for games, giveaways, lucky draws, math practice, and random selection.">
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ================= GLOBALS ================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
 
-<meta name="keywords"
-content="random number generator, RNG tool, online random number picker, generate random numbers, lucky draw generator, randomizer tool, random number app, Flippers">
+    /* ================= VARIABLES ================= */
+    :root {
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --bg-color: #f0f4f8;
+      
+      /* Blob Colors for Light Mode */
+      --blob1: #ffb6ff;
+      --blob2: #b6ffff;
+      
+      /* Glass properties */
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: rgba(0, 0, 0, 0.05);
 
-<meta name="robots" content="index, follow">
-
-<meta name="author" content="Flippers">
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Poppins', sans-serif;
+      /* Accents */
+      --accent-1: #7f00ff;
+      --accent-2: #1a73e8;
     }
 
-    html,body{
-      overflow-x:hidden;
-      scroll-behavior:smooth;
+    [data-theme="dark"] {
+      --text-main: #f9fafb;
+      --text-muted: #d1d5db;
+      --bg-color: #0f172a;
+      
+      /* Blob Colors for Dark Mode */
+      --blob1: #7f00ff;
+      --blob2: #1a73e8;
+
+      /* Glass properties */
+      --glass-bg: rgba(15, 23, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.4);
     }
 
-/* ================= LIGHT TECH BACKGROUND ================= */
+    /* ================= BASE STYLES ================= */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
 
-body{
-  background-color:#f7f9fc;
+    h1, h2, h3, h4 { color: var(--text-main); font-weight: 700; transition: color 0.4s; }
+    p { color: var(--text-muted); line-height: 1.6; transition: color 0.4s; }
+    a { text-decoration: none; color: inherit; }
 
-  /* Purple + Blue Grid */
-  background-image:
-    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+    .text-gradient {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline-block;
+    }
 
-  background-size:50px 50px;
+    /* ================= BACKGROUND BLOBS ================= */
+    .blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      background: var(--blob1);
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      transition: background 0.4s ease;
+    }
+    .blob-2 {
+      background: var(--blob2);
+      width: 600px;
+      height: 600px;
+      bottom: -200px;
+      right: -100px;
+      animation-delay: -5s;
+      transition: background 0.4s ease;
+    }
 
-  position:relative;
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 50px) scale(1.1); }
+    }
 
-  overflow-x:hidden;
-}
+    /* ================= GLASSMORPHISM BASE ================= */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 var(--glass-shadow);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+    
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: skewX(-20deg);
+      transition: all 0.7s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .glass:hover::before {
+      left: 200%;
+    }
+    .glass-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    }
+    .glass > * { position: relative; z-index: 2; }
 
-/* TOP GLOW */
-body::before{
-  content:"";
+    /* ================= BUTTONS & INPUTS ================= */
+    button { font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; border: none; }
+    
+    .glass-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px var(--glass-shadow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    [data-theme="dark"] .glass-btn:hover { background: rgba(255, 255, 255, 0.1); }
 
-  position:fixed;
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-block;
+      text-align: center;
+    }
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(26,115,232,0.4);
+    }
 
-  top:-120px;
-  left:-120px;
+    .glass-input {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      font-size: 16px;
+      margin-top: 8px;
+      transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+    }
+    .glass-input:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+      background: rgba(255,255,255,0.1);
+    }
 
-  width:450px;
-  height:450px;
-
-  background:
-  radial-gradient(circle,
-  rgba(127,0,255,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow1 8s ease-in-out infinite alternate;
-}
-
-/* BOTTOM GLOW */
-body::after{
-  content:"";
-
-  position:fixed;
-
-  bottom:-150px;
-  right:-150px;
-
-  width:500px;
-  height:500px;
-
-  background:
-  radial-gradient(circle,
-  rgba(26,115,232,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow2 10s ease-in-out infinite alternate;
-}
-
-/* FLOATING ANIMATION */
-
-@keyframes moveGlow1{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(80px,40px);
-  }
-
-}
-
-@keyframes moveGlow2{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(-60px,-50px);
-  }
-
-}
+    /* ================= LAYOUT ================= */
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    section { padding: 60px 0; }
 
     /* ================= HEADER ================= */
+    header {
+      position: sticky;
+      top: 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 1000;
+    }
+    .header-left { display: flex; align-items: center; gap: 15px; }
+    .logo-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; box-shadow: 0 8px 20px rgba(127,0,255,0.3);
+    }
+    .brand-text h2 { font-size: 24px; font-weight: 800; line-height: 1; }
+    .brand-text p { font-size: 11px; margin-top: 4px; letter-spacing: 1px; }
+    
+    .header-right { display: flex; gap: 15px; align-items: center; }
 
-    header{
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    /* ================= TOOL HERO ================= */
+    .tool-hero { text-align: center; margin-top: 40px; margin-bottom: 20px; }
+    .tool-hero h1 { font-size: clamp(40px, 5vw, 60px); font-weight: 800; margin-bottom: 25px; }
+    .tool-hero p { max-width: 800px; margin: 0 auto; font-size: 20px; line-height: 1.9; }
 
-      padding:18px 50px;
-
-      background:linear-gradient(135deg,#141e30,#243b55);
-
-      position:sticky;
-      top:0;
-      z-index:1000;
-
-      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    /* ================= TOOL GRID ================= */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 30px;
     }
 
-    /* LEFT */
-
-    .left{
-      display:flex;
-      align-items:center;
-      gap:15px;
+    /* ================= ANIMATION ================= */
+    .number-animation {
+      animation: pulseNumber 0.12s linear infinite;
     }
 
-    .header-logo{
-      width:60px;
-      height:60px;
-
-      border-radius:18px;
-
-      background:linear-gradient(135deg,#7f00ff,#1a73e8);
-
-      color:white;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      font-size:26px;
-      font-weight:bold;
-
-      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    @keyframes pulseNumber {
+      0% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.6; }
     }
 
-    .brand-text h2{
-      color:white;
-      font-size:28px;
-      font-weight:800;
-      line-height:1;
+    /* ================= SEO SECTION ================= */
+    .seo-section { padding: 50px; text-align: left; margin-top: 50px; }
+    .seo-section h2 { font-size: 36px; margin-bottom: 25px; line-height: 1.3; }
+    .seo-section p { margin-bottom: 20px; line-height: 2; font-size: 18px; }
+    
+    .seo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
     }
+    .seo-box h3 { font-size: 24px; margin-bottom: 15px; }
+    .seo-box p { font-size: 16px; line-height: 1.8; color: var(--text-muted); }
 
-    .brand-text p{
-      color:#d1d5db;
-      font-size:12px;
-      margin-top:5px;
-      line-height:1.5;
+    /* ================= FOOTER ================= */
+    footer { margin-top: 60px; padding-bottom: 30px; }
+    .footer-content { display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding: 40px; }
+    .footer-col { flex: 1; min-width: 200px; }
+    .footer-col h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
+    .footer-col p { font-size: 14px; margin-bottom: 10px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--accent-2); }
+    .footer-socials { display: flex; gap: 15px; margin-top: 15px; }
+    .footer-socials a { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); transition: transform 0.3s; }
+    .footer-socials a:hover { transform: scale(1.1); }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--glass-border); margin-top: 20px; color: var(--text-muted); }
+
+    /* ================= SCROLL TO TOP ================= */
+    #scroll-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      font-size: 20px; color: var(--accent-1);
     }
+    #scroll-top.show { opacity: 1; visibility: visible; }
+    #scroll-top:hover { transform: translateY(-5px); }
 
-    /* RIGHT */
-
-    .right{
-      display:flex;
-      gap:15px;
+    /* ================= RESPONSIVE ================= */
+    @media(max-width: 768px) {
+      header { flex-direction: column; gap: 15px; padding: 15px; border-radius: 20px; }
+      .header-right { flex-wrap: wrap; justify-content: center; }
+      .seo-section { padding: 30px 20px; }
+      .tool-hero h1 { font-size: 40px; }
+      .tool-hero p { font-size: 16px; }
+      .seo-section h2 { font-size: 30px; }
     }
-
-    .right button{
-      padding:10px 18px;
-
-      border:none;
-      border-radius:8px;
-
-      background:linear-gradient(135deg,#1a73e8,#7f00ff);
-
-      color:white;
-
-      cursor:pointer;
-
-      transition:0.3s;
-
-      font-size:14px;
-    }
-
-    .right button:hover{
-      background:#00e5ff;
-      color:#111;
-      transform:translateY(-2px);
-    }
-/* GLASS CARD */
-
-.glass-card{
-  background:rgba(255,255,255,0.55);
-
-  backdrop-filter:blur(18px);
-
-  border:1px solid rgba(255,255,255,0.4);
-
-  box-shadow:0 8px 32px rgba(31,38,135,0.15);
-}
-
-/* NUMBER ANIMATION */
-
-.number-animation{
-  animation:pulseNumber 0.12s linear infinite;
-}
-
-@keyframes pulseNumber{
-  0%{
-    transform:scale(1);
-    opacity:0.6;
-  }
-
-  50%{
-    transform:scale(1.08);
-    opacity:1;
-  }
-
-  100%{
-    transform:scale(1);
-    opacity:0.6;
-  }
-}
-
-/* BUTTON */
-
-.generate-btn{
-  background:linear-gradient(135deg,#1a73e8,#7f00ff);
-  transition:0.3s;
-}
-
-.generate-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(26,115,232,0.3);
-}
-
-/* INPUT */
-
-.range-input{
-  width:100%;
-  padding:15px;
-  border-radius:15px;
-  border:2px solid #dbeafe;
-  outline:none;
-  font-size:18px;
-  margin-top:10px;
-}
-
-.range-input:focus{
-  border-color:#7f00ff;
-}
-
-/* FOOTER */
-
-footer{
-  margin-top:70px;
-
-  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-
-  color:white;
-}
-
-.footer-container{
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-
-  gap:30px;
-
-  padding:45px 40px;
-}
-
-.footer-box{
-  flex:1;
-  min-width:220px;
-}
-
-.footer-box h3{
-  margin-bottom:15px;
-  color:#00e5ff;
-  font-size:22px;
-}
-
-.footer-box p,
-.footer-box a{
-  color:#d1d1d1;
-
-  text-decoration:none;
-
-  display:block;
-
-  margin:8px 0;
-
-  transition:0.3s;
-}
-
-.footer-box a:hover{
-  color:#00e5ff;
-  transform:translateX(5px);
-}
-
-.social-icons{
-  display:flex;
-  gap:15px;
-  margin-top:15px;
-}
-
-.social-icons a{
-  width:42px;
-  height:42px;
-
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:rgba(255,255,255,0.1);
-
-  color:white;
-
-  transition:0.3s;
-}
-
-.social-icons a:hover{
-  transform:scale(1.15);
-}
-
-.instagram:hover{
-  background:#e1306c;
-}
-
-.facebook:hover{
-  background:#1877f2;
-}
-
-.whatsapp:hover{
-  background:#25d366;
-}
-
-.footer-bottom{
-  text-align:center;
-
-  padding:15px;
-
-  border-top:1px solid rgba(255,255,255,0.1);
-
-  color:#aaa;
-}
-
-</style>
+  </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-
-<header>
-
-  <div class="left">
-
-    <div class="header-logo">
-      &lt;/&gt;
-    </div>
-
-    <div class="brand-text">
-
-      <h2>FLIPPERS</h2>
-
-      <p>SPIN.PICK.DECIDE</p>
-
-    </div>
-
+  <!-- ================= BACKGROUND BLOBS ================= -->
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
   </div>
 
-  <div class="right">
-
-    <button>Home</button>
-
-    <button>Generators</button>
-
-    <button>Contact</button>
-
-  </div>
-
-</header>
-
-<!-- MAIN -->
-
-<main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
-
-<h1 class="text-5xl font-bold">
-  Free Random Number Generator
-</h1>
-
-<p class="text-gray-500 mt-3 text-lg leading-relaxed">
-  Generate truly random numbers instantly with Flippers Random Number Generator.
-  Choose your minimum and maximum range for games, lucky draws, contests,
-  classroom activities, giveaways, statistics, and fair random selection.
-</p>
-
-  <div class="grid md:grid-cols-2 gap-8 mt-12">
-
-    <!-- LEFT BOX -->
-
-    <div class="glass-card rounded-[32px] p-10">
-
-      <h3 class="text-gray-500 uppercase text-sm tracking-wider">
-  Choose Your Random Number Range
-</h3>
-
-      <div class="mt-8">
-
-        <label class="font-semibold text-gray-700">
-          Minimum Random Value
-        </label>
-
-        <input type="number"
-               id="min-number"
-               value="1"
-               class="range-input">
-
+  <!-- ================= HEADER ================= -->
+  <header class="glass container">
+    <a href="index.html" class="header-left">
+      <div class="logo-icon">
+        <i class="fa-solid fa-coins"></i>
       </div>
-
-      <div class="mt-6">
-
-        <label class="font-semibold text-gray-700">
-          Maximum Random Value
-        </label>
-
-        <input type="number"
-               id="max-number"
-               value="100"
-               class="range-input">
-
+      <div class="brand-text">
+        <h2>FLIPPERS</h2>
+        <p>SPIN.PICK.DECIDE</p>
       </div>
-
-      <button onclick="generateNumber()"
-              id="generate-btn"
-              class="generate-btn text-white px-8 py-4 rounded-2xl font-bold text-lg mt-8 w-full">
-        GENERATE RANDOM NUMBER
+    </a>
+    
+    <div class="header-right">
+      <a href="index.html"><button class="glass-btn">Home</button></a>
+      <a href="index.html#Flippers"><button class="glass-btn">Generators</button></a>
+      <a href="contact.html"><button class="glass-btn">Contact</button></a>
+      <button id="theme-toggle" class="glass-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon"></i>
       </button>
-
     </div>
+  </header>
 
-    <!-- RIGHT BOX -->
+  <main>
+    <!-- ================= TOOL HERO ================= -->
+    <section class="container tool-hero">
+      <h1>Free <span class="text-gradient">Random Number Generator</span></h1>
+      <p>
+        Generate truly random numbers instantly with Flippers Random Number Generator. Choose your minimum and maximum range for games, lucky draws, contests, classroom activities, giveaways, statistics, and fair random selection.
+      </p>
+    </section>
 
-    <div class="glass-card rounded-[32px] p-10 flex flex-col items-center justify-center">
+    <!-- ================= TOOL INTERFACE ================= -->
+    <section class="container">
+      <div class="tool-grid">
 
-      <div id="number-result"
-           class="text-8xl font-bold text-purple-700">
-        ?
+        <!-- LEFT BOX: SETTINGS -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: center;">
+          <h2 style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 30px;">
+            Choose Your Random Number Range
+          </h2>
+          
+          <div style="margin-bottom: 25px;">
+            <label for="min-number" style="font-weight: 600; color: var(--text-main); display: block; margin-bottom: 5px;">
+              Minimum Random Value
+            </label>
+            <input type="number" id="min-number" value="1" class="glass-input">
+          </div>
+
+          <div style="margin-bottom: 35px;">
+            <label for="max-number" style="font-weight: 600; color: var(--text-main); display: block; margin-bottom: 5px;">
+              Maximum Random Value
+            </label>
+            <input type="number" id="max-number" value="100" class="glass-input">
+          </div>
+
+          <button onclick="generateNumber()" id="generate-btn" class="primary-btn" style="font-size: 18px; padding: 15px 40px; width: 100%;">
+            GENERATE RANDOM NUMBER
+          </button>
+        </div>
+
+        <!-- RIGHT BOX: RESULT -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          
+          <div id="number-result" style="font-size: 120px; font-weight: 800; color: var(--accent-1); line-height: 1;">
+            ?
+          </div>
+
+          <p style="margin-top: 40px; color: var(--text-muted); font-size: 18px; max-width: 400px; line-height: 1.8;">
+            Your randomly generated number will appear instantly here after the animation completes. Perfect for games, raffles, contests, classroom activities, and fair random selection.
+          </p>
+          
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SEO CONTENT ================= -->
+    <section class="container">
+      <div class="glass seo-section">
+        <h2>Why Use Our Random Number Generator?</h2>
+        
+        <p>
+          Flippers Random Number Generator helps users generate fast, fair, and completely random numbers online. Whether you need a number for lucky draws, classroom games, team selection, contests, raffles, statistics, or decision-making, our free RNG tool delivers instant results with a modern interactive experience.
+        </p>
+
+        <div class="seo-grid">
+          <div class="seo-box">
+            <h3>Instant Results</h3>
+            <p>Generate random numbers instantly with smooth animation and lightning-fast performance.</p>
+          </div>
+
+          <div class="seo-box">
+            <h3>Fully Custom Range</h3>
+            <p>Set your own minimum and maximum values for unlimited random number generation.</p>
+          </div>
+
+          <div class="seo-box">
+            <h3>Free & Secure</h3>
+            <p>Use the generator anytime for free with a secure and responsive experience across all devices.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="container">
+    <div class="glass footer-content">
+      <div class="footer-col">
+        <h3>Flippers</h3>
+        <p style="max-width: 300px; font-size: 14px;">
+          Flippers provides modern random decision-making tools including random number generators, wheel spinners, fantasy name generators, coin flips, dice rollers, and more for fun, games, and productivity.
+        </p>
       </div>
 
-      <p class="mt-8 text-gray-500 text-center text-lg">
-        Your randomly generated number will appear instantly here after the animation completes.
-Perfect for games, raffles, contests, classroom activities, and fair random selection.
-      </p>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="index.html#Flippers">Flippers</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
 
+      <div class="footer-col">
+        <h3>Follow Us</h3>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+        </div>
+      </div>
     </div>
 
-  </div>
+    <div class="footer-bottom">
+      &copy; 2026 Flippers | All Rights Reserved
+    </div>
+  </footer>
 
-</main>
+  <!-- ================= SCROLL TO TOP BUTTON ================= -->
+  <button id="scroll-top" class="glass-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-<!-- SCRIPT -->
-
-<script>
-
-function generateNumber(){
-
-  const min =
-    parseInt(document.getElementById("min-number").value);
-
-  const max =
-    parseInt(document.getElementById("max-number").value);
-
-  const result =
-    document.getElementById("number-result");
-
-  const btn =
-    document.getElementById("generate-btn");
-
-  if(min >= max){
-
-    alert("Maximum number must be greater than minimum number.");
-
-    return;
-  }
-
-  btn.disabled = true;
-
-  result.classList.add("number-animation");
-
-  let counter = 0;
-
-  const animation = setInterval(() => {
-
-    const random =
-      Math.floor(Math.random() * (max - min + 1)) + min;
-
-    result.innerText = random;
-
-    counter++;
-
-    if(counter > 20){
-
-      clearInterval(animation);
-
-      const finalNumber =
-        Math.floor(Math.random() * (max - min + 1)) + min;
-
-      result.innerText = finalNumber;
-
-      result.classList.remove("number-animation");
-
-      btn.disabled = false;
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // --- 1. Theme Toggle Logic ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    // Check local storage for theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlEl.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    } else {
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        htmlEl.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+      }
     }
 
-  },100);
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
 
-}
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      } else {
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+      }
+    }
 
-</script>
-<!-- SEO CONTENT SECTION -->
+    // --- 2. Scroll to Top Logic ---
+    const scrollTopBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-<section class="max-w-6xl mx-auto px-6 py-20">
+    // --- 3. Random Number Generator Logic ---
+    function generateNumber(){
+      const minInput = document.getElementById("min-number");
+      const maxInput = document.getElementById("max-number");
+      const min = parseInt(minInput.value);
+      const max = parseInt(maxInput.value);
+      const result = document.getElementById("number-result");
+      const btn = document.getElementById("generate-btn");
 
-  <div class="glass-card rounded-[32px] p-10">
+      if(isNaN(min) || isNaN(max)) {
+        alert("Please enter valid numbers.");
+        return;
+      }
 
-    <h2 class="text-4xl font-bold">
-      Why Use Our Random Number Generator?
-    </h2>
+      if(min >= max){
+        alert("Maximum number must be greater than minimum number.");
+        return;
+      }
 
-    <p class="text-gray-600 mt-6 leading-8 text-lg">
-      Flippers Random Number Generator helps users generate fast, fair,
-      and completely random numbers online. Whether you need a number
-      for lucky draws, classroom games, team selection, contests,
-      raffles, statistics, or decision-making, our free RNG tool delivers
-      instant results with a modern interactive experience.
-    </p>
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+      result.classList.add("number-animation");
 
-    <div class="grid md:grid-cols-3 gap-8 mt-12">
+      let counter = 0;
 
-      <div>
-        <h3 class="text-2xl font-bold">
-          Instant Results
-        </h3>
+      const animation = setInterval(() => {
+        const random = Math.floor(Math.random() * (max - min + 1)) + min;
+        result.innerText = random;
+        counter++;
 
-        <p class="text-gray-600 mt-3 leading-7">
-          Generate random numbers instantly with smooth animation
-          and lightning-fast performance.
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-2xl font-bold">
-          Fully Custom Range
-        </h3>
-
-        <p class="text-gray-600 mt-3 leading-7">
-          Set your own minimum and maximum values
-          for unlimited random number generation.
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-2xl font-bold">
-          Free & Secure
-        </h3>
-
-        <p class="text-gray-600 mt-3 leading-7">
-          Use the generator anytime for free with
-          a secure and responsive experience across all devices.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<!-- FOOTER -->
-
-<footer>
-
-  <div class="footer-container">
-
-    <div class="footer-box">
-
-      <h3>Flippers</h3>
-
-      <p>
-        Flippers provides modern random decision-making tools including
-random number generators, wheel spinners, fantasy name generators,
-coin flips, dice rollers, and more for fun, games, and productivity.
-
-    </div>
-
-    <div class="footer-box">
-
-<h3>Quick Links</h3>
-
-        <a href="index.html">Home</a>
-
-        <a href="index.html">Flippers</a>
-
-        <a href="about.html">About</a>
-
-        <a href="contact.html">Contact</a>
-
-    </div>
-
-    <div class="footer-box">
-
-      <h3>Follow Us</h3>
-
-      <div class="social-icons">
-
-        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
-          <i class="fa-brands fa-instagram"></i>
-        </a>
-
-        <!-- <a href="#" class="facebook">
-          <i class="fa-brands fa-facebook"></i>
-        </a> -->
-
-        <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
-          <i class="fa-brands fa-whatsapp"></i>
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © 2026 Flippers | All Rights Reserved
-  </div>
-
-</footer>
-
+        if(counter > 20){
+          clearInterval(animation);
+          
+          const finalNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+          result.innerText = finalNumber;
+          result.classList.remove("number-animation");
+          
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }
+      }, 100);
+    }
+  </script>
 </body>
 </html>
