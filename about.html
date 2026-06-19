@@ -1,719 +1,470 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About FLIPPERS | Free Online Random Decision Maker Tools</title>
+  <meta name="description" content="Learn about FLIPPERS, the free online platform for random decision maker tools including coin flips, dice rollers, wheel spinners, random pickers, and more.">
+  <meta name="keywords" content="about flippers, random decision maker, coin flip tool, wheel spinner, dice roller, online random tools">
+  <meta name="author" content="FLIPPERS">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="About FLIPPERS - Free Online Random Decision Tools">
+  <meta property="og:description" content="Discover FLIPPERS and explore free online tools for quick random decisions and fun interactive generators.">
+  <meta property="og:type" content="website">
 
-<title>About FLIPPERS | Free Online Random Decision Maker Tools</title>
+  <link rel="canonical" href="https://yourwebsite.com/about" />
 
-<meta name="description" content="Learn about FLIPPERS, the free online platform for random decision maker tools including coin flips, dice rollers, wheel spinners, random pickers, and more.">
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ================= GLOBALS ================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
 
-<meta name="keywords" content="about flippers, random decision maker, coin flip tool, wheel spinner, dice roller, online random tools">
+    /* ================= VARIABLES ================= */
+    :root {
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --bg-color: #f0f4f8;
+      
+      /* Blob Colors for Light Mode */
+      --blob1: #ffb6ff;
+      --blob2: #b6ffff;
+      
+      /* Glass properties */
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: rgba(0, 0, 0, 0.05);
 
-<meta name="author" content="FLIPPERS">
-
-<meta name="robots" content="index, follow">
-
-<meta property="og:title" content="About FLIPPERS - Free Online Random Decision Tools">
-
-<meta property="og:description" content="Discover FLIPPERS and explore free online tools for quick random decisions and fun interactive generators.">
-
-<meta property="og:type" content="website">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Poppins', sans-serif;
+      /* Accents */
+      --accent-1: #7f00ff;
+      --accent-2: #1a73e8;
+      --accent-3: #00e5ff;
     }
 
-    html,body{
-      overflow-x:hidden;
-      scroll-behavior:smooth;
+    [data-theme="dark"] {
+      --text-main: #f9fafb;
+      --text-muted: #d1d5db;
+      --bg-color: #0f172a;
+      
+      /* Blob Colors for Dark Mode */
+      --blob1: #7f00ff;
+      --blob2: #1a73e8;
+
+      /* Glass properties */
+      --glass-bg: rgba(15, 23, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.4);
     }
 
-/* ================= LIGHT TECH BACKGROUND ================= */
+    /* ================= BASE STYLES ================= */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
 
-body{
-  background-color:#f7f9fc;
+    h1, h2, h3, h4 { color: var(--text-main); font-weight: 700; transition: color 0.4s; }
+    p { color: var(--text-muted); line-height: 1.6; transition: color 0.4s; }
+    a { text-decoration: none; color: inherit; }
 
-  /* Purple + Blue Grid */
-  background-image:
-    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+    .text-gradient {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline-block;
+    }
 
-  background-size:50px 50px;
+    /* ================= BACKGROUND BLOBS ================= */
+    .blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      background: var(--blob1);
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      transition: background 0.4s ease;
+    }
+    .blob-2 {
+      background: var(--blob2);
+      width: 600px;
+      height: 600px;
+      bottom: -200px;
+      right: -100px;
+      animation-delay: -5s;
+      transition: background 0.4s ease;
+    }
 
-  position:relative;
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 50px) scale(1.1); }
+    }
 
-  overflow-x:hidden;
-}
+    /* ================= GLASSMORPHISM BASE ================= */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 var(--glass-shadow);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+    
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: skewX(-20deg);
+      transition: all 0.7s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .glass:hover::before {
+      left: 200%;
+    }
+    .glass-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    }
+    .glass > * { position: relative; z-index: 2; }
 
-/* TOP GLOW */
-body::before{
-  content:"";
+    /* ================= BUTTONS ================= */
+    button { font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; border: none; }
+    
+    .glass-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px var(--glass-shadow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    [data-theme="dark"] .glass-btn:hover { background: rgba(255, 255, 255, 0.1); }
 
-  position:fixed;
-
-  top:-120px;
-  left:-120px;
-
-  width:450px;
-  height:450px;
-
-  background:
-  radial-gradient(circle,
-  rgba(127,0,255,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow1 8s ease-in-out infinite alternate;
-}
-
-/* BOTTOM GLOW */
-body::after{
-  content:"";
-
-  position:fixed;
-
-  bottom:-150px;
-  right:-150px;
-
-  width:500px;
-  height:500px;
-
-  background:
-  radial-gradient(circle,
-  rgba(26,115,232,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow2 10s ease-in-out infinite alternate;
-}
-
-/* FLOATING ANIMATION */
-
-@keyframes moveGlow1{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(80px,40px);
-  }
-
-}
-
-@keyframes moveGlow2{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(-60px,-50px);
-  }
-
-}
+    /* ================= LAYOUT ================= */
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    section { padding: 60px 0; }
 
     /* ================= HEADER ================= */
-
-    header{
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-
-      padding:18px 50px;
-
-      background:linear-gradient(135deg,#141e30,#243b55);
-
-      position:sticky;
-      top:0;
-      z-index:1000;
-
-      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    header {
+      position: sticky;
+      top: 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 1000;
     }
-
-    /* LEFT */
-
-    .left{
-      display:flex;
-      align-items:center;
-      gap:15px;
+    .header-left { display: flex; align-items: center; gap: 15px; }
+    .logo-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; box-shadow: 0 8px 20px rgba(127,0,255,0.3);
     }
+    .brand-text h2 { font-size: 24px; font-weight: 800; line-height: 1; }
+    .brand-text p { font-size: 11px; margin-top: 4px; letter-spacing: 1px; }
+    
+    .header-right { display: flex; gap: 15px; align-items: center; }
 
-    .header-logo{
-      width:60px;
-      height:60px;
+    /* ================= ABOUT HERO ================= */
+    .about-hero { text-align: center; margin-top: 40px; margin-bottom: 20px; }
+    .about-hero h1 { font-size: clamp(45px, 6vw, 70px); font-weight: 800; margin-bottom: 25px; }
+    .about-hero p { max-width: 900px; margin: 0 auto; font-size: 20px; line-height: 1.9; }
 
-      border-radius:18px;
-
-      background:linear-gradient(135deg,#7f00ff,#1a73e8);
-
-      color:white;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      font-size:26px;
-      font-weight:bold;
-
-      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    /* ================= ABOUT CONTENT CARDS ================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
     }
+    .about-card { padding: 40px; }
+    .about-card i { font-size: 45px; margin-bottom: 20px; color: var(--accent-2); }
+    .about-card h2 { margin-bottom: 15px; font-size: 28px; }
+    .about-card p { line-height: 1.9; }
 
-    .brand-text h2{
-      color:white;
-      font-size:28px;
-      font-weight:800;
-      line-height:1;
+    /* ================= SEO SECTION ================= */
+    .seo-section { padding: 50px; text-align: left; margin-top: 50px; }
+    .seo-section h2 { font-size: 38px; margin-bottom: 25px; line-height: 1.3; }
+    .seo-section p { margin-bottom: 20px; line-height: 2; font-size: 16px; }
+    .seo-section h3 { font-size: 28px; margin-top: 35px; margin-bottom: 15px; }
+    .seo-section ul { padding-left: 25px; margin-bottom: 20px; color: var(--text-muted); line-height: 2; }
+    .seo-section li { margin-bottom: 10px; }
+
+    /* ================= FOOTER ================= */
+    footer { margin-top: 60px; padding-bottom: 30px; }
+    .footer-content { display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding: 40px; }
+    .footer-col { flex: 1; min-width: 200px; }
+    .footer-col h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
+    .footer-col p { font-size: 14px; margin-bottom: 10px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--accent-2); }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--glass-border); margin-top: 20px; color: var(--text-muted); }
+
+    /* ================= SCROLL TO TOP ================= */
+    #scroll-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      font-size: 20px; color: var(--accent-1);
     }
-
-    .brand-text p{
-      color:#d1d5db;
-      font-size:12px;
-      margin-top:5px;
-      line-height:1.5;
-    }
-
-    /* RIGHT */
-
-    .right{
-      display:flex;
-      gap:15px;
-    }
-
-    .right button{
-      padding:10px 18px;
-
-      border:none;
-      border-radius:8px;
-
-      background:linear-gradient(135deg,#1a73e8,#7f00ff);
-
-      color:white;
-
-      cursor:pointer;
-
-      transition:0.3s;
-
-      font-size:14px;
-    }
-
-    .right button:hover{
-      background:#00e5ff;
-      color:#111;
-      transform:translateY(-2px);
-    }
-
-/* HERO */
-
-.about-hero{
-  width:90%;
-  max-width:1200px;
-
-  margin:80px auto;
-
-  text-align:center;
-}
-
-.about-hero h1{
-  font-size:70px;
-  font-weight:800;
-
-  margin-bottom:20px;
-}
-
-.gradient{
-  background: linear-gradient(90deg, #1a73e8, #7f00ff);
-
-  background-clip: text;
-  -webkit-background-clip: text;
-
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-
-  display: inline-block;
-}
-
-.about-hero p{
-  max-width:900px;
-
-  margin:auto;
-
-  font-size:20px;
-
-  line-height:1.9;
-
-  color:#5f6368;
-}
-
-/* CONTENT */
-
-.about-container{
-  width:90%;
-  max-width:1200px;
-  margin:50px auto;
-
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:30px;
-}
-
-.about-card{
-  background:white;
-
-  padding:35px;
-
-  border-radius:24px;
-
-  box-shadow:0 10px 30px rgba(0,0,0,0.07);
-
-  transition:0.3s;
-}
-
-.about-card:hover{
-  transform:translateY(-8px);
-}
-
-.about-card i{
-  font-size:45px;
-
-  margin-bottom:20px;
-
-  color:#1a73e8;
-}
-
-.about-card h2{
-  margin-bottom:15px;
-
-  font-size:28px;
-}
-
-.about-card p{
-  color:#666;
-
-  line-height:1.9;
-}
-
-/* SEO SECTION */
-
-.seo-section{
-  width:90%;
-  max-width:1200px;
-
-  margin:70px auto;
-
-  background:white;
-
-  padding:50px;
-
-  border-radius:28px;
-
-  box-shadow:0 10px 30px rgba(0,0,0,0.07);
-}
-
-.seo-section h2{
-  font-size:42px;
-
-  margin-bottom:20px;
-}
-
-.seo-section p{
-  color:#666;
-
-  line-height:2;
-
-  margin-bottom:20px;
-}
-
-.seo-section ul{
-  padding-left:25px;
-}
-
-.seo-section li{
-  color:#666;
-
-  line-height:2;
-}
-
-/* FOOTER */
-
-    footer{
-      margin-top:70px;
-
-      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-
-      color:white;
-    }
-
-    .footer-container{
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-
-      gap:30px;
-
-      padding:45px 40px;
-    }
-
-    .footer-box{
-      flex:1;
-      min-width:220px;
-    }
-
-    .footer-box h3{
-      margin-bottom:15px;
-      color:#00e5ff;
-      font-size:22px;
-    }
-
-    .footer-box p,
-    .footer-box a{
-      color:#d1d1d1;
-
-      text-decoration:none;
-
-      display:block;
-
-      margin:8px 0;
-
-      transition:0.3s;
-    }
-
-    .footer-box a:hover{
-      color:#00e5ff;
-      transform:translateX(5px);
-    }
-
-    /* SOCIAL */
-
-    .social-icons{
-      display:flex;
-      gap:15px;
-      margin-top:15px;
-    }
-
-    .social-icons a{
-      width:42px;
-      height:42px;
-
-      border-radius:50%;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      background:rgba(255,255,255,0.1);
-
-      color:white;
-
-      transition:0.3s;
-    }
-
-    .social-icons a:hover{
-      transform:scale(1.15);
-    }
-
-    .instagram:hover{
-      background:#e1306c;
-    }
-
-    .facebook:hover{
-      background:#1877f2;
-    }
-
-    .whatsapp:hover{
-      background:#25d366;
-    }
-
-    .footer-bottom{
-      text-align:center;
-
-      padding:15px;
-
-      border-top:1px solid rgba(255,255,255,0.1);
-
-      color:#aaa;
-    }
+    #scroll-top.show { opacity: 1; visibility: visible; }
+    #scroll-top:hover { transform: translateY(-5px); }
 
     /* ================= RESPONSIVE ================= */
-
-    @media(max-width:1100px){
-
-      .hero-section{
-        flex-direction:column;
-      }
-
-      .feature-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-
+    @media(max-width: 992px) {
+      .about-grid { grid-template-columns: 1fr; }
     }
-
-    @media(max-width:768px){
-
-      header{
-        flex-direction:column;
-        gap:15px;
-      }
-
-      .hero-text h1{
-        font-size:48px;
-      }
-
-      .feature-grid{
-        grid-template-columns:1fr;
-      }
-
-      .contact-grid{
-        grid-template-columns:1fr;
-      }
-
-      .footer-container{
-        flex-direction:column;
-      }
-
+    @media(max-width: 768px) {
+      header { flex-direction: column; gap: 15px; padding: 15px; border-radius: 20px; }
+      .header-right { flex-wrap: wrap; justify-content: center; }
+      .seo-section, .about-card { padding: 30px 20px; }
+      .about-hero h1 { font-size: 45px; }
+      .about-hero p { font-size: 16px; }
+      .seo-section h2 { font-size: 32px; }
     }
-
-.left{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  text-decoration:none;
-}
-.header-logo{
-  width:60px;
-  height:60px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#7f00ff,#1a73e8);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  box-shadow:0 8px 20px rgba(127,0,255,0.35);
-}
-</style>
-
+  </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-
-<header>
-
-<a href="index.html" class="left">
-
-<div class="header-logo">
-  <i class="fa-solid fa-coins"></i>
-</div>
-
-<div class="brand-text">
-<h2>FLIPPERS</h2>
-<p>SPIN.PICK.DECIDE</p>
-</div>
-
-</div>
-
-<div class="right">
-
-<a href="index.html">
-<button>Home</button>
-</a>
-
-<a href="about.html">
-<button>About</button>
-</a>
-
-<a href="contact.html">
-<button>Contact</button>
-</a>
-
-</div>
-
-</header>
-
-<!-- HERO -->
-
-<section class="about-hero">
-
-<h1>
-About <span class="gradient">FLIPPERS</span>
-</h1>
-
-<p>
-FLIPPERS is a free online platform designed to make decision-making fun, fast, and effortless. From flipping coins and rolling dice to spinning wheels and generating random names, our tools help users make quick choices instantly with engaging interactive experiences.
-</p>
-
-</section>
-
-<!-- CARDS -->
-
-<section class="about-container">
-
-<div class="about-card">
-
-<i class="fa-solid fa-shuffle"></i>
-
-<h2>Who We Are</h2>
-
-<p>
-FLIPPERS was created for people who want easy-to-use random decision tools online. Whether you're choosing between options, playing games, running giveaways, or making group decisions, our tools are designed to simplify the process.
-</p>
-
-</div>
-
-<div class="about-card">
-
-<i class="fa-solid fa-bolt"></i>
-
-<h2>What We Offer</h2>
-
-<p>
-We provide free online random generators including Coin Flip, Dice Roller, Wheel of Names, Card Shuffle, Fantasy Name Generator, Number Generator, and more. Every tool works instantly without signup or downloads.
-</p>
-
-</div>
-
-<div class="about-card">
-
-<i class="fa-solid fa-globe"></i>
-
-<h2>Why Choose FLIPPERS</h2>
-
-<p>
-Our platform is fast, mobile-friendly, secure, and accessible on all devices. FLIPPERS combines modern design, smooth animations, and reliable randomization tools to create a fun and seamless user experience.
-</p>
-
-</div>
-<div class="about-card">
-
-  <i class="fa-solid fa-face-smile"></i>
-
-  <h2>For Fun & Entertainment</h2>
-
-  <p>
-    FLIPPERS is designed purely for entertainment, fun activities, games, and casual decision-making. Our tools provide random outcomes to make choices easier, but they should not be used for important, professional, financial, legal, medical, or life-changing decisions.
-  </p>
-
-</div>
-
-</section>
-
-<!-- SEO CONTENT -->
-
-<section class="seo-section">
-
-<h2>
-Free Online Random Decision Maker Platform
-</h2>
-
-<p>
-FLIPPERS is one of the best free online random decision-making platforms for users looking for quick and fair choices. Our tools are ideal for classrooms, games, giveaways, social media contests, team activities, and everyday decisions.
-</p>
-
-<p>
-Whether you need a virtual coin toss, random wheel spinner, dice roller, or random number generator, FLIPPERS offers simple and interactive tools that work directly in your browser.
-</p>
-
-<h3 style="margin-bottom:15px;font-size:28px;">
-Popular Features
-</h3>
-
-<ul>
-
-<li>Free online coin flip tool</li>
-
-<li>Interactive wheel of names spinner</li>
-
-<li>Fast and secure random generators</li>
-
-<li>Mobile-friendly responsive design</li>
-
-<li>No registration required</li>
-
-<li>Simple and fun user experience</li>
-
-<li>Perfect for games, giveaways, and quick decisions</li>
-
-</ul>
-<h3 style="margin-top:30px;margin-bottom:15px;font-size:28px;">
-Important Disclaimer
-</h3>
-
-<p>
-FLIPPERS is intended for entertainment and recreational purposes only. While our tools generate random results, they are not designed to provide professional advice or make serious decisions on behalf of users.
-</p>
-
-<p>
-Users should not rely on FLIPPERS for financial, legal, medical, educational, employment, safety-related, or other critical decisions. Always use your own judgment and consult qualified professionals when necessary.
-</p>
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-container">
-
-<div class="footer-box">
-
-<h3>FLIPPERS</h3>
-
-<p>
-Your trusted platform for fun and interactive random decision maker tools online.
-</p>
-
-</div>
-
-<div class="footer-box">
-
-<h3>Quick Links</h3>
-
+  <!-- ================= BACKGROUND BLOBS ================= -->
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="glass container">
+    <a href="index.html" class="header-left">
+      <div class="logo-icon">
+        <i class="fa-solid fa-coins"></i>
+      </div>
+      <div class="brand-text">
+        <h2>FLIPPERS</h2>
+        <p>SPIN.PICK.DECIDE</p>
+      </div>
+    </a>
+    
+    <div class="header-right">
+      <a href="index.html"><button class="glass-btn">Home</button></a>
+      <a href="about.html"><button class="glass-btn">About</button></a>
+      <a href="contact.html"><button class="glass-btn">Contact</button></a>
+      <button id="theme-toggle" class="glass-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= ABOUT HERO ================= -->
+    <section class="container about-hero">
+      <h1>About <span class="text-gradient">FLIPPERS</span></h1>
+      <p>
+        FLIPPERS is a free online platform designed to make decision-making fun, fast, and effortless. From flipping coins and rolling dice to spinning wheels and generating random names, our tools help users make quick choices instantly with engaging interactive experiences.
+      </p>
+    </section>
+
+    <!-- ================= ABOUT CONTENT CARDS ================= -->
+    <section class="container">
+      <div class="about-grid">
+        <div class="glass glass-hover about-card">
+          <i class="fa-solid fa-shuffle"></i>
+          <h2>Who We Are</h2>
+          <p>
+            FLIPPERS was created for people who want easy-to-use random decision tools online. Whether you're choosing between options, playing games, running giveaways, or making group decisions, our tools are designed to simplify the process.
+          </p>
+        </div>
+
+        <div class="glass glass-hover about-card">
+          <i class="fa-solid fa-bolt" style="color: #ffb300;"></i>
+          <h2>What We Offer</h2>
+          <p>
+            We provide free online random generators including Coin Flip, Dice Roller, Wheel of Names, Card Shuffle, Fantasy Name Generator, Number Generator, and more. Every tool works instantly without signup or downloads.
+          </p>
+        </div>
+
+        <div class="glass glass-hover about-card">
+          <i class="fa-solid fa-globe" style="color: var(--accent-1);"></i>
+          <h2>Why Choose FLIPPERS</h2>
+          <p>
+            Our platform is fast, mobile-friendly, secure, and accessible on all devices. FLIPPERS combines modern design, smooth animations, and reliable randomization tools to create a fun and seamless user experience.
+          </p>
+        </div>
+
+        <div class="glass glass-hover about-card">
+          <i class="fa-solid fa-face-smile" style="color: #0abf53;"></i>
+          <h2>For Fun & Entertainment</h2>
+          <p>
+            FLIPPERS is designed purely for entertainment, fun activities, games, and casual decision-making. Our tools provide random outcomes to make choices easier, but they should not be used for important, professional, financial, legal, medical, or life-changing decisions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SEO CONTENT ================= -->
+    <section class="container">
+      <div class="glass seo-section">
+        <h2>Free Online Random Decision Maker Platform</h2>
+        
+        <p>
+          FLIPPERS is one of the best free online random decision-making platforms for users looking for quick and fair choices. Our tools are ideal for classrooms, games, giveaways, social media contests, team activities, and everyday decisions.
+        </p>
+        
+        <p>
+          Whether you need a virtual coin toss, random wheel spinner, dice roller, or random number generator, FLIPPERS offers simple and interactive tools that work directly in your browser.
+        </p>
+
+        <h3>Popular Features</h3>
+        <ul>
+          <li>Free online coin flip tool</li>
+          <li>Interactive wheel of names spinner</li>
+          <li>Fast and secure random generators</li>
+          <li>Mobile-friendly responsive design</li>
+          <li>No registration required</li>
+          <li>Simple and fun user experience</li>
+          <li>Perfect for games, giveaways, and quick decisions</li>
+        </ul>
+
+        <h3>Important Disclaimer</h3>
+        <p>
+          FLIPPERS is intended for entertainment and recreational purposes only. While our tools generate random results, they are not designed to provide professional advice or make serious decisions on behalf of users.
+        </p>
+        
+        <p>
+          Users should not rely on FLIPPERS for financial, legal, medical, educational, employment, safety-related, or other critical decisions. Always use your own judgment and consult qualified professionals when necessary.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="container">
+    <div class="glass footer-content">
+      <div class="footer-col">
+        <h3>FLIPPERS</h3>
+        <p style="max-width: 300px; font-size: 14px;">
+          Your trusted platform for fun and interactive random decision maker tools online.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
         <a href="index.html">Home</a>
-
         <a href="index.html">Flippers</a>
-
         <a href="about.html">About</a>
-
         <a href="contact.html">Contact</a>
+      </div>
 
-</div>
+      <div class="footer-col">
+        <h3>Our Tools</h3>
+        <p>Coin Flip</p>
+        <p>Dice Roller</p>
+        <p>Wheel of Names</p>
+        <p>Number Generator</p>
+      </div>
+    </div>
 
-<div class="footer-box">
+    <div class="footer-bottom">
+      &copy; 2026 FLIPPERS | All Rights Reserved
+    </div>
+  </footer>
 
-<h3>Our Tools</h3>
+  <!-- ================= SCROLL TO TOP BUTTON ================= -->
+  <button id="scroll-top" class="glass-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-<p>Coin Flip</p>
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // 1. Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    // Check local storage for theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlEl.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    } else {
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        htmlEl.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+      }
+    }
 
-<p>Dice Roller</p>
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
 
-<p>Wheel of Names</p>
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      } else {
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+      }
+    }
 
-<p>Number Generator</p>
-
-</div>
-
-</div>
-
-<div class="footer-bottom">
-© 2026 FLIPPERS | All Rights Reserved
-</div>
-
-</footer>
-
+    // 2. Scroll to Top Logic
+    const scrollTopBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
