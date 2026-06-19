@@ -1,752 +1,706 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Wheel Spinner Online Free | Random Wheel Picker - Flippers</title>
+  <meta name="description" content="Use Flippers Wheel Spinner to create a random spinning wheel online. Add unlimited options, spin the wheel, and randomly pick winners instantly for games, giveaways, decisions, classrooms, teams, and fun activities.">
+  <meta name="keywords" content="wheel spinner, random wheel picker, spin the wheel online, wheel of names, decision wheel, random picker, spinning wheel app, online spinner tool, Flippers">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Flippers">
 
-<title>Wheel Spinner Online Free | Random Wheel Picker - Flippers</title>
-<meta name="description"
-content="Use Flippers Wheel Spinner to create a random spinning wheel online. Add unlimited options, spin the wheel, and randomly pick winners instantly for games, giveaways, decisions, classrooms, teams, and fun activities.">
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ================= GLOBALS ================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
 
-<meta name="keywords"
-content="wheel spinner, random wheel picker, spin the wheel online, wheel of names, decision wheel, random picker, spinning wheel app, online spinner tool, Flippers">
+    /* ================= VARIABLES ================= */
+    :root {
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --bg-color: #f0f4f8;
+      
+      /* Blob Colors for Light Mode */
+      --blob1: #ffb6ff;
+      --blob2: #b6ffff;
+      
+      /* Glass properties */
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: rgba(0, 0, 0, 0.05);
 
-<meta name="robots" content="index, follow">
-
-<meta name="author" content="Flippers">
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Poppins', sans-serif;
+      /* Accents */
+      --accent-1: #7f00ff;
+      --accent-2: #1a73e8;
     }
 
-    html,body{
-      overflow-x:hidden;
-      scroll-behavior:smooth;
+    [data-theme="dark"] {
+      --text-main: #f9fafb;
+      --text-muted: #d1d5db;
+      --bg-color: #0f172a;
+      
+      /* Blob Colors for Dark Mode */
+      --blob1: #7f00ff;
+      --blob2: #1a73e8;
+
+      /* Glass properties */
+      --glass-bg: rgba(15, 23, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.4);
     }
 
-/* ================= LIGHT TECH BACKGROUND ================= */
+    /* ================= BASE STYLES ================= */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
 
-body{
-  background-color:#f7f9fc;
+    h1, h2, h3, h4 { color: var(--text-main); font-weight: 700; transition: color 0.4s; }
+    p { color: var(--text-muted); line-height: 1.6; transition: color 0.4s; }
+    a { text-decoration: none; color: inherit; }
 
-  /* Purple + Blue Grid */
-  background-image:
-    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+    .text-gradient {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline-block;
+    }
 
-  background-size:50px 50px;
+    /* ================= BACKGROUND BLOBS ================= */
+    .blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      background: var(--blob1);
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      transition: background 0.4s ease;
+    }
+    .blob-2 {
+      background: var(--blob2);
+      width: 600px;
+      height: 600px;
+      bottom: -200px;
+      right: -100px;
+      animation-delay: -5s;
+      transition: background 0.4s ease;
+    }
 
-  position:relative;
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 50px) scale(1.1); }
+    }
 
-  overflow-x:hidden;
-}
+    /* ================= GLASSMORPHISM BASE ================= */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 var(--glass-shadow);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+    
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: skewX(-20deg);
+      transition: all 0.7s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .glass:hover::before {
+      left: 200%;
+    }
+    .glass-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    }
+    .glass > * { position: relative; z-index: 2; }
 
-/* TOP GLOW */
-body::before{
-  content:"";
+    /* ================= BUTTONS & INPUTS ================= */
+    button { font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; border: none; }
+    
+    .glass-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px var(--glass-shadow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    [data-theme="dark"] .glass-btn:hover { background: rgba(255, 255, 255, 0.1); }
 
-  position:fixed;
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-block;
+      text-align: center;
+    }
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(26,115,232,0.4);
+    }
 
-  top:-120px;
-  left:-120px;
+    .secondary-btn {
+      background: linear-gradient(135deg, #00c9a7, #1a73e8);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-block;
+      text-align: center;
+    }
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(26,115,232,0.4);
+    }
 
-  width:450px;
-  height:450px;
+    .glass-textarea {
+      width: 100%;
+      height: 180px;
+      padding: 15px;
+      border-radius: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      resize: vertical;
+      transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+    }
+    .glass-textarea::placeholder {
+      color: var(--text-muted);
+    }
+    .glass-textarea:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+      background: rgba(255,255,255,0.1);
+    }
 
-  background:
-  radial-gradient(circle,
-  rgba(127,0,255,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow1 8s ease-in-out infinite alternate;
-}
-
-/* BOTTOM GLOW */
-body::after{
-  content:"";
-
-  position:fixed;
-
-  bottom:-150px;
-  right:-150px;
-
-  width:500px;
-  height:500px;
-
-  background:
-  radial-gradient(circle,
-  rgba(26,115,232,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow2 10s ease-in-out infinite alternate;
-}
-
-/* FLOATING ANIMATION */
-
-@keyframes moveGlow1{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(80px,40px);
-  }
-
-}
-
-@keyframes moveGlow2{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(-60px,-50px);
-  }
-
-}
+    /* ================= LAYOUT ================= */
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    section { padding: 60px 0; }
 
     /* ================= HEADER ================= */
+    header {
+      position: sticky;
+      top: 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 1000;
+    }
+    .header-left { display: flex; align-items: center; gap: 15px; }
+    .logo-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; box-shadow: 0 8px 20px rgba(127,0,255,0.3);
+    }
+    .brand-text h2 { font-size: 24px; font-weight: 800; line-height: 1; }
+    .brand-text p { font-size: 11px; margin-top: 4px; letter-spacing: 1px; }
+    
+    .header-right { display: flex; gap: 15px; align-items: center; }
 
-    header{
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    /* ================= TOOL HERO ================= */
+    .tool-hero { text-align: center; margin-top: 40px; margin-bottom: 20px; }
+    .tool-hero h1 { font-size: clamp(40px, 5vw, 60px); font-weight: 800; margin-bottom: 25px; }
+    .tool-hero p { max-width: 800px; margin: 0 auto; font-size: 20px; line-height: 1.9; }
 
-      padding:18px 50px;
-
-      background:linear-gradient(135deg,#141e30,#243b55);
-
-      position:sticky;
-      top:0;
-      z-index:1000;
-
-      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    /* ================= TOOL GRID ================= */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 30px;
     }
 
-    /* LEFT */
-
-    .left{
-      display:flex;
-      align-items:center;
-      gap:15px;
+    /* ================= WHEEL STYLES ================= */
+    .wheel-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
     }
 
-    .header-logo{
-      width:60px;
-      height:60px;
-
-      border-radius:18px;
-
-      background:linear-gradient(135deg,#7f00ff,#1a73e8);
-
-      color:white;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      font-size:26px;
-      font-weight:bold;
-
-      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    .wheel-container {
+      position: relative;
+      width: 350px;
+      height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
     }
 
-    .brand-text h2{
-      color:white;
-      font-size:28px;
-      font-weight:800;
-      line-height:1;
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid var(--glass-border);
+      position: relative;
+      overflow: hidden;
+      transition: transform 5s cubic-bezier(0.17,0.67,0.12,0.99);
+      background: var(--glass-bg);
+      box-shadow: 0 0 0 4px var(--accent-1);
     }
 
-    .brand-text p{
-      color:#d1d5db;
-      font-size:12px;
-      margin-top:5px;
-      line-height:1.5;
+    .segment {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 0%;
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* RIGHT */
-
-    .right{
-      display:flex;
-      gap:15px;
+    .segment span {
+      position: absolute;
+      left: 55%;
+      top: 18%;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      width: 120px;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
 
-    .right button{
-      padding:10px 18px;
-
-      border:none;
-      border-radius:8px;
-
-      background:linear-gradient(135deg,#1a73e8,#7f00ff);
-
-      color:white;
-
-      cursor:pointer;
-
-      transition:0.3s;
-
-      font-size:14px;
+    .pointer {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 35px solid var(--text-main);
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
     }
 
-    .right button:hover{
-      background:#00e5ff;
-      color:#111;
-      transform:translateY(-2px);
+    /* ================= SEO SECTION ================= */
+    .seo-section { padding: 50px; text-align: left; margin-top: 50px; }
+    .seo-section h2 { font-size: 36px; margin-bottom: 25px; line-height: 1.3; }
+    .seo-section p { margin-bottom: 20px; line-height: 2; font-size: 18px; }
+    
+    .seo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
     }
-/* ================= GLASS CARD ================= */
-
-.glass-card{
-  background:rgba(255,255,255,0.18);
-
-  backdrop-filter:blur(18px);
-
-  border:1px solid rgba(255,255,255,0.25);
-
-  box-shadow:0 8px 32px rgba(31,38,135,0.15);
-}
-
-/* ================= WHEEL ================= */
-
-.wheel-container{
-  position:relative;
-  width:380px;
-  height:380px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.wheel{
-  width:100%;
-  height:100%;
-
-  border-radius:50%;
-
-  border:10px solid white;
-
-  position:relative;
-
-  overflow:hidden;
-
-  transition:transform 5s cubic-bezier(0.17,0.67,0.12,0.99);
-
-  background:white;
-}
-
-.segment{
-  position:absolute;
-
-  width:50%;
-  height:50%;
-
-  top:50%;
-  left:50%;
-
-  transform-origin:0% 0%;
-
-  clip-path:polygon(0 0, 100% 0, 0 100%);
-}
-
-.segment span{
-  position:absolute;
-
-  left:55%;
-  top:18%;
-
-  color:white;
-
-  font-size:14px;
-  font-weight:bold;
-
-  width:120px;
-
-  text-align:center;
-}
-
-.pointer{
-  width:0;
-  height:0;
-
-  border-left:20px solid transparent;
-  border-right:20px solid transparent;
-  border-top:40px solid #111;
-
-  position:absolute;
-
-  top:-10px;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  z-index:10;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  margin-top:70px;
-
-  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-
-  color:white;
-}
-
-.footer-container{
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-
-  gap:30px;
-
-  padding:45px 40px;
-}
-
-.footer-box{
-  flex:1;
-  min-width:220px;
-}
-
-.footer-box h3{
-  margin-bottom:15px;
-  color:#00e5ff;
-  font-size:22px;
-}
-
-.footer-box p,
-.footer-box a{
-  color:#d1d1d1;
-
-  text-decoration:none;
-
-  display:block;
-
-  margin:8px 0;
-
-  transition:0.3s;
-}
-
-.footer-box a:hover{
-  color:#00e5ff;
-  transform:translateX(5px);
-}
-
-.social-icons{
-  display:flex;
-  gap:15px;
-  margin-top:15px;
-}
-
-.social-icons a{
-  width:42px;
-  height:42px;
-
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:rgba(255,255,255,0.1);
-
-  color:white;
-
-  transition:0.3s;
-}
-
-.social-icons a:hover{
-  transform:scale(1.15);
-}
-
-.instagram:hover{
-  background:#e1306c;
-}
-
-.facebook:hover{
-  background:#1877f2;
-}
-
-.whatsapp:hover{
-  background:#25d366;
-}
-
-.footer-bottom{
-  text-align:center;
-
-  padding:15px;
-
-  border-top:1px solid rgba(255,255,255,0.1);
-
-  color:#aaa;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:768px){
-
-  header{
-    flex-direction:column;
-    gap:20px;
-    padding:20px;
-  }
-
-  .wheel-container{
-    width:300px;
-    height:300px;
-  }
-
-}
-
-</style>
+    .seo-box h3 { font-size: 24px; margin-bottom: 15px; }
+    .seo-box p { font-size: 16px; line-height: 1.8; color: var(--text-muted); }
+
+    /* ================= FOOTER ================= */
+    footer { margin-top: 60px; padding-bottom: 30px; }
+    .footer-content { display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding: 40px; }
+    .footer-col { flex: 1; min-width: 200px; }
+    .footer-col h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
+    .footer-col p { font-size: 14px; margin-bottom: 10px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--accent-2); }
+    .footer-socials { display: flex; gap: 15px; margin-top: 15px; }
+    .footer-socials a { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); transition: transform 0.3s; }
+    .footer-socials a:hover { transform: scale(1.1); }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--glass-border); margin-top: 20px; color: var(--text-muted); }
+
+    /* ================= SCROLL TO TOP ================= */
+    #scroll-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      font-size: 20px; color: var(--accent-1);
+    }
+    #scroll-top.show { opacity: 1; visibility: visible; }
+    #scroll-top:hover { transform: translateY(-5px); }
+
+    /* ================= RESPONSIVE ================= */
+    @media(max-width: 768px) {
+      header { flex-direction: column; gap: 15px; padding: 15px; border-radius: 20px; }
+      .header-right { flex-wrap: wrap; justify-content: center; }
+      .seo-section { padding: 30px 20px; }
+      .tool-hero h1 { font-size: 40px; }
+      .tool-hero p { font-size: 16px; }
+      .seo-section h2 { font-size: 30px; }
+      .wheel-container { width: 280px; height: 280px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-
-<header>
-
-<div class="left">
-
-<div class="header-logo">
-&lt;/&gt;
-</div>
-
-<div class="brand-text">
-<h2>FLIPPERS</h2>
-<p>SPIN.PICK.DECIDE</p>
-</div>
-
-</div>
-
-<div class="right">
-
-<button>Home</button>
-
-<button>Wheel</button>
-
-<button>Contact</button>
-
-</div>
-
-</header>
-
-<!-- MAIN -->
-
-<main class="pt-24 pb-20 px-6 max-w-6xl mx-auto">
-
-<h1 class="text-5xl font-bold">
-Free Wheel Spinner Online
-</h1>
-
-<p class="text-gray-500 mt-3 text-lg leading-relaxed">
-Create a custom spinning wheel and randomly pick winners instantly.
-Perfect for games, lucky draws, classroom activities, team selection,
-decision making, giveaways, raffles, and fun random choices.
-</p>
-
-<div class="grid md:grid-cols-2 gap-8 mt-10">
-
-<!-- LEFT BOX -->
-
-<div class="glass-card rounded-[32px] p-10">
-
-<h3 class="text-gray-500 uppercase text-sm tracking-widest">
-Random Winner Result
-</h3>
-
-<div id="result"
-class="text-5xl font-bold mt-6 text-purple-700">
-?
-</div>
-
-<textarea
-id="options"
-class="w-full mt-8 p-5 rounded-2xl outline-none bg-white/60"
-rows="10"
-placeholder="Enter options separated by commas... Example: Pizza, Burger, Pasta, Coffee"></textarea>
-
-<div class="flex flex-wrap gap-4 mt-6">
-
-<button onclick="createWheel()"
-class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-4 rounded-2xl font-bold hover:scale-105 transition">
-CREATE SPINNING WHEEL
-</button>
-
-<button onclick="spinWheel()"
-class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-2xl font-bold hover:scale-105 transition">
-SPIN THE WHEEL
-</button>
-
-</div>
-
-</div>
-
-<!-- RIGHT BOX -->
-
-<div class="glass-card rounded-[32px] p-10 flex flex-col items-center">
-
-<div class="pointer"></div>
-
-<div class="wheel-container">
-
-<div id="wheel" class="wheel"></div>
-
-</div>
-
-</div>
-
-</div>
-
-</main>
-
-<!-- SCRIPT -->
-
-<script>
-
-let currentRotation = 0;
-
-const colors = [
-  "#7f00ff",
-  "#1a73e8",
-  "#ff6b6b",
-  "#00c9a7",
-  "#ffc75f",
-  "#845ec2",
-  "#0081cf",
-  "#ff9671",
-  "#ff0080",
-  "#00b894",
-  "#6c5ce7",
-  "#fdcb6e"
-];
-
-function createWheel(){
-
-  const wheel = document.getElementById("wheel");
-
-  wheel.innerHTML = "";
-
-  const options = document.getElementById("options")
-  .value
-  .split(",")
-  .map(item => item.trim())
-  .filter(item => item !== "");
-
-  if(options.length < 2){
-    alert("Enter at least 2 options");
-    return;
-  }
-
-  const angle = 360 / options.length;
-
-  options.forEach((option,index)=>{
-
-    const segment = document.createElement("div");
-
-    segment.classList.add("segment");
-
-    segment.style.background =
-    colors[index % colors.length];
-
-    segment.style.transform =
-    `rotate(${index * angle}deg) skewY(${90-angle}deg)`;
-
-    const text = document.createElement("span");
-
-    text.innerText = option;
-
-    text.style.transform =
-    `skewY(-${90-angle}deg) rotate(${angle/2}deg)`;
-
-    segment.appendChild(text);
-
-    wheel.appendChild(segment);
-
-  });
-
-}
-
-function spinWheel(){
-
-  const options = document.getElementById("options")
-  .value
-  .split(",")
-  .map(item => item.trim())
-  .filter(item => item !== "");
-
-  if(options.length < 2){
-    alert("Enter at least 2 options");
-    return;
-  }
-
-  const wheel = document.getElementById("wheel");
-
-  const randomIndex =
-  Math.floor(Math.random() * options.length);
-
-  const degreesPerOption =
-  360 / options.length;
-
-  const extraRotation = 3600;
-
-  const finalRotation =
-    extraRotation +
-    (360 - (randomIndex * degreesPerOption)) -
-    (degreesPerOption / 2);
-
-  currentRotation += finalRotation;
-
-  wheel.style.transform =
-  `rotate(${currentRotation}deg)`;
-
-  setTimeout(()=>{
-
-    document.getElementById("result")
-    .innerText = options[randomIndex];
-
-  },5000);
-
-}
-
-window.onload = createWheel;
-
-</script>
-<!-- SEO CONTENT SECTION -->
-
-<section class="max-w-6xl mx-auto px-6 py-20">
-
-<div class="glass-card rounded-[32px] p-10">
-
-<h2 class="text-4xl font-bold">
-Why Use Our Wheel Spinner?
-</h2>
-
-<p class="text-gray-600 mt-6 text-lg leading-8">
-Flippers Wheel Spinner helps you make fair and fun random choices instantly.
-Simply enter your options, create the wheel, and spin to randomly select
-a winner. Whether you're choosing food, selecting teams, running giveaways,
-classroom games, raffles, lucky draws, or making daily decisions,
-our online wheel picker makes the process exciting and effortless.
-</p>
-
-<div class="grid md:grid-cols-3 gap-8 mt-12">
-
-<div>
-<h3 class="text-2xl font-bold">
-Unlimited Options
-</h3>
-
-<p class="text-gray-600 mt-3 leading-7">
-Add as many custom choices as you want
-and create your own personalized spinning wheel.
-</p>
-</div>
-
-<div>
-<h3 class="text-2xl font-bold">
-Fair Random Results
-</h3>
-
-<p class="text-gray-600 mt-3 leading-7">
-Get unbiased random winner selection
-for games, contests, and decision making.
-</p>
-</div>
-
-<div>
-<h3 class="text-2xl font-bold">
-Fun & Interactive
-</h3>
-
-<p class="text-gray-600 mt-3 leading-7">
-Enjoy smooth spinning animations,
-modern visuals, and a responsive experience.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-container">
-
-<div class="footer-box">
-
-<h3>Flippers</h3>
-
-Flippers offers modern random decision-making tools including
-wheel spinners, random number generators, coin flips,
-dice rollers, fantasy name generators, and more.
-
-</div>
-
-<div class="footer-box">
-
-<h3>Quick Links</h3>
-
+  <!-- ================= BACKGROUND BLOBS ================= -->
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="glass container">
+    <a href="index.html" class="header-left">
+      <div class="logo-icon">
+        <i class="fa-solid fa-coins"></i>
+      </div>
+      <div class="brand-text">
+        <h2>FLIPPERS</h2>
+        <p>SPIN.PICK.DECIDE</p>
+      </div>
+    </a>
+    
+    <div class="header-right">
+      <a href="index.html"><button class="glass-btn">Home</button></a>
+      <a href="index.html#Flippers"><button class="glass-btn">Wheel</button></a>
+      <a href="contact.html"><button class="glass-btn">Contact</button></a>
+      <button id="theme-toggle" class="glass-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= TOOL HERO ================= -->
+    <section class="container tool-hero">
+      <h1>Free <span class="text-gradient">Wheel Spinner Online</span></h1>
+      <p>
+        Create a custom spinning wheel and randomly pick winners instantly. Perfect for games, lucky draws, classroom activities, team selection, decision making, giveaways, raffles, and fun random choices.
+      </p>
+    </section>
+
+    <!-- ================= TOOL INTERFACE ================= -->
+    <section class="container">
+      <div class="tool-grid">
+
+        <!-- LEFT BOX: SETTINGS & RESULT -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: center;">
+          <h2 style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px;">
+            Random Winner Result
+          </h2>
+          
+          <div id="result" style="font-size: 45px; font-weight: 800; color: var(--accent-1); min-height: 60px; word-break: break-word; line-height: 1.2;">
+            ?
+          </div>
+
+          <textarea id="options" class="glass-textarea" style="margin-top: 30px; margin-bottom: 25px;" placeholder="Enter options separated by commas... Example: Pizza, Burger, Pasta, Coffee"></textarea>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <button onclick="createWheel()" class="secondary-btn" style="flex: 1; min-width: 200px; font-size: 15px; padding: 15px;">
+              <i class="fa-solid fa-rotate-right"></i> UPDATE WHEEL
+            </button>
+
+            <button onclick="spinWheel()" id="spin-btn" class="primary-btn" style="flex: 1; min-width: 200px; font-size: 15px; padding: 15px;">
+              <i class="fa-solid fa-play"></i> SPIN THE WHEEL
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT BOX: THE WHEEL -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          
+          <div class="wheel-wrapper">
+            <div class="pointer"></div>
+            <div class="wheel-container">
+              <div id="wheel" class="wheel"></div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SEO CONTENT ================= -->
+    <section class="container">
+      <div class="glass seo-section">
+        <h2>Why Use Our Wheel Spinner?</h2>
+        
+        <p>
+          Flippers Wheel Spinner helps you make fair and fun random choices instantly. Simply enter your options, create the wheel, and spin to randomly select a winner. Whether you're choosing food, selecting teams, running giveaways, classroom games, raffles, lucky draws, or making daily decisions, our online wheel picker makes the process exciting and effortless.
+        </p>
+
+        <div class="seo-grid">
+          <div class="seo-box">
+            <h3>Unlimited Options</h3>
+            <p>Add as many custom choices as you want and create your own personalized spinning wheel.</p>
+          </div>
+
+          <div class="seo-box">
+            <h3>Fair Random Results</h3>
+            <p>Get unbiased random winner selection for games, contests, and decision making.</p>
+          </div>
+
+          <div class="seo-box">
+            <h3>Fun & Interactive</h3>
+            <p>Enjoy smooth spinning animations, modern visuals, and a responsive experience.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="container">
+    <div class="glass footer-content">
+      <div class="footer-col">
+        <h3>Flippers</h3>
+        <p style="max-width: 300px; font-size: 14px;">
+          Flippers offers modern random decision-making tools including wheel spinners, random number generators, coin flips, dice rollers, fantasy name generators, and more.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
         <a href="index.html">Home</a>
-
-        <a href="index.html">Flippers</a>
-
+        <a href="index.html#Flippers">Flippers</a>
         <a href="about.html">About</a>
-
         <a href="contact.html">Contact</a>
+      </div>
 
-</div>
+      <div class="footer-col">
+        <h3>Follow Us</h3>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
 
-<div class="footer-box">
+        </div>
+      </div>
+    </div>
 
-<h3>Follow Us</h3>
+    <div class="footer-bottom">
+      &copy; 2026 Flippers | All Rights Reserved
+    </div>
+  </footer>
 
-<div class="social-icons">
+  <!-- ================= SCROLL TO TOP BUTTON ================= -->
+  <button id="scroll-top" class="glass-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-<a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
-<i class="fa-brands fa-instagram"></i>
-</a>
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // --- 1. Theme Toggle Logic ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    // Check local storage for theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlEl.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    } else {
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        htmlEl.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+      }
+    }
 
-<!-- <a href="#" class="facebook">
-<i class="fa-brands fa-facebook"></i>
-</a> -->
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
 
-<a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
-<i class="fa-brands fa-whatsapp"></i>
-</a>
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        // Adjust pointer color for dark mode
+        document.querySelector('.pointer').style.borderTopColor = '#f9fafb';
+      } else {
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        // Adjust pointer color for light mode
+        document.querySelector('.pointer').style.borderTopColor = '#1f2937';
+      }
+    }
 
-</div>
+    // Set initial pointer color
+    if (htmlEl.getAttribute('data-theme') === 'dark') {
+      document.querySelector('.pointer').style.borderTopColor = '#f9fafb';
+    } else {
+      document.querySelector('.pointer').style.borderTopColor = '#1f2937';
+    }
 
-</div>
+    // --- 2. Scroll to Top Logic ---
+    const scrollTopBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-</div>
+    // --- 3. Wheel Spinner Logic ---
+    let currentRotation = 0;
+    let isSpinning = false;
 
-<div class="footer-bottom">
-© 2026 Flippers | All Rights Reserved
-</div>
+    const colors = [
+      "#7f00ff", "#1a73e8", "#ff6b6b", "#00c9a7",
+      "#ffc75f", "#845ec2", "#0081cf", "#ff9671",
+      "#ff0080", "#00b894", "#6c5ce7", "#fdcb6e"
+    ];
 
-</footer>
+    function createWheel(){
+      const wheel = document.getElementById("wheel");
+      wheel.innerHTML = "";
+      
+      // Default options if empty
+      let optionsText = document.getElementById("options").value;
+      if (!optionsText.trim()) {
+        optionsText = "Pizza, Burger, Sushi, Tacos, Salad";
+        document.getElementById("options").value = optionsText;
+      }
 
+      const options = optionsText
+        .split(",")
+        .map(item => item.trim())
+        .filter(item => item !== "");
+
+      if(options.length < 2){
+        alert("Enter at least 2 options to create a wheel.");
+        return;
+      }
+
+      const angle = 360 / options.length;
+
+      options.forEach((option, index) => {
+        const segment = document.createElement("div");
+        segment.classList.add("segment");
+        segment.style.background = colors[index % colors.length];
+        
+        // CSS trick to create wedges: Rotate and then Skew. 
+        segment.style.transform = `rotate(${index * angle}deg) skewY(${90 - angle}deg)`;
+
+        const text = document.createElement("span");
+        text.innerText = option;
+        
+        // Un-skew the text so it's readable
+        text.style.transform = `skewY(-${90 - angle}deg) rotate(${angle / 2}deg)`;
+
+        segment.appendChild(text);
+        wheel.appendChild(segment);
+      });
+      
+      // Reset rotation visually
+      currentRotation = 0;
+      wheel.style.transition = 'none';
+      wheel.style.transform = `rotate(0deg)`;
+      
+      // Force reflow
+      void wheel.offsetWidth;
+      
+      // Restore transition
+      wheel.style.transition = 'transform 5s cubic-bezier(0.17,0.67,0.12,0.99)';
+      document.getElementById("result").innerText = "?";
+    }
+
+    function spinWheel(){
+      if (isSpinning) return;
+      
+      const options = document.getElementById("options")
+        .value
+        .split(",")
+        .map(item => item.trim())
+        .filter(item => item !== "");
+
+      if(options.length < 2){
+        alert("Enter at least 2 options before spinning.");
+        return;
+      }
+
+      isSpinning = true;
+      document.getElementById("spin-btn").style.opacity = '0.5';
+      document.getElementById("result").innerText = "Spinning...";
+
+      const wheel = document.getElementById("wheel");
+      const randomIndex = Math.floor(Math.random() * options.length);
+      const degreesPerOption = 360 / options.length;
+      
+      // Base extra spins (10 full rotations)
+      const extraRotation = 3600;
+      
+      // Calculate where to stop so the top center (pointer) points to the random segment
+      // The CSS wheel starts at 0deg on the right side, pointer is top (-90deg relative to start)
+      // So we need to calculate carefully.
+      const finalRotation = extraRotation + (360 - (randomIndex * degreesPerOption)) - (degreesPerOption / 2);
+
+      currentRotation += finalRotation;
+      wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+      setTimeout(()=>{
+        document.getElementById("result").innerText = "🎉 " + options[randomIndex];
+        isSpinning = false;
+        document.getElementById("spin-btn").style.opacity = '1';
+      }, 5000); // matches the 5s transition
+    }
+
+    // Initialize wheel on load
+    window.onload = createWheel;
+
+  </script>
 </body>
 </html>
