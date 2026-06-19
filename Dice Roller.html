@@ -1,629 +1,601 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Dice Roller - Free Random Dice Generator | Flippers</title>
-<meta name="description" content="Use the free online Dice Roller by Flippers to roll 1 to 6 dice instantly. Perfect for board games, classrooms, decision-making, RPGs, probability games, and fun random number generation.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Decision Shuffler Online | Free Random Decision Maker - FLIPPERS</title>
+  <meta name="description" content="Use the free online Decision Shuffler by FLIPPERS to randomly choose between options instantly. Perfect for daily decisions, games, food choices, and fun activities.">
+  <meta name="keywords" content="decision shuffler, random decision maker, online decision picker, choice generator, random choice selector, decision maker tool, shuffle choices online">
+  <meta name="author" content="FLIPPERS">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Decision Shuffler Online - FLIPPERS">
+  <meta property="og:description" content="Randomly shuffle and pick decisions instantly with the FLIPPERS Decision Shuffler tool.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://yourwebsite.com/decision-shuffler-preview.jpg">
+  <meta property="og:url" content="https://yourwebsite.com/decision-shuffler">
 
-<meta name="keywords" content="dice roller, online dice roller, random dice generator, virtual dice, roll dice online, dice game tool, free dice roller, random number dice, RPG dice roller, flippers">
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ================= GLOBALS ================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
 
-<meta name="author" content="Flippers">
+    /* ================= VARIABLES ================= */
+    :root {
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --bg-color: #f0f4f8;
+      
+      /* Blob Colors for Light Mode */
+      --blob1: #ffb6ff;
+      --blob2: #b6ffff;
+      
+      /* Glass properties */
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: rgba(0, 0, 0, 0.05);
 
-<meta property="og:title" content="Online Dice Roller - Free Random Dice Generator | Flippers">
-
-<meta property="og:description" content="Roll virtual dice instantly with Flippers Dice Roller. Fast, fun, accurate, and perfect for games, random choices, and classroom activities.">
-
-<meta property="og:type" content="website">
-
-<meta name="robots" content="index, follow">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Poppins', sans-serif;
+      /* Accents */
+      --accent-1: #7f00ff;
+      --accent-2: #1a73e8;
     }
 
-    html,body{
-      overflow-x:hidden;
-      scroll-behavior:smooth;
+    [data-theme="dark"] {
+      --text-main: #f9fafb;
+      --text-muted: #d1d5db;
+      --bg-color: #0f172a;
+      
+      /* Blob Colors for Dark Mode */
+      --blob1: #7f00ff;
+      --blob2: #1a73e8;
+
+      /* Glass properties */
+      --glass-bg: rgba(15, 23, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.4);
     }
 
-/* ================= LIGHT TECH BACKGROUND ================= */
+    /* ================= BASE STYLES ================= */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
 
-body{
-  background-color:#f7f9fc;
+    h1, h2, h3, h4 { color: var(--text-main); font-weight: 700; transition: color 0.4s; }
+    p { color: var(--text-muted); line-height: 1.6; transition: color 0.4s; }
+    a { text-decoration: none; color: inherit; }
 
-  /* Purple + Blue Grid */
-  background-image:
-    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
+    .text-gradient {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline-block;
+    }
 
-  background-size:50px 50px;
+    /* ================= BACKGROUND BLOBS ================= */
+    .blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      background: var(--blob1);
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      transition: background 0.4s ease;
+    }
+    .blob-2 {
+      background: var(--blob2);
+      width: 600px;
+      height: 600px;
+      bottom: -200px;
+      right: -100px;
+      animation-delay: -5s;
+      transition: background 0.4s ease;
+    }
 
-  position:relative;
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 50px) scale(1.1); }
+    }
 
-  overflow-x:hidden;
-}
+    /* ================= GLASSMORPHISM BASE ================= */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 var(--glass-shadow);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+    
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: skewX(-20deg);
+      transition: all 0.7s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .glass:hover::before {
+      left: 200%;
+    }
+    .glass-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    }
+    .glass > * { position: relative; z-index: 2; }
 
-/* TOP GLOW */
-body::before{
-  content:"";
+    /* ================= BUTTONS & INPUTS ================= */
+    button { font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; border: none; }
+    
+    .glass-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px var(--glass-shadow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    [data-theme="dark"] .glass-btn:hover { background: rgba(255, 255, 255, 0.1); }
 
-  position:fixed;
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-block;
+      text-align: center;
+    }
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(26,115,232,0.4);
+    }
 
-  top:-120px;
-  left:-120px;
+    .glass-textarea {
+      width: 100%;
+      height: 180px;
+      padding: 15px;
+      border-radius: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      resize: vertical;
+      transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+    }
+    .glass-textarea::placeholder {
+      color: var(--text-muted);
+    }
+    .glass-textarea:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+      background: rgba(255,255,255,0.1);
+    }
 
-  width:450px;
-  height:450px;
-
-  background:
-  radial-gradient(circle,
-  rgba(127,0,255,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow1 8s ease-in-out infinite alternate;
-}
-
-/* BOTTOM GLOW */
-body::after{
-  content:"";
-
-  position:fixed;
-
-  bottom:-150px;
-  right:-150px;
-
-  width:500px;
-  height:500px;
-
-  background:
-  radial-gradient(circle,
-  rgba(26,115,232,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow2 10s ease-in-out infinite alternate;
-}
-
-/* FLOATING ANIMATION */
-
-@keyframes moveGlow1{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(80px,40px);
-  }
-
-}
-
-@keyframes moveGlow2{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(-60px,-50px);
-  }
-
-}
+    /* ================= LAYOUT ================= */
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    section { padding: 60px 0; }
 
     /* ================= HEADER ================= */
+    header {
+      position: sticky;
+      top: 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 1000;
+    }
+    .header-left { display: flex; align-items: center; gap: 15px; }
+    .logo-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; box-shadow: 0 8px 20px rgba(127,0,255,0.3);
+    }
+    .brand-text h2 { font-size: 24px; font-weight: 800; line-height: 1; }
+    .brand-text p { font-size: 11px; margin-top: 4px; letter-spacing: 1px; }
+    
+    .header-right { display: flex; gap: 15px; align-items: center; }
 
-    header{
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    /* ================= TOOL HERO ================= */
+    .tool-hero { text-align: center; margin-top: 40px; margin-bottom: 20px; }
+    .tool-hero h1 { font-size: clamp(40px, 5vw, 60px); font-weight: 800; margin-bottom: 25px; }
+    .tool-hero p { max-width: 800px; margin: 0 auto; font-size: 20px; line-height: 1.9; }
 
-      padding:18px 50px;
-
-      background:linear-gradient(135deg,#141e30,#243b55);
-
-      position:sticky;
-      top:0;
-      z-index:1000;
-
-      box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    /* ================= TOOL GRID ================= */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 30px;
     }
 
-    /* LEFT */
-
-    .left{
-      display:flex;
-      align-items:center;
-      gap:15px;
+    /* ================= SHUFFLE ANIMATION ================= */
+    .shuffling {
+      animation: shake 0.2s infinite;
     }
 
-    .header-logo{
-      width:60px;
-      height:60px;
-
-      border-radius:18px;
-
-      background:linear-gradient(135deg,#7f00ff,#1a73e8);
-
-      color:white;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      font-size:26px;
-      font-weight:bold;
-
-      box-shadow:0 8px 20px rgba(127,0,255,0.35);
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
     }
 
-    .brand-text h2{
-      color:white;
-      font-size:28px;
-      font-weight:800;
-      line-height:1;
+    /* ================= HISTORY LIST ================= */
+    .history-wrapper {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    #history {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 10px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+    #history li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--glass-border);
+      color: var(--text-main);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #history li::before {
+      content: "•";
+      color: var(--accent-2);
+      font-size: 18px;
+    }
+    #history li:last-child {
+      border-bottom: none;
     }
 
-    .brand-text p{
-      color:#d1d5db;
-      font-size:12px;
-      margin-top:5px;
-      line-height:1.5;
+    /* Custom Scrollbar for history */
+    #history::-webkit-scrollbar { width: 6px; }
+    #history::-webkit-scrollbar-track { background: transparent; }
+    #history::-webkit-scrollbar-thumb { background: rgba(127, 0, 255, 0.3); border-radius: 10px; }
+    [data-theme="dark"] #history::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); }
+
+    /* ================= SEO SECTION ================= */
+    .seo-section { padding: 50px; text-align: left; margin-top: 50px; }
+    .seo-section h2 { font-size: 36px; margin-bottom: 25px; line-height: 1.3; }
+    .seo-section p { margin-bottom: 20px; line-height: 2; font-size: 16px; }
+    .seo-section h3 { font-size: 28px; margin-top: 35px; margin-bottom: 15px; }
+    .seo-section ul { padding-left: 25px; margin-bottom: 20px; color: var(--text-muted); line-height: 2; }
+    .seo-section li { margin-bottom: 10px; }
+
+    /* ================= FOOTER ================= */
+    footer { margin-top: 60px; padding-bottom: 30px; }
+    .footer-content { display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding: 40px; }
+    .footer-col { flex: 1; min-width: 200px; }
+    .footer-col h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
+    .footer-col p { font-size: 14px; margin-bottom: 10px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--accent-2); }
+    .footer-socials { display: flex; gap: 15px; margin-top: 15px; }
+    .footer-socials a { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); transition: transform 0.3s; }
+    .footer-socials a:hover { transform: scale(1.1); }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--glass-border); margin-top: 20px; color: var(--text-muted); }
+
+    /* ================= SCROLL TO TOP ================= */
+    #scroll-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      font-size: 20px; color: var(--accent-1);
     }
+    #scroll-top.show { opacity: 1; visibility: visible; }
+    #scroll-top:hover { transform: translateY(-5px); }
 
-    /* RIGHT */
-
-    .right{
-      display:flex;
-      gap:15px;
+    /* ================= RESPONSIVE ================= */
+    @media(max-width: 768px) {
+      header { flex-direction: column; gap: 15px; padding: 15px; border-radius: 20px; }
+      .header-right { flex-wrap: wrap; justify-content: center; }
+      .seo-section { padding: 30px 20px; }
+      .tool-hero h1 { font-size: 40px; }
+      .tool-hero p { font-size: 16px; }
+      .seo-section h2 { font-size: 30px; }
     }
-
-    .right button{
-      padding:10px 18px;
-
-      border:none;
-      border-radius:8px;
-
-      background:linear-gradient(135deg,#1a73e8,#7f00ff);
-
-      color:white;
-
-      cursor:pointer;
-
-      transition:0.3s;
-
-      font-size:14px;
-    }
-
-    .right button:hover{
-      background:#00e5ff;
-      color:#111;
-      transform:translateY(-2px);
-    }
-/* GLASS CARD */
-
-.glass-card{
-  background:rgba(255,255,255,0.6);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.3);
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-/* DICE */
-
-.dice{
-  width:90px;
-  height:90px;
-  border-radius:20px;
-  background:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:40px;
-  font-weight:bold;
-  box-shadow:0 10px 20px rgba(0,0,0,0.15);
-  animation:none;
-}
-
-.rolling{
-  animation:shake 0.6s ease;
-}
-
-@keyframes shake{
-  0%{transform:rotate(0deg);}
-  25%{transform:rotate(10deg);}
-  50%{transform:rotate(-10deg);}
-  75%{transform:rotate(10deg);}
-  100%{transform:rotate(0deg);}
-}
-
-/* FOOTER */
-
-    footer{
-      margin-top:70px;
-
-      background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-
-      color:white;
-    }
-
-    .footer-container{
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-
-      gap:30px;
-
-      padding:45px 40px;
-    }
-
-    .footer-box{
-      flex:1;
-      min-width:220px;
-    }
-
-    .footer-box h3{
-      margin-bottom:15px;
-      color:#00e5ff;
-      font-size:22px;
-    }
-
-    .footer-box p,
-    .footer-box a{
-      color:#d1d1d1;
-
-      text-decoration:none;
-
-      display:block;
-
-      margin:8px 0;
-
-      transition:0.3s;
-    }
-
-    .footer-box a:hover{
-      color:#00e5ff;
-      transform:translateX(5px);
-    }
-
-    /* SOCIAL */
-
-    .social-icons{
-      display:flex;
-      gap:15px;
-      margin-top:15px;
-    }
-
-    .social-icons a{
-      width:42px;
-      height:42px;
-
-      border-radius:50%;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      background:rgba(255,255,255,0.1);
-
-      color:white;
-
-      transition:0.3s;
-    }
-
-    .social-icons a:hover{
-      transform:scale(1.15);
-    }
-
-    .instagram:hover{
-      background:#e1306c;
-    }
-
-    .facebook:hover{
-      background:#1877f2;
-    }
-
-    .whatsapp:hover{
-      background:#25d366;
-    }
-
-    .footer-bottom{
-      text-align:center;
-
-      padding:15px;
-
-      border-top:1px solid rgba(255,255,255,0.1);
-
-      color:#aaa;
-    }
-.header-logo{
-  width:60px;
-  height:60px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#7f00ff,#1a73e8);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  box-shadow:0 8px 20px rgba(127,0,255,0.35);
-}
-</style>
+  </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-
-<header>
-
-<a href="index.html" class="left">
-
-
-<div class="header-logo">
-  <i class="fa-solid fa-coins"></i>
-</div>
-
-<div class="brand-text">
-<h2>FLIPPERS</h2>
-<p>SPIN.PICK.DECIDE</p>
-</div>
-</a>
-<div class="right">
-
-<a href="index.html">
-  <button>Home</button>
-</a>
-
-<a href="index.html#Flippers">
-  <button>Flippers</button>
-</a>
-
-<a href="index.html#contact">
-  <button>Contact</button>
-</a>
-
-</div>
-
-</header>
-
-<!-- MAIN -->
-
-<main class="pt-24 pb-20 px-6 max-w-6xl mx-auto">
-
-<h1 class="text-5xl font-bold">
-Online Dice Roller
-</h1>
-
-<p class="text-gray-500 mt-2">
-Roll virtual dice instantly with our free online dice roller. Perfect for board games, classroom activities, RPG sessions, probability practice, random number generation, and fun decision-making.
-</p>
-
-<div class="grid md:grid-cols-2 gap-8 mt-10">
-
-<!-- LEFT BOX -->
-
-<div class="glass-card rounded-[32px] p-10">
-
-<h3 class="text-gray-400 uppercase text-xs">
-DICE ROLL RESULT
-</h3>
-
-<div id="total-result" class="text-6xl font-bold mt-4">
-0
-</div>
-
-<div class="mt-6">
-<p class="text-gray-500">
-Total Dice Rolled:
-<span id="dice-count">1</span>
-</p>
-</div>
-
-<button onclick="resetDice()"
-class="mt-6 text-sm text-red-500">
-Reset
-</button>
-
-</div>
-
-<!-- RIGHT BOX -->
-
-<div class="glass-card rounded-[32px] p-10 flex flex-col items-center">
-
-<select id="dice-select"
-class="border p-3 rounded-xl mb-6 w-full">
-
-<option value="1">1 Dice</option>
-<option value="2">2 Dice</option>
-<option value="3">3 Dice</option>
-<option value="4">4 Dice</option>
-<option value="5">5 Dice</option>
-<option value="6">6 Dice</option>
-
-</select>
-
-<div id="dice-container"
-class="flex flex-wrap gap-4 justify-center mb-10">
-
-<div class="dice">🎲</div>
-
-</div>
-
-<button onclick="rollDice()"
-class="bg-blue-600 px-10 py-4 rounded-xl font-bold text-white hover:bg-blue-500">
-
-ROLL DICE
-
-</button>
-
-</div>
-
-</div>
-
-</main>
-
-<!-- SCRIPT -->
-
-<script>
-
-const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
-
-function rollDice(){
-
-  const diceCount = parseInt(document.getElementById("dice-select").value);
-
-  const container = document.getElementById("dice-container");
-
-  const totalResult = document.getElementById("total-result");
-
-  document.getElementById("dice-count").innerText = diceCount;
-
-  container.innerHTML = "";
-
-  let total = 0;
-
-  for(let i=0;i<diceCount;i++){
-
-    const value = Math.floor(Math.random()*6)+1;
-
-    total += value;
-
-    const dice = document.createElement("div");
-
-    dice.classList.add("dice","rolling");
-
-    dice.innerText = diceFaces[value-1];
-
-    container.appendChild(dice);
-
-  }
-
-  setTimeout(()=>{
-    totalResult.innerText = total;
-  },500);
-
-}
-
-function resetDice(){
-
-  document.getElementById("total-result").innerText = "0";
-
-  document.getElementById("dice-count").innerText = "1";
-
-  document.getElementById("dice-select").value = "1";
-
-  document.getElementById("dice-container").innerHTML =
-  '<div class="dice">🎲</div>';
-}
-
-</script>
-<!-- SEO CONTENT SECTION -->
-
-<section class="max-w-6xl mx-auto px-6 py-10">
-
-<div class="glass-card rounded-[32px] p-10">
-
-<h2 class="text-3xl font-bold mb-6">
-Why Use Our Online Dice Roller?
-</h2>
-
-<p class="text-gray-600 leading-8 mb-6">
-The Flippers Dice Roller is a fast, free, and interactive virtual dice generator designed for players, students, teachers, and anyone who needs fair random results instantly. Whether you are playing board games, tabletop RPGs, classroom activities, or making quick random decisions, our dice roller provides accurate and fun dice rolling with smooth animations.
-</p>
-
-<p class="text-gray-600 leading-8 mb-6">
-You can roll multiple dice at once and instantly see the total score. The tool works perfectly on desktop and mobile devices without requiring downloads or registration.
-</p>
-
-<h3 class="text-2xl font-bold mb-4">
-Popular Uses of Dice Roller
-</h3>
-
-<ul class="text-gray-600 leading-8 list-disc pl-6">
-<li>Board games and tabletop games</li>
-<li>Dungeons & Dragons and RPG sessions</li>
-<li>Math and probability learning</li>
-<li>Random number generation</li>
-<li>Classroom activities</li>
-<li>Fun online decision-making</li>
-</ul>
-
-</div>
-
-</section>
-<!-- FOOTER -->
-
-<!-- FOOTER -->
-
-<footer>
-
-  <div class="footer-container">
-
-    <div class="footer-box">
-
-      <h3>Flippers</h3>
-
+  <!-- ================= BACKGROUND BLOBS ================= -->
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="glass container">
+    <a href="index.html" class="header-left">
+      <div class="logo-icon">
+        <i class="fa-solid fa-coins"></i>
+      </div>
+      <div class="brand-text">
+        <h2>FLIPPERS</h2>
+        <p>SPIN.PICK.DECIDE</p>
+      </div>
+    </a>
+    
+    <div class="header-right">
+      <a href="index.html"><button class="glass-btn">Home</button></a>
+      <a href="index.html#Flippers"><button class="glass-btn">Flippers</button></a>
+      <a href="contact.html"><button class="glass-btn">Contact</button></a>
+      <button id="theme-toggle" class="glass-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= TOOL HERO ================= -->
+    <section class="container tool-hero">
+      <h1>Online <span class="text-gradient">Decision Shuffler</span></h1>
       <p>
-        FLIPPERS provides free online random decision-making tools including
-        coin tosses, dice rollers, wheel spinners, card shufflers, and random
-        generators.
+        Instantly shuffle your choices and let the random decision maker pick for you 🎯
       </p>
+    </section>
 
-    </div>
+    <!-- ================= TOOL INTERFACE ================= -->
+    <section class="container">
+      <div class="tool-grid">
 
-    <div class="footer-box">
+        <!-- LEFT BOX: RESULT & HISTORY -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center;">
+          <h2 style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px;">
+            Random Decision Result
+          </h2>
+          
+          <div id="result" style="font-size: 26px; font-weight: 800; margin-bottom: 30px; min-height: 60px; color: var(--text-main); line-height: 1.4;">
+            Enter choices to generate a random decision
+          </div>
 
-      <h3>Useful Links</h3>
+          <div class="history-wrapper">
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Recent Decision History</h3>
+            <ul id="history"></ul>
+          </div>
 
-      <a href="index.html">Home</a>
-      <a href="index.html#Flippers">Flippers</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+          <button onclick="resetAll()" class="glass-btn" style="padding: 8px 16px; font-size: 14px; margin-top: auto;">
+            <i class="fa-solid fa-trash-can"></i> Reset All
+          </button>
+        </div>
 
-    </div>
+        <!-- RIGHT BOX: INPUT & ACTION -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
+          
+          <h2 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 15px;">Add Your Options</h2>
 
-    <div class="footer-box">
+          <textarea id="input" class="glass-textarea" placeholder="Enter choices separated by commas (Example: Pizza, Burger, Pasta)"></textarea>
 
-      <h3>Follow Us</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px; margin-bottom: 20px;">
+            <i class="fa-solid fa-circle-info"></i> Example: Watch movie, Order pizza, Go shopping
+          </p>
 
-      <div class="social-icons">
-
-        <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
-          <i class="fa-brands fa-instagram"></i>
-        </a>
-
-        <!-- <a href="#" class="facebook">
-          <i class="fa-brands fa-facebook"></i>
-        </a> -->
-
-        <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
-          <i class="fa-brands fa-whatsapp"></i>
-        </a>
+          <button onclick="shuffleDecision()" aria-label="Shuffle random decision choices" class="primary-btn" style="font-size: 16px; padding: 15px 40px; width: 100%; margin-top: auto;">
+            SHUFFLE RANDOM DECISION
+          </button>
+          
+        </div>
 
       </div>
+    </section>
 
+    <!-- ================= SEO CONTENT ================= -->
+    <section class="container">
+      <div class="glass seo-section">
+        <h2>Free Online Decision Shuffler Tool</h2>
+        
+        <p>
+          FLIPPERS Decision Shuffler is a free online random decision maker designed to help you choose between multiple options quickly and fairly. Whether you are deciding what to eat, where to go, what activity to do, or making fun group decisions, this tool instantly shuffles your choices and picks one randomly.
+        </p>
+        
+        <p>
+          Simply enter your options separated by commas and let the random choice generator do the work. The Decision Shuffler includes smooth animations, instant results, and a clean interface that works perfectly on desktop and mobile devices.
+        </p>
+
+        <h3>Features of the Decision Shuffler</h3>
+        <ul>
+          <li>Instant random decision generation</li>
+          <li>Interactive shuffle animation</li>
+          <li>Fair and unbiased random selection</li>
+          <li>Simple and user-friendly interface</li>
+          <li>Works on mobile and desktop devices</li>
+          <li>Completely free online decision maker</li>
+          <li>Perfect for games, food choices, and daily decisions</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="container">
+    <div class="glass footer-content">
+      <div class="footer-col">
+        <h3>Flippers</h3>
+        <p style="max-width: 300px; font-size: 14px;">
+          FLIPPERS provides free online decision-making tools including random pickers, shufflers, generators, spinning wheels, and fun utilities for quick choices.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Useful Links</h3>
+        <a href="index.html">Home</a>
+        <a href="index.html#Flippers">Flippers</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <h3>Follow Us</h3>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+        </div>
+      </div>
     </div>
 
-  </div>
+    <div class="footer-bottom">
+      &copy; 2026 FLIPPERS | All Rights Reserved
+    </div>
+  </footer>
 
-  <div class="footer-bottom">
-    © 2026 Flippers | All Rights Reserved
-  </div>
+  <!-- ================= SCROLL TO TOP BUTTON ================= -->
+  <button id="scroll-top" class="glass-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-</footer>
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // --- 1. Theme Toggle Logic ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    // Check local storage for theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlEl.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    } else {
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        htmlEl.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+      }
+    }
 
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      } else {
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+      }
+    }
+
+    // --- 2. Scroll to Top Logic ---
+    const scrollTopBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- 3. Decision Shuffler Logic ---
+    let historyList = [];
+
+    function shuffleDecision(){
+      let input = document.getElementById("input").value;
+      let choices = input.split(",").map(x => x.trim()).filter(x => x);
+
+      if(choices.length < 2){
+        alert("Please enter at least 2 choices separated by commas.");
+        return;
+      }
+
+      const result = document.getElementById("result");
+      result.classList.add("shuffling");
+
+      let i = 0;
+      let cycles = 0;
+
+      // SHUFFLE ANIMATION
+      let interval = setInterval(() => {
+        result.innerText = choices[i];
+        i = (i + 1) % choices.length;
+        cycles++;
+
+        if(cycles > 25){
+          clearInterval(interval);
+
+          let finalChoice = choices[Math.floor(Math.random() * choices.length)];
+          result.innerHTML = `<span style="color: var(--accent-1);">🎯</span> ` + finalChoice;
+
+          historyList.push(finalChoice);
+          updateHistory();
+
+          result.classList.remove("shuffling");
+        }
+      }, 90);
+    }
+
+    function updateHistory(){
+      document.getElementById("history").innerHTML = historyList.map(h => `<li>${h}</li>`).join("");
+    }
+
+    function resetAll(){
+      historyList = [];
+      document.getElementById("result").innerText = "Enter choices to generate a random decision";
+      document.getElementById("history").innerHTML = "";
+      document.getElementById("input").value = "";
+    }
+  </script>
 </body>
 </html>
