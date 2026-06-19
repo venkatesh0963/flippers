@@ -4,16 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Decision Shuffler Online | Free Random Decision Maker - FLIPPERS</title>
-  <meta name="description" content="Use the free online Decision Shuffler by FLIPPERS to randomly choose between options instantly. Perfect for daily decisions, games, food choices, and fun activities.">
-  <meta name="keywords" content="decision shuffler, random decision maker, online decision picker, choice generator, random choice selector, decision maker tool, shuffle choices online">
-  <meta name="author" content="FLIPPERS">
+  <title>Online Dice Roller - Free Random Dice Generator | Flippers</title>
+  <meta name="description" content="Use the free online Dice Roller by Flippers to roll 1 to 6 dice instantly. Perfect for board games, classrooms, decision-making, RPGs, probability games, and fun random number generation.">
+  <meta name="keywords" content="dice roller, online dice roller, random dice generator, virtual dice, roll dice online, dice game tool, free dice roller, random number dice, RPG dice roller, flippers">
+  <meta name="author" content="Flippers">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Decision Shuffler Online - FLIPPERS">
-  <meta property="og:description" content="Randomly shuffle and pick decisions instantly with the FLIPPERS Decision Shuffler tool.">
+  <meta property="og:title" content="Online Dice Roller - Free Random Dice Generator | Flippers">
+  <meta property="og:description" content="Roll virtual dice instantly with Flippers Dice Roller. Fast, fun, accurate, and perfect for games, random choices, and classroom activities.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://yourwebsite.com/decision-shuffler-preview.jpg">
-  <meta property="og:url" content="https://yourwebsite.com/decision-shuffler">
 
   <!-- GOOGLE FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -196,26 +194,33 @@
       box-shadow: 0 10px 25px rgba(26,115,232,0.4);
     }
 
-    .glass-textarea {
+    .glass-select {
       width: 100%;
-      height: 180px;
-      padding: 15px;
+      padding: 15px 20px;
       border-radius: 12px;
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       color: var(--text-main);
       font-family: 'Poppins', sans-serif;
       outline: none;
-      resize: vertical;
+      font-size: 16px;
+      margin-bottom: 24px;
       transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+      cursor: pointer;
+      appearance: none;
     }
-    .glass-textarea::placeholder {
-      color: var(--text-muted);
-    }
-    .glass-textarea:focus {
+    .glass-select:focus {
       border-color: var(--accent-2);
       box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
       background: rgba(255,255,255,0.1);
+    }
+    .glass-select option {
+      background: white;
+      color: black;
+    }
+    [data-theme="dark"] .glass-select option {
+      background: #1f2937;
+      color: white;
     }
 
     /* ================= LAYOUT ================= */
@@ -258,56 +263,45 @@
       margin-top: 30px;
     }
 
-    /* ================= SHUFFLE ANIMATION ================= */
-    .shuffling {
-      animation: shake 0.2s infinite;
+    /* ================= DICE ================= */
+    .dice-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 40px;
+      min-height: 90px;
+    }
+    .dice {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      background: white; 
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 55px;
+      font-weight: bold;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.05);
+      animation: none;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] .dice {
+      background: #e2e8f0;
+    }
+
+    .rolling {
+      animation: shake 0.5s ease-in-out infinite;
     }
 
     @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
+      0% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(15deg) scale(1.1); }
+      50% { transform: rotate(-15deg) scale(1.1); }
+      75% { transform: rotate(15deg) scale(1.1); }
+      100% { transform: rotate(0deg) scale(1); }
     }
-
-    /* ================= HISTORY LIST ================= */
-    .history-wrapper {
-      width: 100%;
-      max-width: 400px;
-      margin-top: 20px;
-      text-align: left;
-    }
-    #history {
-      list-style-type: none;
-      padding: 0;
-      margin-top: 10px;
-      max-height: 150px;
-      overflow-y: auto;
-    }
-    #history li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--glass-border);
-      color: var(--text-main);
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    #history li::before {
-      content: "•";
-      color: var(--accent-2);
-      font-size: 18px;
-    }
-    #history li:last-child {
-      border-bottom: none;
-    }
-
-    /* Custom Scrollbar for history */
-    #history::-webkit-scrollbar { width: 6px; }
-    #history::-webkit-scrollbar-track { background: transparent; }
-    #history::-webkit-scrollbar-thumb { background: rgba(127, 0, 255, 0.3); border-radius: 10px; }
-    [data-theme="dark"] #history::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); }
 
     /* ================= SEO SECTION ================= */
     .seo-section { padding: 50px; text-align: left; margin-top: 50px; }
@@ -386,9 +380,9 @@
   <main>
     <!-- ================= TOOL HERO ================= -->
     <section class="container tool-hero">
-      <h1>Online <span class="text-gradient">Decision Shuffler</span></h1>
+      <h1>Online <span class="text-gradient">Dice Roller</span></h1>
       <p>
-        Instantly shuffle your choices and let the random decision maker pick for you 🎯
+        Roll virtual dice instantly with our free online dice roller. Perfect for board games, classroom activities, RPG sessions, probability practice, and fun decision-making.
       </p>
     </section>
 
@@ -396,39 +390,46 @@
     <section class="container">
       <div class="tool-grid">
 
-        <!-- LEFT BOX: RESULT & HISTORY -->
-        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center;">
+        <!-- LEFT BOX: RESULT -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
           <h2 style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px;">
-            Random Decision Result
+            DICE ROLL RESULT
           </h2>
           
-          <div id="result" style="font-size: 26px; font-weight: 800; margin-bottom: 30px; min-height: 60px; color: var(--text-main); line-height: 1.4;">
-            Enter choices to generate a random decision
+          <div id="total-result" style="font-size: 80px; font-weight: 800; margin-bottom: 20px; line-height: 1; color: var(--text-main);">
+            0
           </div>
 
-          <div class="history-wrapper">
-            <h3 style="font-size: 16px; font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Recent Decision History</h3>
-            <ul id="history"></ul>
+          <div style="font-size: 16px; margin-bottom: 30px; font-weight: 600;">
+            Total Dice Rolled: <span id="dice-count" style="color: var(--accent-1); font-size: 22px;">1</span>
           </div>
 
-          <button onclick="resetAll()" class="glass-btn" style="padding: 8px 16px; font-size: 14px; margin-top: auto;">
-            <i class="fa-solid fa-trash-can"></i> Reset All
+          <button onclick="resetDice()" class="glass-btn" style="padding: 8px 16px; font-size: 14px; margin-top: auto;">
+            <i class="fa-solid fa-rotate-right"></i> Reset
           </button>
         </div>
 
-        <!-- RIGHT BOX: INPUT & ACTION -->
-        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
+        <!-- RIGHT BOX: SETTINGS & ACTION -->
+        <div class="glass" style="padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
           
-          <h2 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 15px;">Add Your Options</h2>
+          <div style="width: 100%; max-width: 300px; position: relative;">
+            <i class="fa-solid fa-chevron-down" style="position: absolute; right: 15px; top: 15px; color: var(--text-muted); pointer-events: none;"></i>
+            <select id="dice-select" class="glass-select">
+              <option value="1">1 Dice</option>
+              <option value="2">2 Dice</option>
+              <option value="3">3 Dice</option>
+              <option value="4">4 Dice</option>
+              <option value="5">5 Dice</option>
+              <option value="6">6 Dice</option>
+            </select>
+          </div>
 
-          <textarea id="input" class="glass-textarea" placeholder="Enter choices separated by commas (Example: Pizza, Burger, Pasta)"></textarea>
+          <div id="dice-container" class="dice-container">
+            <div class="dice">🎲</div>
+          </div>
 
-          <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px; margin-bottom: 20px;">
-            <i class="fa-solid fa-circle-info"></i> Example: Watch movie, Order pizza, Go shopping
-          </p>
-
-          <button onclick="shuffleDecision()" aria-label="Shuffle random decision choices" class="primary-btn" style="font-size: 16px; padding: 15px 40px; width: 100%; margin-top: auto;">
-            SHUFFLE RANDOM DECISION
+          <button onclick="rollDice()" aria-label="Roll the dice" class="primary-btn" style="font-size: 18px; padding: 15px 40px; width: 100%; max-width: 300px;">
+            ROLL DICE
           </button>
           
         </div>
@@ -439,25 +440,24 @@
     <!-- ================= SEO CONTENT ================= -->
     <section class="container">
       <div class="glass seo-section">
-        <h2>Free Online Decision Shuffler Tool</h2>
+        <h2>Why Use Our Online Dice Roller?</h2>
         
         <p>
-          FLIPPERS Decision Shuffler is a free online random decision maker designed to help you choose between multiple options quickly and fairly. Whether you are deciding what to eat, where to go, what activity to do, or making fun group decisions, this tool instantly shuffles your choices and picks one randomly.
+          The Flippers Dice Roller is a fast, free, and interactive virtual dice generator designed for players, students, teachers, and anyone who needs fair random results instantly. Whether you are playing board games, tabletop RPGs, classroom activities, or making quick random decisions, our dice roller provides accurate and fun dice rolling with smooth animations.
         </p>
         
         <p>
-          Simply enter your options separated by commas and let the random choice generator do the work. The Decision Shuffler includes smooth animations, instant results, and a clean interface that works perfectly on desktop and mobile devices.
+          You can roll multiple dice at once and instantly see the total score. The tool works perfectly on desktop and mobile devices without requiring downloads or registration.
         </p>
 
-        <h3>Features of the Decision Shuffler</h3>
+        <h3>Popular Uses of Dice Roller</h3>
         <ul>
-          <li>Instant random decision generation</li>
-          <li>Interactive shuffle animation</li>
-          <li>Fair and unbiased random selection</li>
-          <li>Simple and user-friendly interface</li>
-          <li>Works on mobile and desktop devices</li>
-          <li>Completely free online decision maker</li>
-          <li>Perfect for games, food choices, and daily decisions</li>
+          <li>Board games and tabletop games</li>
+          <li>Dungeons & Dragons and RPG sessions</li>
+          <li>Math and probability learning</li>
+          <li>Random number generation</li>
+          <li>Classroom activities</li>
+          <li>Fun online decision-making</li>
         </ul>
       </div>
     </section>
@@ -469,7 +469,7 @@
       <div class="footer-col">
         <h3>Flippers</h3>
         <p style="max-width: 300px; font-size: 14px;">
-          FLIPPERS provides free online decision-making tools including random pickers, shufflers, generators, spinning wheels, and fun utilities for quick choices.
+          FLIPPERS provides free online random decision-making tools including coin tosses, dice rollers, wheel spinners, card shufflers, and random generators.
         </p>
       </div>
 
@@ -486,13 +486,13 @@
         <div class="footer-socials">
           <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" target="_blank"><i class="fa-brands fa-instagram"></i></a>
           <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-
+          <a href="https://www.linkedin.com/in/venkatesh-b-172505353?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      &copy; 2026 FLIPPERS | All Rights Reserved
+      &copy; 2026 Flippers | All Rights Reserved
     </div>
   </footer>
 
@@ -548,53 +548,49 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // --- 3. Decision Shuffler Logic ---
-    let historyList = [];
+    // --- 3. Dice Roller Logic ---
+    const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
 
-    function shuffleDecision(){
-      let input = document.getElementById("input").value;
-      let choices = input.split(",").map(x => x.trim()).filter(x => x);
+    function rollDice(){
+      const diceCount = parseInt(document.getElementById("dice-select").value);
+      const container = document.getElementById("dice-container");
+      const totalResult = document.getElementById("total-result");
 
-      if(choices.length < 2){
-        alert("Please enter at least 2 choices separated by commas.");
-        return;
+      document.getElementById("dice-count").innerText = diceCount;
+      container.innerHTML = "";
+      totalResult.innerText = "...";
+
+      let total = 0;
+      let diceElements = [];
+
+      for(let i=0; i<diceCount; i++){
+        const value = Math.floor(Math.random()*6)+1;
+        total += value;
+
+        const dice = document.createElement("div");
+        dice.classList.add("dice", "rolling");
+        // Start with a random face while rolling
+        dice.innerText = diceFaces[Math.floor(Math.random()*6)];
+        container.appendChild(dice);
+        
+        diceElements.push({element: dice, finalValue: value});
       }
 
-      const result = document.getElementById("result");
-      result.classList.add("shuffling");
-
-      let i = 0;
-      let cycles = 0;
-
-      // SHUFFLE ANIMATION
-      let interval = setInterval(() => {
-        result.innerText = choices[i];
-        i = (i + 1) % choices.length;
-        cycles++;
-
-        if(cycles > 25){
-          clearInterval(interval);
-
-          let finalChoice = choices[Math.floor(Math.random() * choices.length)];
-          result.innerHTML = `<span style="color: var(--accent-1);">🎯</span> ` + finalChoice;
-
-          historyList.push(finalChoice);
-          updateHistory();
-
-          result.classList.remove("shuffling");
-        }
-      }, 90);
+      // Stop animation and show final values after a short delay
+      setTimeout(()=>{
+        diceElements.forEach(item => {
+          item.element.classList.remove("rolling");
+          item.element.innerText = diceFaces[item.finalValue - 1];
+        });
+        totalResult.innerText = total;
+      }, 600);
     }
 
-    function updateHistory(){
-      document.getElementById("history").innerHTML = historyList.map(h => `<li>${h}</li>`).join("");
-    }
-
-    function resetAll(){
-      historyList = [];
-      document.getElementById("result").innerText = "Enter choices to generate a random decision";
-      document.getElementById("history").innerHTML = "";
-      document.getElementById("input").value = "";
+    function resetDice(){
+      document.getElementById("total-result").innerText = "0";
+      document.getElementById("dice-count").innerText = "1";
+      document.getElementById("dice-select").value = "1";
+      document.getElementById("dice-container").innerHTML = '<div class="dice">🎲</div>';
     }
   </script>
 </body>
