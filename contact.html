@@ -1,715 +1,599 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Contact Flippers | Get in Touch With Our Team</title>
-
-<meta name="description"
-content="Contact Flippers for support, feedback, business inquiries, or collaboration opportunities. Reach out to our team anytime using our modern contact page.">
-
-<meta name="keywords"
-content="contact flippers, flippers support, contact page, customer support, online tools support, random picker website contact">
-
-<meta name="author" content="Flippers">
-
-<meta property="og:title"
-content="Contact Flippers | Get in Touch">
-
-<meta property="og:description"
-content="Reach out to Flippers for support, feedback, and inquiries about our online decision-making tools.">
-
-<meta property="og:type" content="website">
-
-<meta name="robots" content="index, follow">
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
-
-html,body{
-  overflow-x:hidden;
-  scroll-behavior:smooth;
-}
-
-/* ================= BACKGROUND ================= */
-
-body{
-  background-color:#f7f9fc;
-
-  background-image:
-    linear-gradient(rgba(127,0,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26,115,232,0.07) 1px, transparent 1px);
-
-  background-size:50px 50px;
-
-  position:relative;
-}
-
-/* TOP GLOW */
-
-body::before{
-  content:"";
-  position:fixed;
-  top:-120px;
-  left:-120px;
-  width:450px;
-  height:450px;
-
-  background:
-  radial-gradient(circle,
-  rgba(127,0,255,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow1 8s ease-in-out infinite alternate;
-}
-
-/* BOTTOM GLOW */
-
-body::after{
-  content:"";
-  position:fixed;
-  bottom:-150px;
-  right:-150px;
-  width:500px;
-  height:500px;
-
-  background:
-  radial-gradient(circle,
-  rgba(26,115,232,0.18),
-  transparent 70%);
-
-  z-index:-1;
-
-  animation:moveGlow2 10s ease-in-out infinite alternate;
-}
-
-@keyframes moveGlow1{
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(80px,40px);
-  }
-}
-
-@keyframes moveGlow2{
-  0%{
-    transform:translate(0,0);
-  }
-
-  100%{
-    transform:translate(-60px,-50px);
-  }
-}
-
-/* ================= HEADER ================= */
-
-header{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  padding:18px 50px;
-
-  background:linear-gradient(135deg,#141e30,#243b55);
-
-  position:sticky;
-  top:0;
-  z-index:1000;
-
-  box-shadow:0 4px 20px rgba(0,0,0,0.15);
-}
-
-.left{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.header-logo{
-  width:60px;
-  height:60px;
-
-  border-radius:18px;
-
-  background:linear-gradient(135deg,#7f00ff,#1a73e8);
-
-  color:white;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:26px;
-  font-weight:bold;
-
-  box-shadow:0 8px 20px rgba(127,0,255,0.35);
-}
-
-.brand-text h2{
-  color:white;
-  font-size:28px;
-  font-weight:800;
-}
-
-.brand-text p{
-  color:#d1d5db;
-  font-size:12px;
-  margin-top:5px;
-}
-
-/* NAV */
-
-.right{
-  display:flex;
-  gap:15px;
-}
-
-.nav-btn{
-  padding:10px 18px;
-
-  border-radius:8px;
-
-  background:linear-gradient(135deg,#1a73e8,#7f00ff);
-
-  color:white;
-
-  text-decoration:none;
-
-  transition:0.3s;
-
-  display:inline-block;
-}
-
-.nav-btn:hover{
-  background:#00e5ff;
-  color:#111;
-  transform:translateY(-2px);
-}
-
-/* ================= GLASS CARD ================= */
-
-.glass-card{
-  background:rgba(255,255,255,0.18);
-
-  backdrop-filter:blur(18px);
-
-  border:1px solid rgba(255,255,255,0.25);
-
-  box-shadow:0 8px 32px rgba(31,38,135,0.15);
-}
-
-/* ================= INPUTS ================= */
-
-.input-box{
-  width:100%;
-
-  padding:16px 20px;
-
-  border:none;
-
-  border-radius:18px;
-
-  background:rgba(255,255,255,0.65);
-
-  outline:none;
-
-  font-size:16px;
-
-  margin-top:8px;
-}
-
-textarea{
-  resize:none;
-}
-
-/* BUTTON */
-
-.submit-btn{
-  background:linear-gradient(135deg,#1a73e8,#7f00ff);
-
-  color:white;
-
-  padding:16px 30px;
-
-  border:none;
-
-  border-radius:18px;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-  transition:0.3s;
-}
-
-.submit-btn:hover{
-  transform:translateY(-3px);
-
-  box-shadow:0 10px 25px rgba(26,115,232,0.3);
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  margin-top:70px;
-
-  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-
-  color:white;
-}
-
-.footer-container{
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-
-  gap:30px;
-
-  padding:45px 40px;
-}
-
-.footer-box{
-  flex:1;
-  min-width:220px;
-}
-
-.footer-box h3{
-  margin-bottom:15px;
-  color:#00e5ff;
-  font-size:22px;
-}
-
-.footer-box p,
-.footer-box a{
-  color:#d1d1d1;
-
-  text-decoration:none;
-
-  display:block;
-
-  margin:8px 0;
-
-  transition:0.3s;
-}
-
-.footer-box a:hover{
-  color:#00e5ff;
-  transform:translateX(5px);
-}
-
-/* SOCIAL */
-
-.social-icons{
-  display:flex;
-  gap:15px;
-  margin-top:15px;
-}
-
-.social-icons a{
-  width:42px;
-  height:42px;
-
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:rgba(255,255,255,0.1);
-
-  color:white;
-
-  transition:0.3s;
-}
-
-.social-icons a:hover{
-  transform:scale(1.15);
-}
-
-.instagram:hover{
-  background:#e1306c;
-}
-
-.facebook:hover{
-  background:#1877f2;
-}
-
-.whatsapp:hover{
-  background:#25d366;
-}
-
-.footer-bottom{
-  text-align:center;
-
-  padding:15px;
-
-  border-top:1px solid rgba(255,255,255,0.1);
-
-  color:#aaa;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:768px){
-
-  header{
-    flex-direction:column;
-    gap:20px;
-    padding:20px;
-  }
-
-}
-.left{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  text-decoration:none;
-}
-.header-logo{
-  width:60px;
-  height:60px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#7f00ff,#1a73e8);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  box-shadow:0 8px 20px rgba(127,0,255,0.35);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contact Flippers | Get in Touch With Our Team</title>
+  <meta name="description" content="Contact Flippers for support, feedback, business inquiries, or collaboration opportunities. Reach out to our team anytime using our modern contact page.">
+  <meta name="keywords" content="contact flippers, flippers support, contact page, customer support, online tools support, random picker website contact">
+  <meta name="author" content="Flippers">
+  <meta property="og:title" content="Contact Flippers | Get in Touch">
+  <meta property="og:description" content="Reach out to Flippers for support, feedback, and inquiries about our online decision-making tools.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ================= GLOBALS ================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    /* ================= VARIABLES ================= */
+    :root {
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --bg-color: #f0f4f8;
+      
+      /* Blob Colors for Light Mode */
+      --blob1: #ffb6ff;
+      --blob2: #b6ffff;
+      
+      /* Glass properties */
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: rgba(0, 0, 0, 0.05);
+
+      /* Accents */
+      --accent-1: #7f00ff;
+      --accent-2: #1a73e8;
+    }
+
+    [data-theme="dark"] {
+      --text-main: #f9fafb;
+      --text-muted: #d1d5db;
+      --bg-color: #0f172a;
+      
+      /* Blob Colors for Dark Mode */
+      --blob1: #7f00ff;
+      --blob2: #1a73e8;
+
+      /* Glass properties */
+      --glass-bg: rgba(15, 23, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    /* ================= BASE STYLES ================= */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { color: var(--text-main); font-weight: 700; transition: color 0.4s; }
+    p { color: var(--text-muted); line-height: 1.6; transition: color 0.4s; }
+    a { text-decoration: none; color: inherit; }
+
+    .text-gradient {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      display: inline-block;
+    }
+
+    /* ================= BACKGROUND BLOBS ================= */
+    .blobs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      background: var(--blob1);
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      transition: background 0.4s ease;
+    }
+    .blob-2 {
+      background: var(--blob2);
+      width: 600px;
+      height: 600px;
+      bottom: -200px;
+      right: -100px;
+      animation-delay: -5s;
+      transition: background 0.4s ease;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 50px) scale(1.1); }
+    }
+
+    /* ================= GLASSMORPHISM BASE ================= */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 var(--glass-shadow);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+    
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: skewX(-20deg);
+      transition: all 0.7s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .glass:hover::before {
+      left: 200%;
+    }
+    .glass-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 var(--glass-shadow);
+    }
+    .glass > * { position: relative; z-index: 2; }
+
+    /* ================= BADGE ================= */
+    .badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 50px;
+      background: rgba(127, 0, 255, 0.1);
+      color: var(--accent-1);
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(127, 0, 255, 0.2);
+    }
+    [data-theme="dark"] .badge {
+      background: rgba(127, 0, 255, 0.2);
+      color: #e0b3ff;
+    }
+
+    /* ================= BUTTONS ================= */
+    button { font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; border: none; }
+    
+    .glass-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px var(--glass-shadow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    [data-theme="dark"] .glass-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-block;
+      text-align: center;
+    }
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(26,115,232,0.4);
+    }
+
+    /* ================= FORM INPUTS ================= */
+    .glass-input {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      font-size: 16px;
+      margin-top: 8px;
+      transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+    }
+    .glass-input::placeholder { color: var(--text-muted); }
+    .glass-input:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+      background: rgba(255,255,255,0.1);
+    }
+    textarea.glass-input { resize: vertical; }
+
+    /* ================= LAYOUT ================= */
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    section { padding: 60px 0; }
+
+    /* ================= HEADER ================= */
+    header {
+      position: sticky;
+      top: 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 1000;
+    }
+    .header-left { display: flex; align-items: center; gap: 15px; }
+    .logo-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; box-shadow: 0 8px 20px rgba(127,0,255,0.3);
+    }
+    .brand-text h2 { font-size: 24px; font-weight: 800; line-height: 1; }
+    .brand-text p { font-size: 11px; margin-top: 4px; letter-spacing: 1px; }
+    
+    .header-right { display: flex; gap: 15px; align-items: center; }
+
+    /* ================= HERO ================= */
+    .hero { margin-top: 40px; margin-bottom: 20px; }
+    .hero h1 { font-size: clamp(40px, 5vw, 65px); font-weight: 800; line-height: 1.1; margin-bottom: 25px; }
+    .hero p { max-width: 800px; font-size: 20px; line-height: 1.9; }
+
+    /* ================= CONTACT GRID ================= */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 20px;
+    }
+    
+    .contact-form { padding: 40px; }
+    .contact-form h2 { font-size: 32px; margin-bottom: 10px; }
+    .contact-form p { margin-bottom: 30px; font-size: 16px; }
+    
+    .form-group { margin-bottom: 25px; text-align: left; }
+    .form-group label { font-weight: 600; font-size: 15px; display: block; color: var(--text-main); }
+    
+    .contact-info { padding: 40px; }
+    .contact-info h2 { font-size: 32px; margin-bottom: 10px; }
+    .contact-info p { margin-bottom: 30px; font-size: 16px; }
+    
+    .info-card {
+      background: var(--glass-bg);
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 15px;
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 16px;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .info-card i {
+      font-size: 24px;
+      color: var(--accent-2);
+    }
+
+    /* ================= SEO / FEATURES GRID ================= */
+    .features-section { padding: 50px; margin-top: 50px; }
+    .features-section h2 { font-size: 36px; margin-bottom: 20px; }
+    .features-section > p { margin-bottom: 40px; font-size: 18px; line-height: 1.8; }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .feature-card {
+      background: var(--glass-bg);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .feature-card .icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .feature-card h3 { font-size: 22px; margin-bottom: 15px; }
+    .feature-card p { font-size: 16px; line-height: 1.7; }
+
+    /* ================= FOOTER ================= */
+    footer { margin-top: 60px; padding-bottom: 30px; }
+    .footer-content { display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding: 40px; }
+    .footer-col { flex: 1; min-width: 200px; }
+    .footer-col h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-main); }
+    .footer-col p { font-size: 14px; margin-bottom: 10px; }
+    .footer-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--accent-2); }
+    .footer-socials { display: flex; gap: 15px; margin-top: 15px; }
+    .footer-socials a { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); transition: transform 0.3s; }
+    .footer-socials a:hover { transform: scale(1.1); }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--glass-border); margin-top: 20px; color: var(--text-muted); }
+
+    /* ================= SCROLL TO TOP ================= */
+    #scroll-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      font-size: 20px; color: var(--accent-1);
+    }
+    #scroll-top.show { opacity: 1; visibility: visible; }
+    #scroll-top:hover { transform: translateY(-5px); }
+
+    /* ================= RESPONSIVE ================= */
+    @media(max-width: 768px) {
+      header { flex-direction: column; gap: 15px; padding: 15px; border-radius: 20px; }
+      .header-right { flex-wrap: wrap; justify-content: center; }
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 16px; }
+      .contact-form, .contact-info { padding: 25px; }
+      .features-section { padding: 30px 20px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-
-<header>
-
-<a href="index.html" class="left">
-
-
-<div class="header-logo">
-  <i class="fa-solid fa-coins"></i>
-</div>
-
-<div class="brand-text">
-
-<h2>FLIPPERS</h2>
-
-<p>SPIN.PICK.DECIDE</p>
-
-</div>
-
-</div>
-
-<div class="right">
-
-<a href="index.html" class="nav-btn">
-Home
-</a>
-
-<a href="index.html" class="nav-btn">
-Flippers
-</a>
-
-<a href="contact.html" class="nav-btn">
-Contact
-</a>
-
-</div>
-
-</header>
-
-<!-- MAIN -->
-
-<main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
-
-<!-- HERO -->
-
-<section>
-
-<div class="glass-card rounded-[35px] p-10 md:p-16">
-
-<span class="inline-block px-5 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm">
-📩 Contact Flippers
-</span>
-
-<h1 class="text-5xl md:text-6xl font-extrabold mt-6 leading-tight">
-
-Get In
-<span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-Touch With Us
-</span>
-
-</h1>
-
-<p class="text-gray-700 text-lg mt-6 leading-8 max-w-3xl">
-
-Need help, have feedback, or want to collaborate with Flippers?
-Reach out to our team anytime. We are always happy to hear from users,
-partners, and creators using our online decision-making tools.
-
-</p>
-
-</div>
-
-</section>
-
-<!-- CONTACT SECTION -->
-
-<section class="mt-14">
-
-<div class="grid md:grid-cols-2 gap-8">
-
-<!-- LEFT -->
-
-<div class="glass-card rounded-[35px] p-10">
-
-<h2 class="text-4xl font-bold">
-Send a Message
-</h2>
-
-<p class="text-gray-600 mt-5 leading-8">
-Fill out the contact form below and we’ll respond as soon as possible.
-</p>
-
-<form class="mt-8 space-y-6">
-
-<div>
-
-<label class="font-semibold">
-Full Name
-</label>
-
-<input type="text"
-placeholder="Enter your name"
-class="input-box">
-
-</div>
-
-<div>
-
-<label class="font-semibold">
-Email Address
-</label>
-
-<input type="email"
-placeholder="Enter your email"
-class="input-box">
-
-</div>
-
-<div>
-
-<label class="font-semibold">
-Message
-</label>
-
-<textarea rows="6"
-placeholder="Write your message..."
-class="input-box"></textarea>
-
-</div>
-
-<button type="submit" class="submit-btn">
-SEND MESSAGE
-</button>
-
-</form>
-
-</div>
-
-<!-- RIGHT -->
-
-<div class="glass-card rounded-[35px] p-10">
-
-<h2 class="text-4xl font-bold">
-Contact Information
-</h2>
-
-<p class="text-gray-600 mt-5 leading-8">
-Connect with Flippers for support, partnerships,
-feature requests, or business inquiries.
-</p>
-
-<div class="space-y-6 mt-10">
-
-<div class="bg-white/40 p-6 rounded-2xl">
-📧 support@flippers.com
-</div>
-
-<div class="bg-white/40 p-6 rounded-2xl">
-🌐 www.flippers.com
-</div>
-
-<div class="bg-white/40 p-6 rounded-2xl">
-📍 Global Online Platform
-</div>
-
-<div class="bg-white/40 p-6 rounded-2xl">
-⏰ Available 24/7
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- SEO CONTENT -->
-
-<section class="mt-20">
-
-<div class="glass-card rounded-[35px] p-10">
-
-<h2 class="text-4xl font-bold">
-Why Contact Flippers?
-</h2>
-
-<p class="text-gray-700 leading-8 mt-6 text-lg">
-
-Flippers creates modern online tools for random decisions,
-spinning wheels, coin tosses, generators, and fun interactive experiences.
-Our contact page helps users connect directly with our support team
-for questions, suggestions, bug reports, collaborations, and feedback.
-
-</p>
-
-<div class="grid md:grid-cols-3 gap-8 mt-12">
-
-<div class="bg-white/40 rounded-3xl p-8">
-
-<div class="text-5xl mb-4">⚡</div>
-
-<h3 class="text-2xl font-bold">
-Fast Support
-</h3>
-
-<p class="text-gray-700 mt-4 leading-7">
-We aim to respond quickly to all messages and user inquiries.
-</p>
-
-</div>
-
-<div class="bg-white/40 rounded-3xl p-8">
-
-<div class="text-5xl mb-4">🤝</div>
-
-<h3 class="text-2xl font-bold">
-Collaborations
-</h3>
-
-<p class="text-gray-700 mt-4 leading-7">
-Partner with Flippers for creative projects and online tools.
-</p>
-
-</div>
-
-<div class="bg-white/40 rounded-3xl p-8">
-
-<div class="text-5xl mb-4">💡</div>
-
-<h3 class="text-2xl font-bold">
-Feature Requests
-</h3>
-
-<p class="text-gray-700 mt-4 leading-7">
-Share ideas and help us improve future Flippers experiences.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-container">
-
-<div class="footer-box">
-
-<h3>Flippers</h3>
-
-<p>
-Flippers provides fun and interactive online tools
-including random pickers, generators, spinning wheels,
-and decision-making apps for everyone.
-</p>
-
-</div>
-
-<div class="footer-box">
-
-<h3>Quick Links</h3>
-
+  <!-- ================= BACKGROUND BLOBS ================= -->
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="glass container">
+    <a href="index.html" class="header-left">
+      <div class="logo-icon">
+        <i class="fa-solid fa-coins"></i>
+      </div>
+      <div class="brand-text">
+        <h2>FLIPPERS</h2>
+        <p>SPIN.PICK.DECIDE</p>
+      </div>
+    </a>
+    
+    <div class="header-right">
+      <a href="index.html"><button class="glass-btn">Home</button></a>
+      <a href="index.html#Flippers"><button class="glass-btn">Flippers</button></a>
+      <a href="contact.html"><button class="glass-btn">Contact</button></a>
+      <button id="theme-toggle" class="glass-btn" aria-label="Toggle Dark Mode" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="container">
+      <div class="glass hero" style="padding: 50px 40px;">
+        <span class="badge">📩 Contact Flippers</span>
+        
+        <h1>
+          Get In <span class="text-gradient">Touch With Us</span>
+        </h1>
+        
+        <p>
+          Need help, have feedback, or want to collaborate with Flippers?
+          Reach out to our team anytime. We are always happy to hear from users,
+          partners, and creators using our online decision-making tools.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT SECTION ================= -->
+    <section class="container">
+      <div class="contact-grid">
+
+        <!-- LEFT: FORM -->
+        <div class="glass contact-form">
+          <h2>Send a Message</h2>
+          <p>Fill out the contact form below and we'll respond as soon as possible.</p>
+
+          <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Message feature is purely visual in this template.');">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" placeholder="Enter your name" class="glass-input" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="Enter your email" class="glass-input" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" rows="5" placeholder="Write your message..." class="glass-input" required></textarea>
+            </div>
+
+            <button type="submit" class="primary-btn" style="width: 100%; font-size: 16px; padding: 15px;">
+              SEND MESSAGE
+            </button>
+          </form>
+        </div>
+
+        <!-- RIGHT: INFO -->
+        <div class="glass contact-info">
+          <h2>Contact Information</h2>
+          <p>Connect with Flippers for support, partnerships, feature requests, or business inquiries.</p>
+
+          <div style="margin-top: 30px;">
+            <div class="info-card">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@flippers.com</span>
+            </div>
+
+            <div class="info-card">
+              <i class="fa-solid fa-globe"></i>
+              <span>www.flippers.com</span>
+            </div>
+
+            <div class="info-card">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Global Online Platform</span>
+            </div>
+
+            <div class="info-card">
+              <i class="fa-solid fa-clock"></i>
+              <span>Available 24/7</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SEO CONTENT / FEATURES ================= -->
+    <section class="container">
+      <div class="glass features-section">
+        <h2>Why Contact Flippers?</h2>
+        <p>
+          Flippers creates modern online tools for random decisions, spinning wheels, coin tosses, generators, and fun interactive experiences. Our contact page helps users connect directly with our support team for questions, suggestions, bug reports, collaborations, and feedback.
+        </p>
+
+        <div class="features-grid">
+          
+          <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>Fast Support</h3>
+            <p>We aim to respond quickly to all messages and user inquiries.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">🤝</div>
+            <h3>Collaborations</h3>
+            <p>Partner with Flippers for creative projects and online tools.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">💡</div>
+            <h3>Feature Requests</h3>
+            <p>Share ideas and help us improve future Flippers experiences.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="container">
+    <div class="glass footer-content">
+      <div class="footer-col">
+        <h3>Flippers</h3>
+        <p style="max-width: 300px; font-size: 14px;">
+          Flippers provides fun and interactive online tools including random pickers, generators, spinning wheels, and decision-making apps for everyone.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
         <a href="index.html">Home</a>
-
-        <a href="index.html">Flippers</a>
-
+        <a href="index.html#Flippers">Flippers</a>
         <a href="about.html">About</a>
-
         <a href="contact.html">Contact</a>
+      </div>
 
-</div>
+      <div class="footer-col">
+        <h3>Follow Us</h3>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
 
-<div class="footer-box">
+        </div>
+      </div>
+    </div>
 
-<h3>Follow Us</h3>
+    <div class="footer-bottom">
+      &copy; 2026 Flippers | All Rights Reserved
+    </div>
+  </footer>
 
-<div class="social-icons">
+  <!-- ================= SCROLL TO TOP BUTTON ================= -->
+  <button id="scroll-top" class="glass-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-<a href="https://www.instagram.com/thecodecraft.dev?igsh=bjhzZzhnNmZrZ3l2" class="instagram">
-<i class="fa-brands fa-instagram"></i>
-</a>
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // --- 1. Theme Toggle Logic ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    // Check local storage for theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlEl.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    } else {
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        htmlEl.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+      }
+    }
 
-<!-- <a href="#" class="facebook">
-<i class="fa-brands fa-facebook"></i>
-</a> -->
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
 
-<a href="https://whatsapp.com/channel/0029VbCpE1Z0QeadMS6voR17" class="whatsapp">
-<i class="fa-brands fa-whatsapp"></i>
-</a>
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      } else {
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+      }
+    }
 
-</div>
-
-</div>
-
-</div>
-
-<div class="footer-bottom">
-© 2026 Flippers | All Rights Reserved
-</div>
-
-</footer>
-
+    // --- 2. Scroll to Top Logic ---
+    const scrollTopBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
