@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomness API - Flippers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 24px -1px rgba(0,0,0,0.05); }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04); }
+        .glass-button { background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7)); border: 1px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s; }
+        .glass-button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; }
+        .glow-purple { background: radial-gradient(circle, rgba(176,106,179,0.4) 0%, transparent 70%); width: 700px; height: 700px; top: -200px; left: -100px; }
+        .glow-cyan { background: radial-gradient(circle, rgba(69,104,220,0.3) 0%, transparent 70%); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+        .logo-symbol { display: inline-flex; width: 32px; height: 32px; background: linear-gradient(135deg, #b06ab3, #4568dc); border-radius: 8px; align-items: center; justify-content: center; font-weight: bold; color: white; transform: rotate(-10deg); }
+        .input-glass { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); padding: 1rem; border-radius: 1rem; outline: none; transition: all 0.2s; color: #1E293B; width: 100%; }
+        .input-glass:focus { background: rgba(255,255,255,0.9); border-color: #4568dc; box-shadow: 0 0 0 2px rgba(69,104,220,0.2); }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-purple"></div><div class="bg-glow glow-cyan"></div>
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3"><div class="logo-symbol text-lg">F</div><span class="font-sora font-bold text-xl text-[#1E293B]">FLIPPERS</span></a>
+            <div class="flex items-center gap-6 text-sm font-medium text-[#64748B]">
+                <a href="index.html#Flippers" class="hover:text-[#1E293B] transition-colors">Tools</a>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-32 pb-12 px-4 max-w-3xl mx-auto flex-1 w-full">
+        <h1 class="text-4xl md:text-5xl font-sora font-bold mb-8 text-primary">Randomness API</h1>
+        <div class="glass-card rounded-3xl p-8 md:p-12 text-secondary leading-relaxed space-y-6">
+            
+            <div class="text-center py-12">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-accent/10 mb-6">
+                    <i data-lucide="code-2" class="w-10 h-10 text-accent"></i>
+                </div>
+                <h2 class="text-3xl font-sora font-bold text-primary mb-4">Coming Soon</h2>
+                <p class="text-lg max-w-lg mx-auto">We are currently building a lightning-fast REST API for developers. Soon, you'll be able to integrate Flippers' randomization engines directly into your own applications, bots, and games.</p>
+            </div>
+            
+            <div class="bg-white/50 p-6 rounded-2xl border border-white mt-8">
+                <h3 class="font-sora font-bold text-primary mb-2">Planned Endpoints:</h3>
+                <ul class="list-disc pl-5 space-y-2 font-mono text-sm">
+                    <li>GET /api/v1/coin</li>
+                    <li>GET /api/v1/dice?sides=20</li>
+                    <li>POST /api/v1/shuffle</li>
+                    <li>GET /api/v1/number?min=1&max=100</li>
+                </ul>
+            </div>
+        
+        </div>
+    </main>
+        <footer class="mt-auto border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

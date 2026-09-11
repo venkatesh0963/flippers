@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller - Flippers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sora: ['Sora', 'sans-serif'], inter: ['Inter', 'sans-serif'] },
+                    colors: { bgbase: '#F4F7FB', primary: '#1E293B', secondary: '#64748B', accent: '#4568dc' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.05); }
+        .glass-button { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6)); border: 1px solid rgba(255, 255, 255, 1); backdrop-filter: blur(10px); transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; color: #1E293B; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .glass-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1), 0 0 20px rgba(69, 104, 220, 0.1); }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; animation: floatGlow 15s ease-in-out infinite alternate; }
+        .glow-purple { background: radial-gradient(circle, rgba(176, 106, 179, 0.4) 0%, transparent 70%); width: 700px; height: 700px; top: -200px; left: -100px; }
+        .glow-cyan { background: radial-gradient(circle, rgba(69, 104, 220, 0.3) 0%, transparent 70%); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+        .logo-symbol { display: inline-flex; width: 32px; height: 32px; background: linear-gradient(135deg, #b06ab3, #4568dc); border-radius: 8px; align-items: center; justify-content: center; font-weight: bold; color: white; transform: rotate(-10deg); }
+        .dice-container { width: 120px; height: 120px; perspective: 800px; margin: 0 auto; }
+        .dice { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.1s; }
+        .dice-face { position: absolute; width: 100%; height: 100%; background: rgba(255,255,255,0.95); border: 2px solid #e2e8f0; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 5rem; line-height: 1; color: #1E293B; backface-visibility: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.1); }
+        .dice-front { transform: translateZ(60px); }
+        .dice-back { transform: rotateY(180deg) translateZ(60px); }
+        .dice-right { transform: rotateY(90deg) translateZ(60px); }
+        .dice-left { transform: rotateY(-90deg) translateZ(60px); }
+        .dice-top { transform: rotateX(90deg) translateZ(60px); }
+        .dice-bottom { transform: rotateX(-90deg) translateZ(60px); }
+        @keyframes tumble {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0) translateY(0); }
+            25% { transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg) translateY(-80px); }
+            50% { transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) translateY(-120px); }
+            75% { transform: rotateX(1080deg) rotateY(540deg) rotateZ(270deg) translateY(-60px); }
+            100% { transform: rotateX(1440deg) rotateY(720deg) rotateZ(360deg) translateY(0); }
+        }
+        .result-panel { opacity: 0; transform: translateY(10px) scale(0.95); transition: all 0.4s; display: none; }
+        .result-panel.show { opacity: 1; transform: translateY(0) scale(1); display: block; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04); transition: all 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-purple"></div><div class="bg-glow glow-cyan"></div>
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3"><div class="logo-symbol text-lg">F</div><span class="font-sora font-bold text-xl text-primary">FLIPPERS</span></a>
+            <a href="index.html" class="hover:text-primary text-secondary">Tools</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-12 px-4 max-w-2xl mx-auto flex flex-col items-center justify-center w-full">
+        <div class="w-full mb-8"><a href="index.html" class="text-secondary hover:text-primary flex items-center gap-2 inline-flex"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to tools</a></div>
+        <h1 class="text-4xl font-sora font-bold mb-4 text-primary">Dice Roller</h1>
+        <p class="text-secondary text-lg mb-12">Roll standard or custom dice.</p>
+        <div class="mb-16 h-32 flex items-center justify-center gap-8 w-full">
+            <div class="dice-container">
+                <div class="dice" id="dice-1">
+                    <div class="dice-face dice-front">⚀</div><div class="dice-face dice-back">⚅</div><div class="dice-face dice-right">⚂</div>
+                    <div class="dice-face dice-left">⚃</div><div class="dice-face dice-top">⚁</div><div class="dice-face dice-bottom">⚄</div>
+                </div>
+            </div>
+        </div>
+        <button id="btn-roll" class="glass-button rounded-full px-16 py-5 text-xl font-sora font-bold tracking-widest mb-10" onclick="rollDiceAction()">ROLL</button>
+        <div id="dice-result-panel" class="result-panel glass-panel rounded-3xl p-8 w-full text-center mt-4">
+            <h3 class="text-sm tracking-widest text-secondary uppercase mb-2">Result</h3>
+            <div class="text-6xl font-sora font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-accent to-purple-500 mb-4" id="dice-result-text">4</div>
+            <p class="text-secondary mb-8" id="dice-result-msg">You rolled a 4.</p>
+        </div>
+    </main>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 w-full text-center md:text-left">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-4 flex items-center gap-2 justify-center md:justify-start"><i data-lucide="info" class="w-6 h-6 text-purple-500"></i> About Dice Roller</h2>
+        <p class="text-slate-600 text-lg leading-relaxed bg-white/50 p-6 rounded-2xl border border-white shadow-sm">Roll standard D6 dice with a realistic 3D tumble. Perfect for board games, tabletop RPGs, or anywhere you need instant random numbers.</p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-16 mb-8 border-t border-slate-200 w-full">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-blue-500"></i> More Decision Tools</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a href="coin-flip.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🪙</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Coin Flip</h3><p class="text-slate-500 text-sm">Heads or tails? Let fate decide.</p>
+            </a>
+            <a href="wheel.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🎡</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Wheel of Names</h3><p class="text-slate-500 text-sm">Spin to pick a random winner.</p>
+            </a>
+            <a href="shuffler.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🔀</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Decision Shuffler</h3><p class="text-slate-500 text-sm">Add options and let it pick.</p>
+            </a>
+        </div>
+    </section>
+
+            <footer class="mt-auto border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const dice1 = document.getElementById('dice-1');
+        const diceResultPanel = document.getElementById('dice-result-panel');
+        const btnRoll = document.getElementById('btn-roll');
+        function getDiceTransform(num) {
+            switch(num) { case 1: return 'rotateX(0deg) rotateY(0deg)'; case 2: return 'rotateX(-90deg) rotateY(0deg)'; case 3: return 'rotateX(0deg) rotateY(-90deg)'; case 4: return 'rotateX(0deg) rotateY(90deg)'; case 5: return 'rotateX(90deg) rotateY(0deg)'; case 6: return 'rotateX(180deg) rotateY(0deg)'; default: return 'rotateX(0) rotateY(0)'; }
+        }
+        function rollDiceAction() {
+            diceResultPanel.classList.remove('show');
+            setTimeout(() => { diceResultPanel.style.display = 'none'; }, 400);
+            btnRoll.disabled = true;
+            dice1.style.animation = 'none';
+            void dice1.offsetWidth;
+            dice1.style.animation = 'tumble 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+            const result = Math.floor(Math.random() * 6) + 1;
+            setTimeout(() => {
+                dice1.style.animation = 'none';
+                dice1.style.transform = getDiceTransform(result);
+                document.getElementById('dice-result-text').innerText = result;
+                document.getElementById('dice-result-msg').innerText = `You rolled a ${result}.`;
+                diceResultPanel.style.display = 'block';
+                setTimeout(() => diceResultPanel.classList.add('show'), 10);
+                btnRoll.disabled = false;
+            }, 850);
+        }
+    </script>
+</body>
+</html>

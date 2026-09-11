@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flippers - Decisions, flipped. The Ultimate Decision Toolkit</title>
+    <meta name="description" content="Flippers is a beautiful digital toolbox for making quick decisions. Coin flip, dice roller, wheel of names, decision shuffler, and more. Make a choice. Move on.">
+    <meta name="keywords" content="decision maker, randomizer, coin flip, dice roller, wheel of names, random number generator, decision shuffler">
+    <meta property="og:title" content="Flippers - Decisions, flipped.">
+    <meta property="og:description" content="Your little decision machine. When you can't decide, flip it.">
+    <meta property="og:type" content="website">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sora: ['Sora', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        bgbase: '#F4F7FB',
+                        primary: '#1E293B',
+                        secondary: '#64748B',
+                        accent: '#4568dc',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Light Theme Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.08);
+        }
+
+        .glass-button {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            border: 1px solid rgba(255, 255, 255, 1);
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #1E293B;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .glass-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, rgba(255,255,255,1), rgba(255,255,255,0.8));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1), 0 0 20px rgba(69, 104, 220, 0.1);
+        }
+        
+        .glass-button:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        /* Light Theme Background Glows */
+        .bg-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: floatGlow 15s ease-in-out infinite alternate;
+        }
+        .glow-purple {
+            background: radial-gradient(circle, rgba(176, 106, 179, 0.4) 0%, transparent 70%);
+            width: 700px;
+            height: 700px;
+            top: -200px;
+            left: -100px;
+        }
+        .glow-cyan {
+            background: radial-gradient(circle, rgba(69, 104, 220, 0.3) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            bottom: -200px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+        .glow-orange {
+            background: radial-gradient(circle, rgba(255, 165, 0, 0.2) 0%, transparent 70%);
+            width: 500px;
+            height: 500px;
+            top: 20%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* Rolling Text Hero */
+        .rolling-text-wrapper {
+            height: 1.2em;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            position: relative;
+        }
+        .rolling-text-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .rolling-item {
+            height: 1.2em;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #b06ab3, #4568dc, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .logo-symbol {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #b06ab3, #4568dc);
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            transform: rotate(-10deg);
+            transition: transform 0.3s;
+        }
+        .logo-symbol:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        main { flex: 1; }
+    </style>
+</head>
+<body>
+
+    <!-- Background Glows -->
+    <div class="bg-glow glow-purple"></div>
+    <div class="bg-glow glow-cyan"></div>
+    <div class="bg-glow glow-orange"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="logo-symbol text-lg">F</div>
+                    <span class="font-sora font-bold text-xl tracking-wide text-primary">FLIPPERS</span>
+                </a>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8 text-sm font-medium text-secondary">
+                        <a href="#Flippers" class="text-primary transition-colors font-bold">Tools</a>
+                        <a href="#" class="hover:text-primary transition-colors">Discover</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-secondary hover:text-primary">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <!-- Using flex flex-col gap-24 (6rem) for perfectly consistent margins between all major sections -->
+    <main class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full flex flex-col gap-24">
+        
+        <!-- Section 1: Hero -->
+        <section class="text-center w-full">
+            <h1 class="text-5xl md:text-7xl font-sora font-extrabold mb-6 tracking-tight text-primary">
+                <div class="rolling-text-wrapper align-middle mb-2">
+                    <div class="rolling-text-inner" id="hero-roller">
+                        <div class="rolling-item">🪙 FLIP IT</div>
+                        <div class="rolling-item">🎲 ROLL IT</div>
+                        <div class="rolling-item">🎡 SPIN IT</div>
+                        <div class="rolling-item">🔀 SHUFFLE IT</div>
+                        <div class="rolling-item">✨ DECIDE IT</div>
+                    </div>
+                </div>
+            </h1>
+            <p class="text-xl text-secondary mb-10 max-w-2xl mx-auto">
+                Whatever you're deciding, we've got a way to randomize it. <br/> Your beautiful digital toolbox for quick decisions.
+            </p>
+
+            <!-- Search -->
+            <div class="max-w-md mx-auto relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="search" class="w-5 h-5 text-secondary group-focus-within:text-accent transition-colors"></i>
+                </div>
+                <input type="text" class="w-full glass-panel text-primary rounded-full py-4 pl-12 pr-4 focus:outline-none focus:border-accent/40 transition-colors placeholder-secondary/70 font-medium shadow-sm" placeholder="Search a decision tool...">
+            </div>
+        </section>
+
+        <!-- Section 2: Marketing Features Above Tools -->
+        <section class="text-center w-full">
+            <h2 class="text-3xl md:text-4xl font-sora font-extrabold text-primary mb-6 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-accent">Free Online Random Decision Maker Tools</h2>
+            <p class="text-lg text-secondary mb-10 max-w-3xl mx-auto leading-relaxed">Use powerful and fun online random tools to make quick decisions instantly. Flip coins, roll dice, spin wheels, shuffle cards, generate names, and much more — all completely free.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <div class="glass-panel p-6 rounded-2xl font-sora font-bold text-primary flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="text-3xl">🎉</span> Made For Fun
+                </div>
+                <div class="glass-panel p-6 rounded-2xl font-sora font-bold text-primary flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="text-3xl">⚖️</span> Random & Fair
+                </div>
+                <div class="glass-panel p-6 rounded-2xl font-sora font-bold text-primary flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="text-3xl">⚡</span> Instant Results
+                </div>
+                <div class="glass-panel p-6 rounded-2xl font-sora font-bold text-primary flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md transition-shadow">
+                    <span class="text-3xl">🙌</span> Casual Use Only
+                </div>
+            </div>
+
+            <div class="bg-white/50 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/80 shadow-sm text-left flex flex-col md:flex-row gap-12 items-center w-full">
+                <div class="flex-1">
+                    <h3 class="text-2xl md:text-3xl font-sora font-bold text-primary mb-4 leading-tight">Random Decision Tools,<br/>Made for Fun</h3>
+                    <p class="text-secondary text-lg">Enjoy random tools for games, parties, giveaways, and everyday fun.</p>
+                </div>
+                <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i data-lucide="shuffle" class="w-5 h-5 text-accent"></i> Random Choice</h4>
+                        <p class="text-sm text-secondary">Pick between options fairly and instantly.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-purple-500"></i> Interactive UI</h4>
+                        <p class="text-sm text-secondary">Simple, engaging experience for fast decisions.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i data-lucide="pen-tool" class="w-5 h-5 text-pink-500"></i> Custom Inputs</h4>
+                        <p class="text-sm text-secondary">Add your own choices and get instant results.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i data-lucide="sparkles" class="w-5 h-5 text-yellow-500"></i> Random Results</h4>
+                        <p class="text-sm text-secondary">Results are generated randomly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Categories (The Tools Grid) -->
+        <section class="space-y-16 w-full" id="Flippers">
+            <!-- Most Popular -->
+            <div>
+                <h2 class="text-sm font-bold tracking-widest text-secondary uppercase mb-6 flex items-center gap-2">
+                    <i data-lucide="zap" class="w-4 h-4 text-yellow-500"></i> Most Popular
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none"></div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-5xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:rotate-12 duration-500 origin-bottom-left">🪙</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Coin Flip</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Heads or tails? Let fate decide with a realistic 3D coin.</p>
+                            <a href="coin-flip.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">
+                                Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none"></div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-5xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:-rotate-12 duration-500 origin-bottom-left">🎲</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Dice Roller</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Roll standard or custom dice instantly with physics.</p>
+                            <a href="dice-roller.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">
+                                Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none"></div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-5xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:rotate-45 duration-700 origin-center">🎡</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Wheel of Names</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Spin the colorful wheel to pick a random winner.</p>
+                            <a href="wheel.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">
+                                Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decision Makers -->
+            <div>
+                <h2 class="text-sm font-bold tracking-widest text-secondary uppercase mb-6 flex items-center gap-2">
+                    <i data-lucide="split-square-horizontal" class="w-4 h-4 text-accent"></i> Decision Makers
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-4xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:rotate-12 duration-500 origin-bottom-left">🔀</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Decision Shuffler</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Add options, shuffle, and let the cards decide.</p>
+                            <a href="shuffler.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-4xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:rotate-12 duration-500 origin-bottom-left">💬</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Comment Picker</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Transparently pick winners from huge lists.</p>
+                            <a href="comments.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Randomizers -->
+            <div>
+                <h2 class="text-sm font-bold tracking-widest text-secondary uppercase mb-6 flex items-center gap-2">
+                    <i data-lucide="shuffle" class="w-4 h-4 text-purple-500"></i> Randomizers
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-4xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:rotate-12 duration-500 origin-bottom-left">🃏</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Card Shuffler</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Draw random cards from a realistic deck.</p>
+                            <a href="cards.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-4xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:-rotate-12 duration-500 origin-bottom-left">🔢</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Number Gen</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Generate random numbers in a custom range.</p>
+                            <a href="numbers.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 flex flex-col group relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="text-4xl mb-4 drop-shadow-md transform transition-transform group-hover:scale-110 group-hover:rotate-12 duration-500 origin-bottom-left">👤</div>
+                            <h3 class="font-sora font-bold text-xl mb-2 text-primary">Name Gen</h3>
+                            <p class="text-secondary text-sm flex-1 mb-6">Creative names for games, stories, or pets.</p>
+                            <a href="names.html" class="glass-button w-full py-3 rounded-2xl font-sora font-bold text-sm">Open Tool <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: SEO & CTA Block Below Tools -->
+        <section class="text-center w-full">
+            <div class="glass-card rounded-[2rem] p-8 md:p-16 mb-16 bg-gradient-to-br from-white/90 to-white/60 shadow-xl shadow-accent/5">
+                <h2 class="text-2xl md:text-4xl font-sora font-extrabold text-primary mb-6 leading-tight">Have fun making choices with FLIPPERS free random tools for games and entertainment.</h2>
+                <a href="#Flippers" class="inline-block bg-primary text-white hover:bg-accent px-10 py-5 rounded-full font-sora font-bold text-lg mb-10 transition-colors shadow-lg hover:shadow-accent/40 hover:-translate-y-1">TRY TOOLS &rarr;</a>
+                
+                <blockquote class="text-lg md:text-xl italic text-secondary border-t border-black/5 pt-10 max-w-3xl mx-auto px-4 relative">
+                    <span class="absolute top-6 left-0 text-6xl text-accent/20 font-serif leading-none">"</span>
+                    <span class="relative z-10">Spin, flip, pick, and play with FLIPPERS — free random tools designed for fun and entertainment.</span>
+                        <footer class="border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+                </blockquote>
+            </div>
+
+            <div class="text-left bg-white/50 backdrop-blur-md rounded-[2rem] p-8 md:p-12 border border-white/80 shadow-sm text-secondary space-y-6 w-full">
+                <h2 class="text-3xl font-sora font-bold text-primary mb-6">Free Online Random Tools for Fun & Entertainment</h2>
+                <p class="text-lg leading-relaxed">FLIPPERS is a free online platform offering fun and interactive random tools including Coin Flip, Dice Roller, Wheel of Names, Card Shuffle, Number Generator, Fantasy Name Generator, and more. Whether you're playing games, hosting giveaways, organizing activities, or simply looking for a quick random choice, FLIPPERS provides fast and easy-to-use tools directly in your browser.</p>
+                <p class="text-lg leading-relaxed">Our tools are designed to make random selection simple, entertaining, and accessible on any device. No downloads, registrations, or installations are required—just choose a tool and start having fun instantly.</p>
+
+                <h3 class="text-2xl font-sora font-bold text-primary mt-10 mb-6">Why Use FLIPPERS?</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
+                    <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> Free online random generators and decision tools</li>
+                    <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> Instant coin flips, dice rolls, and wheel spins</li>
+                    <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> Simple, fast, and mobile-friendly experience</li>
+                    <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> Perfect for games, giveaways, classrooms, and parties</li>
+                    <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> No signup or installation required</li>
+                    <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-green-500 shrink-0"></i> Fun and interactive user experience</li>
+                </ul>
+
+                <div class="bg-red-50/80 border border-red-200 rounded-2xl p-8 mt-12">
+                    <h3 class="text-xl font-sora font-bold text-red-800 mb-4 flex items-center gap-3"><i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i> Important Disclaimer</h3>
+                    <p class="text-red-900/80 leading-relaxed mb-4">FLIPPERS is intended for entertainment and recreational purposes only. All results generated by our tools are random and should not be considered professional advice, recommendations, predictions, or guarantees of any kind.</p>
+                    <p class="text-red-900/80 leading-relaxed">Users should not rely on FLIPPERS for financial, legal, medical, educational, employment, safety-related, or other important real-world decisions. Always use personal judgment and consult qualified professionals when making significant decisions.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Professional Footer -->
+    <!-- Removed mt-20 since the main flex column handles spacing perfectly now -->
+        <footer class="border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Rolling Text Animation
+        const roller = document.getElementById('hero-roller');
+        let currentRollIndex = 0;
+        const totalRollItems = 5;
+        
+        setInterval(() => {
+            currentRollIndex = (currentRollIndex + 1) % totalRollItems;
+            roller.style.transform = `translateY(-${currentRollIndex * 1.2}em)`;
+        }, 2500);
+    </script>
+</body>
+</html>

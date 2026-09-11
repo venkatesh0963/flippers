@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Generator - Flippers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 24px -1px rgba(0,0,0,0.05); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px -4px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.2s; }
+        .glass-card.active { border-color: #4568dc; background: #fff; box-shadow: 0 0 0 2px rgba(69,104,220,0.3); }
+        .glass-button { background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7)); border: 1px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s; }
+        .glass-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; }
+        .glow-purple { background: radial-gradient(circle, rgba(176,106,179,0.4) 0%, transparent 70%); width: 700px; height: 700px; top: -200px; left: -100px; }
+        .glow-cyan { background: radial-gradient(circle, rgba(69,104,220,0.3) 0%, transparent 70%); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+        .logo-symbol { display: inline-flex; width: 32px; height: 32px; background: linear-gradient(135deg, #b06ab3, #4568dc); border-radius: 8px; align-items: center; justify-content: center; font-weight: bold; color: white; transform: rotate(-10deg); }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-purple"></div><div class="bg-glow glow-cyan"></div>
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3"><div class="logo-symbol text-lg">F</div><span class="font-sora font-bold text-xl text-[#1E293B]">FLIPPERS</span></a>
+            <a href="index.html" class="text-sm font-medium text-[#64748B] hover:text-[#1E293B]">Tools</a>
+        </div>
+    </nav>
+    <main class="pt-32 pb-12 px-4 max-w-2xl mx-auto flex flex-col items-center w-full">
+        <div class="w-full mb-8 text-left"><a href="index.html" class="text-secondary flex items-center gap-2 inline-flex text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</a></div>
+        <h1 class="text-4xl font-sora font-bold mb-2">Name Generator</h1>
+        <p class="text-secondary mb-10">What kind of name are you looking for?</p>
+        <div class="grid grid-cols-2 gap-4 w-full max-w-lg mb-8">
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3 active" onclick="setCategory('person', this)"><span class="text-2xl">👤</span> <span class="font-sora font-bold">Person</span></div>
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3" onclick="setCategory('fantasy', this)"><span class="text-2xl">🐉</span> <span class="font-sora font-bold">Fantasy</span></div>
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3" onclick="setCategory('gamer', this)"><span class="text-2xl">🎮</span> <span class="font-sora font-bold">Gamer</span></div>
+            <div class="glass-card p-4 rounded-2xl flex items-center gap-3" onclick="setCategory('business', this)"><span class="text-2xl">🏢</span> <span class="font-sora font-bold">Business</span></div>
+        </div>
+        <button onclick="generateNames()" class="w-full max-w-lg glass-button py-4 rounded-xl font-sora font-bold text-lg mb-8">GENERATE</button>
+        <div id="results" class="w-full max-w-lg space-y-3 hidden"></div>
+    </main>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 w-full text-center md:text-left">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-4 flex items-center gap-2 justify-center md:justify-start"><i data-lucide="info" class="w-6 h-6 text-purple-500"></i> About Name Generator</h2>
+        <p class="text-slate-600 text-lg leading-relaxed bg-white/50 p-6 rounded-2xl border border-white shadow-sm">Generate creative names instantly. Choose from categories like Person, Fantasy, Gamer, or Business to find the perfect name for your next character or project.</p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-16 mb-8 border-t border-slate-200 w-full">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-blue-500"></i> More Decision Tools</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a href="coin-flip.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🪙</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Coin Flip</h3><p class="text-slate-500 text-sm">Heads or tails? Let fate decide.</p>
+            </a>
+            <a href="wheel.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🎡</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Wheel of Names</h3><p class="text-slate-500 text-sm">Spin to pick a random winner.</p>
+            </a>
+            <a href="shuffler.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🔀</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Decision Shuffler</h3><p class="text-slate-500 text-sm">Add options and let it pick.</p>
+            </a>
+        </div>
+    </section>
+
+            <footer class="mt-auto border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        let currentCategory = 'person';
+        function setCategory(cat, el) { currentCategory = cat; document.querySelectorAll('.glass-card').forEach(c => c.classList.remove('active')); el.classList.add('active'); }
+        const data = {
+            person: { first: ['Alex','Sarah','John','Priya','Rahul','Emma','Liam','Olivia','Noah','Ava'], last: ['Smith','Johnson','Patel','Sharma','Williams','Brown','Jones','Garcia','Miller'] },
+            fantasy: { first: ['Nova','Aria','Kai','Luna','Thorne','Sylas','Lyra','Elowen','Draken'], last: ['Vale','Stone','Mercer','Reed','Storm','Shadow','Fire','Wood','Frost'] },
+            gamer: { pre: ['Shadow','Toxic','Cyber','Ninja','Ghost','Dark','Pro','Sniper','Neon'], post: ['Slayer','Killa','Wolf','Strike','Blade','Viper','Demon','God'] },
+            business: { pre: ['Tech','Global','Prime','Apex','Nexus','Vantage','Core','Peak'], post: ['Solutions','Corp','Industries','Dynamics','Labs','Ventures','Group'] }
+        };
+        function generateNames() {
+            const container = document.getElementById('results');
+            container.innerHTML = '<h3 class="text-xs text-secondary uppercase text-center mb-4">Your Generated Names</h3>';
+            container.classList.remove('hidden');
+            for(let i=0; i<4; i++) {
+                let name = ''; const catData = data[currentCategory];
+                if(currentCategory === 'person' || currentCategory === 'fantasy') { name = `${catData.first[Math.floor(Math.random()*catData.first.length)]} ${catData.last[Math.floor(Math.random()*catData.last.length)]}`; }
+                else if(currentCategory === 'gamer') { name = `${catData.pre[Math.floor(Math.random()*catData.pre.length)]}${catData.post[Math.floor(Math.random()*catData.post.length)]}${Math.random()>0.5 ? Math.floor(Math.random()*99) : ''}`; }
+                else { name = `${catData.pre[Math.floor(Math.random()*catData.pre.length)]} ${catData.post[Math.floor(Math.random()*catData.post.length)]}`; }
+                container.innerHTML += `<div class="glass-panel p-4 rounded-xl flex justify-between items-center group"><span class="font-sora font-bold text-lg text-primary">✦ ${name}</span><button onclick="navigator.clipboard.writeText('${name}')" class="text-secondary hover:text-accent opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="copy" class="w-4 h-4"></i></button></div>`;
+            }
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

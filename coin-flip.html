@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip - Flippers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.05); }
+        .glass-button { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6)); border: 1px solid rgba(255, 255, 255, 1); backdrop-filter: blur(10px); transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; color: #1E293B; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .glass-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1), 0 0 20px rgba(69, 104, 220, 0.1); }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; animation: floatGlow 15s ease-in-out infinite alternate; }
+        .glow-purple { background: radial-gradient(circle, rgba(176, 106, 179, 0.4) 0%, transparent 70%); width: 700px; height: 700px; top: -200px; left: -100px; }
+        .glow-cyan { background: radial-gradient(circle, rgba(69, 104, 220, 0.3) 0%, transparent 70%); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+        .logo-symbol { display: inline-flex; width: 32px; height: 32px; background: linear-gradient(135deg, #b06ab3, #4568dc); border-radius: 8px; align-items: center; justify-content: center; font-weight: bold; color: white; transform: rotate(-10deg); }
+        .coin-container { perspective: 800px; width: 160px; height: 160px; margin: 0 auto; }
+        .coin { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.1s; }
+        .coin-face { position: absolute; width: 100%; height: 100%; border-radius: 50%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; font-family: 'Sora', sans-serif; box-shadow: inset 0 0 0 8px rgba(255,255,255,0.4), 0 10px 30px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.8); }
+        .coin-face-heads { background: linear-gradient(135deg, #FFD700, #FDB931); color: #8B6508; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); }
+        .coin-face-tails { transform: rotateX(180deg); background: linear-gradient(135deg, #E0E0E0, #9E9E9E); color: #424242; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); }
+        @keyframes flip-heads { 0% { transform: rotateX(0) translateY(0); } 50% { transform: rotateX(1080deg) translateY(-150px); } 100% { transform: rotateX(2160deg) translateY(0); } }
+        @keyframes flip-tails { 0% { transform: rotateX(0) translateY(0); } 50% { transform: rotateX(1080deg) translateY(-150px); } 100% { transform: rotateX(2340deg) translateY(0); } }
+        .result-panel { opacity: 0; transform: translateY(10px) scale(0.95); transition: all 0.4s; display: none; }
+        .result-panel.show { opacity: 1; transform: translateY(0) scale(1); display: block; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04); transition: all 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-purple"></div><div class="bg-glow glow-cyan"></div>
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3"><div class="logo-symbol text-lg">F</div><span class="font-sora font-bold text-xl text-primary">FLIPPERS</span></a>
+            <a href="index.html" class="hover:text-primary text-secondary">Tools</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-12 px-4 max-w-2xl mx-auto flex flex-col items-center justify-center w-full">
+        <div class="w-full mb-8"><a href="index.html" class="text-secondary hover:text-primary flex items-center gap-2 inline-flex"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to tools</a></div>
+        <h1 class="text-4xl md:text-5xl font-sora font-bold mb-4 text-primary">Coin Flip</h1>
+        <p class="text-secondary text-lg mb-12">Heads or tails? Let fate decide.</p>
+        <div class="mb-16"><div class="coin-container" id="coin-container"><div class="coin" id="coin"><div class="coin-face coin-face-heads">H</div><div class="coin-face coin-face-tails">T</div></div></div></div>
+        <button id="btn-flip" class="glass-button rounded-full px-16 py-5 text-xl font-sora font-bold tracking-widest mb-10" onclick="flipCoinAction()">FLIP</button>
+        <div id="coin-result-panel" class="result-panel glass-panel rounded-3xl p-8 w-full text-center mt-4">
+            <h3 class="text-sm tracking-widest text-secondary uppercase mb-2">Result</h3>
+            <div class="text-5xl font-sora font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-accent to-purple-500 mb-4" id="coin-result-text">HEADS</div>
+            <p class="text-secondary mb-8">Fate has spoken.</p>
+        </div>
+        <div class="mt-8 pt-8 flex gap-8 text-sm text-secondary">
+            <div class="glass-panel px-6 py-3 rounded-2xl flex flex-col items-center"><span class="text-xs uppercase tracking-wider mb-1">Heads</span><span id="stat-heads" class="text-primary font-bold text-xl">0</span></div>
+            <div class="glass-panel px-6 py-3 rounded-2xl flex flex-col items-center"><span class="text-xs uppercase tracking-wider mb-1">Tails</span><span id="stat-tails" class="text-primary font-bold text-xl">0</span></div>
+        </div>
+    </main>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 w-full text-center md:text-left">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-4 flex items-center gap-2 justify-center md:justify-start"><i data-lucide="info" class="w-6 h-6 text-purple-500"></i> About Coin Flip</h2>
+        <p class="text-slate-600 text-lg leading-relaxed bg-white/50 p-6 rounded-2xl border border-white shadow-sm">The Coin Flip tool provides a realistic 3D flipping experience. Whether you're making a quick choice between two options or settling a friendly debate, let fate decide with a simple tap.</p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-16 mb-8 border-t border-slate-200 w-full">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-blue-500"></i> More Decision Tools</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a href="coin-flip.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🪙</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Coin Flip</h3><p class="text-slate-500 text-sm">Heads or tails? Let fate decide.</p>
+            </a>
+            <a href="wheel.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🎡</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Wheel of Names</h3><p class="text-slate-500 text-sm">Spin to pick a random winner.</p>
+            </a>
+            <a href="shuffler.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🔀</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Decision Shuffler</h3><p class="text-slate-500 text-sm">Add options and let it pick.</p>
+            </a>
+        </div>
+    </section>
+
+            <footer class="mt-auto border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        let headsCount = 0; let tailsCount = 0;
+        const coin = document.getElementById('coin'); const coinResultPanel = document.getElementById('coin-result-panel'); const btnFlip = document.getElementById('btn-flip');
+        function flipCoinAction() {
+            coinResultPanel.classList.remove('show'); setTimeout(() => { coinResultPanel.style.display = 'none'; }, 400); btnFlip.disabled = true;
+            coin.style.animation = 'none'; void coin.offsetWidth;
+            const isHeads = Math.random() > 0.5;
+            coin.style.animation = `${isHeads ? 'flip-heads' : 'flip-tails'} 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+            setTimeout(() => {
+                if(isHeads) { headsCount++; document.getElementById('stat-heads').innerText = headsCount; document.getElementById('coin-result-text').innerText = "HEADS"; }
+                else { tailsCount++; document.getElementById('stat-tails').innerText = tailsCount; document.getElementById('coin-result-text').innerText = "TAILS"; }
+                coinResultPanel.style.display = 'block'; setTimeout(() => coinResultPanel.classList.add('show'), 10); btnFlip.disabled = false;
+            }, 1300);
+        }
+    </script>
+</body>
+</html>

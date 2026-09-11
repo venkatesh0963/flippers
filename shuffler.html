@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Shuffler - Flippers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 24px -1px rgba(0,0,0,0.05); }
+        .glass-button { background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7)); border: 1px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s; }
+        .glass-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; }
+        .glow-purple { background: radial-gradient(circle, rgba(176,106,179,0.4) 0%, transparent 70%); width: 700px; height: 700px; top: -200px; left: -100px; }
+        .glow-cyan { background: radial-gradient(circle, rgba(69,104,220,0.3) 0%, transparent 70%); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+        .logo-symbol { display: inline-flex; width: 32px; height: 32px; background: linear-gradient(135deg, #b06ab3, #4568dc); border-radius: 8px; align-items: center; justify-content: center; font-weight: bold; color: white; transform: rotate(-10deg); }
+        .input-glass { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); padding: 1rem; border-radius: 1rem; outline: none; transition: all 0.2s; color: #1E293B; width: 100%; font-weight: 500; }
+        .input-glass:focus { background: rgba(255,255,255,0.9); border-color: #4568dc; box-shadow: 0 0 0 2px rgba(69,104,220,0.2); }
+        .opt-card { transition: all 0.2s; }
+        .opt-card.highlight { transform: scale(1.05); border-color: #4568dc; background: #fff; box-shadow: 0 4px 20px rgba(69,104,220,0.2); z-index: 10; }
+        .opt-card.winner { transform: scale(1.1); border-color: #00d2ff; background: #fff; box-shadow: 0 8px 30px rgba(0,210,255,0.4); z-index: 20; }
+        .result-panel { opacity: 0; transform: translateY(10px) scale(0.95); transition: all 0.4s; display: none; }
+        .result-panel.show { opacity: 1; transform: translateY(0) scale(1); display: block; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04); transition: all 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-purple"></div><div class="bg-glow glow-cyan"></div>
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3"><div class="logo-symbol text-lg">F</div><span class="font-sora font-bold text-xl text-[#1E293B]">FLIPPERS</span></a>
+            <a href="index.html" class="text-sm font-medium text-[#64748B] hover:text-[#1E293B]">Tools</a>
+        </div>
+    </nav>
+    <main class="pt-32 pb-12 px-4 max-w-2xl mx-auto flex-1 flex flex-col items-center w-full">
+        <div class="w-full mb-8 text-left"><a href="index.html" class="text-secondary flex items-center gap-2 inline-flex text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</a></div>
+        <h1 class="text-4xl font-sora font-bold mb-2">Decision Shuffler</h1>
+        <p class="text-secondary mb-10">What are you choosing between?</p>
+        <div class="w-full max-w-lg mb-8 flex gap-2">
+            <input type="text" id="opt-input" class="input-glass flex-1" placeholder="e.g. Pizza, Burger, Sushi..." onkeypress="if(event.key === 'Enter') addOption()">
+            <button onclick="addOption()" class="glass-button px-6 py-4 rounded-xl font-sora font-bold bg-white/80 hover:bg-white text-xl">+</button>
+        </div>
+        <div id="options-container" class="w-full max-w-lg grid grid-cols-2 gap-4 mb-8"></div>
+        <button id="btn-shuffle" onclick="shuffleDecision()" class="w-full max-w-lg glass-button bg-accent text-primary py-4 rounded-xl font-sora font-bold text-lg hidden">DECIDE</button>
+        <div id="result-panel" class="result-panel w-full max-w-lg mt-8 text-center">
+            <div class="text-4xl font-sora font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-accent to-cyan-500 mb-2" id="winner-text"></div>
+            <p class="text-secondary text-sm">The decision has been made.</p>
+        </div>
+    </main>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 w-full text-center md:text-left">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-4 flex items-center gap-2 justify-center md:justify-start"><i data-lucide="info" class="w-6 h-6 text-purple-500"></i> About Decision Shuffler</h2>
+        <p class="text-slate-600 text-lg leading-relaxed bg-white/50 p-6 rounded-2xl border border-white shadow-sm">Can't choose what to eat or watch? Add your options as cards, hit shuffle, and let the algorithm highlight a random winner for you.</p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-16 mb-8 border-t border-slate-200 w-full">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-blue-500"></i> More Decision Tools</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a href="coin-flip.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🪙</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Coin Flip</h3><p class="text-slate-500 text-sm">Heads or tails? Let fate decide.</p>
+            </a>
+            <a href="wheel.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🎡</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Wheel of Names</h3><p class="text-slate-500 text-sm">Spin to pick a random winner.</p>
+            </a>
+            <a href="shuffler.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🔀</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Decision Shuffler</h3><p class="text-slate-500 text-sm">Add options and let it pick.</p>
+            </a>
+        </div>
+    </section>
+
+            <footer class="mt-auto border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        let options = [];
+        function addOption() {
+            const val = document.getElementById('opt-input').value.trim();
+            if(val) { options.push(val); document.getElementById('opt-input').value = ''; renderOptions(); }
+        }
+        function removeOption(idx) { options.splice(idx, 1); renderOptions(); }
+        function renderOptions() {
+            document.getElementById('options-container').innerHTML = options.map((opt, i) => `<div class="opt-card glass-panel p-4 rounded-xl flex justify-between items-center group relative overflow-hidden" id="card-${i}"><span class="font-sora font-bold z-10 truncate pr-4">${opt}</span><button onclick="removeOption(${i})" class="z-10 text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="x" class="w-4 h-4"></i></button></div>`).join('');
+            lucide.createIcons();
+            document.getElementById('btn-shuffle').classList.toggle('hidden', options.length < 2);
+        }
+        function shuffleDecision() {
+            if(options.length < 2) return;
+            const resultPanel = document.getElementById('result-panel');
+            resultPanel.classList.remove('show'); setTimeout(()=>resultPanel.style.display='none', 400);
+            document.getElementById('btn-shuffle').disabled = true;
+            document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('highlight', 'winner'));
+            let jumps = Math.floor(Math.random() * 10) + 15; let currentIdx = 0; let delay = 50;
+            function jump() {
+                document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('highlight'));
+                document.getElementById(`card-${currentIdx}`).classList.add('highlight');
+                jumps--;
+                if(jumps > 0) { currentIdx = (currentIdx + 1) % options.length; delay += 15; setTimeout(jump, delay); }
+                else {
+                    document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('highlight'));
+                    document.getElementById(`card-${currentIdx}`).classList.add('winner');
+                    document.getElementById('winner-text').innerText = `✨ ${options[currentIdx].toUpperCase()} ✨`;
+                    resultPanel.style.display = 'block'; setTimeout(() => resultPanel.classList.add('show'), 10);
+                    document.getElementById('btn-shuffle').disabled = false;
+                }
+            }
+            jump();
+        }
+    </script>
+</body>
+</html>

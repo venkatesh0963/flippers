@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Picker - Flippers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #F8FAFC; color: #1E293B; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 24px -1px rgba(0,0,0,0.05); }
+        .glass-button { background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7)); border: 1px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s; }
+        .glass-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; }
+        .glow-purple { background: radial-gradient(circle, rgba(176,106,179,0.4) 0%, transparent 70%); width: 700px; height: 700px; top: -200px; left: -100px; }
+        .glow-cyan { background: radial-gradient(circle, rgba(69,104,220,0.3) 0%, transparent 70%); width: 600px; height: 600px; bottom: -200px; right: -100px; }
+        .logo-symbol { display: inline-flex; width: 32px; height: 32px; background: linear-gradient(135deg, #b06ab3, #4568dc); border-radius: 8px; align-items: center; justify-content: center; font-weight: bold; color: white; transform: rotate(-10deg); }
+        .input-glass { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); padding: 1rem; border-radius: 1rem; outline: none; transition: all 0.2s; color: #1E293B; width: 100%; resize: none; font-family: monospace; }
+        .input-glass:focus { background: rgba(255,255,255,0.9); border-color: #4568dc; box-shadow: 0 0 0 2px rgba(69,104,220,0.2); }
+        .result-panel { opacity: 0; transform: translateY(10px) scale(0.95); transition: all 0.4s; display: none; }
+        .result-panel.show { opacity: 1; transform: translateY(0) scale(1); display: block; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.04); transition: all 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-purple"></div><div class="bg-glow glow-cyan"></div>
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3"><div class="logo-symbol text-lg">F</div><span class="font-sora font-bold text-xl text-[#1E293B]">FLIPPERS</span></a>
+            <a href="index.html" class="text-sm font-medium text-[#64748B] hover:text-[#1E293B]">Tools</a>
+        </div>
+    </nav>
+    <main class="pt-32 pb-12 px-4 max-w-2xl mx-auto flex-1 flex flex-col items-center w-full">
+        <div class="w-full mb-8 text-left"><a href="index.html" class="text-secondary flex items-center gap-2 inline-flex text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</a></div>
+        <h1 class="text-4xl font-sora font-bold mb-2">Comment Picker</h1>
+        <p class="text-secondary mb-10">Pick a winner from comments.</p>
+        <div class="w-full max-w-lg mb-8">
+            <textarea id="comments-input" rows="6" class="input-glass mb-4" placeholder="@alex: I want this!&#10;@sarah: Amazing giveaway!&#10;@john: Count me in!"></textarea>
+            <div class="flex flex-col gap-3 mb-6 bg-white/40 p-4 rounded-xl border border-white/60">
+                <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-5 h-5 rounded text-accent accent-[#4568dc]"><span class="text-sm font-medium text-primary">Filter empty comments</span></label>
+                <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="chk-dupes" checked class="w-5 h-5 rounded text-accent accent-[#4568dc]"><span class="text-sm font-medium text-primary">Remove duplicates (1 entry per user)</span></label>
+            </div>
+            <button onclick="pickWinner()" class="w-full glass-button bg-accent text-primary py-4 rounded-xl font-sora font-bold text-lg">PICK WINNER</button>
+        </div>
+        <div id="loading" class="hidden text-secondary text-sm mb-4 text-center">
+            <div class="animate-pulse mb-1" id="loading-1">Reading comments...</div><div class="animate-pulse mb-1 hidden" id="loading-2">Filtering entries...</div><div class="animate-pulse hidden" id="loading-3">Picking winner...</div>
+        </div>
+        <div id="result-panel" class="result-panel w-full max-w-lg glass-panel rounded-3xl p-8 text-center relative overflow-hidden">
+            <h3 class="text-sm tracking-widest text-secondary uppercase mb-2">🎉 WINNER 🎉</h3>
+            <div class="text-3xl font-sora font-extrabold text-primary mb-2 break-words" id="winner-text"></div>
+            <p class="text-xs text-secondary mb-8">Selected from <span id="valid-count" class="font-bold"></span> valid entries.</p>
+            <button class="glass-button rounded-xl px-6 py-2 text-sm font-medium" onclick="document.getElementById('result-panel').classList.remove('show'); document.getElementById('result-panel').style.display='none';">Pick Another</button>
+        </div>
+    </main>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 w-full text-center md:text-left">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-4 flex items-center gap-2 justify-center md:justify-start"><i data-lucide="info" class="w-6 h-6 text-purple-500"></i> About Comment Picker</h2>
+        <p class="text-slate-600 text-lg leading-relaxed bg-white/50 p-6 rounded-2xl border border-white shadow-sm">Transparently pick a winner from a large list of comments. Filter out empty lines or limit entries to one per user for fair giveaways and contests.</p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-16 mb-8 border-t border-slate-200 w-full">
+        <h2 class="text-2xl font-sora font-bold text-slate-800 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-blue-500"></i> More Decision Tools</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <a href="coin-flip.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🪙</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Coin Flip</h3><p class="text-slate-500 text-sm">Heads or tails? Let fate decide.</p>
+            </a>
+            <a href="wheel.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🎡</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Wheel of Names</h3><p class="text-slate-500 text-sm">Spin to pick a random winner.</p>
+            </a>
+            <a href="shuffler.html" class="glass-card rounded-3xl p-6 flex flex-col group border border-white bg-white/60 hover:bg-white transition-all shadow-sm block">
+                <div class="text-4xl mb-4">🔀</div><h3 class="font-sora font-bold text-lg mb-2 text-slate-800">Decision Shuffler</h3><p class="text-slate-500 text-sm">Add options and let it pick.</p>
+            </a>
+        </div>
+    </section>
+
+            <footer class="mt-auto border-t border-white/40 glass-panel rounded-none shadow-none pb-12 pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-symbol text-white text-sm w-8 h-8 flex items-center justify-center font-bold">F</div>
+                        <span class="font-sora font-bold text-xl text-primary">FLIPPERS</span>
+                    </div>
+                    <p class="text-secondary text-sm mb-6">
+                        Make a choice. Move on. The beautiful digital toolbox for making quick decisions without the friction.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-pink-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-red-600 transition-colors flex items-center justify-center">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-full glass-button hover:text-blue-500 transition-colors flex items-center justify-center">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Top Tools</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="coin-flip.html" class="hover:text-accent transition-colors">🪙 Coin Flip</a></li>
+                        <li><a href="dice-roller.html" class="hover:text-accent transition-colors">🎲 Dice Roller</a></li>
+                        <li><a href="wheel.html" class="hover:text-accent transition-colors">🎡 Wheel of Names</a></li>
+                        <li><a href="shuffler.html" class="hover:text-accent transition-colors">🔀 Decision Shuffler</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Resources</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="index.html#Flippers" class="hover:text-accent transition-colors">All Tools</a></li>
+                        <li><a href="how-it-works.html" class="hover:text-accent transition-colors">How it Works</a></li>
+                        <li><a href="api.html" class="hover:text-accent transition-colors">Randomness API</a></li>
+                        <li><a href="submit.html" class="hover:text-accent transition-colors">Submit an Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-sora font-bold text-primary mb-4">Legal & Contact</h4>
+                    <ul class="space-y-3 text-sm text-secondary">
+                        <li><a href="privacy.html" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:hello@flippers.app" class="hover:text-accent transition-colors flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@flippers.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-black/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <p>&copy; 2026 Flippers App. All rights reserved.</p>
+                <div class="flex gap-4 font-sora font-semibold">
+                    <span>⚡ Fast</span>
+                    <span>✨ Free</span>
+                    <span>🎯 Simple</span>
+                    <span>🎲 Fun</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        function pickWinner() {
+            const rawText = document.getElementById('comments-input').value;
+            let lines = rawText.split('\n');
+            const filterEmpty = document.getElementById('chk-empty').checked; const filterDupes = document.getElementById('chk-dupes').checked;
+            if(lines.length === 0 || rawText.trim() === '') { alert("Please paste some comments first!"); return; }
+            document.getElementById('result-panel').classList.remove('show'); document.getElementById('result-panel').style.display = 'none';
+            document.getElementById('loading').classList.remove('hidden'); document.getElementById('loading-1').classList.remove('hidden'); document.getElementById('loading-2').classList.add('hidden'); document.getElementById('loading-3').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('loading-2').classList.remove('hidden');
+                if(filterEmpty) lines = lines.filter(l => l.trim() !== '');
+                if(filterDupes) {
+                    let uniqueUsers = new Set(); let uniqueLines = [];
+                    lines.forEach(l => {
+                        const parts = l.split(':');
+                        if(parts.length > 1 && parts[0].startsWith('@')) {
+                            const user = parts[0].trim().toLowerCase();
+                            if(!uniqueUsers.has(user)) { uniqueUsers.add(user); uniqueLines.push(l); }
+                        } else {
+                            if(!uniqueUsers.has(l.trim().toLowerCase())) { uniqueUsers.add(l.trim().toLowerCase()); uniqueLines.push(l); }
+                        }
+                    });
+                    lines = uniqueLines;
+                }
+                if(lines.length === 0) { alert("No valid entries left after filtering."); document.getElementById('loading').classList.add('hidden'); return; }
+                setTimeout(() => {
+                    document.getElementById('loading-3').classList.remove('hidden');
+                    setTimeout(() => {
+                        const winner = lines[Math.floor(Math.random() * lines.length)];
+                        document.getElementById('winner-text').innerText = winner; document.getElementById('valid-count').innerText = lines.length;
+                        document.getElementById('loading').classList.add('hidden'); document.getElementById('result-panel').style.display = 'block';
+                        setTimeout(() => document.getElementById('result-panel').classList.add('show'), 10);
+                    }, 500);
+                }, 500);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
