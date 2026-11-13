@@ -1,4 +1,4 @@
-# 🎲 FLIPPERS — The Ultimate Decision Toolkit.
+# 🎲 FLIPPERS — The Ultimate Decision Toolkit..
 
 > **Make a choice. Move on.**  
 > A beautiful, free digital toolbox for making quick decisions without the friction.
